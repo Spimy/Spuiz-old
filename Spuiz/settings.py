@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_SPUIZ')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG_DJANGO_SPUIZ')
+DEBUG = (os.environ.get('DEBUG_DJANGO_SPUIZ') == 'True')
 
 ALLOWED_HOSTS = ['spuiz.herokuapp.com']
 
