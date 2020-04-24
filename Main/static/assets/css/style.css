@@ -1,5 +1,5 @@
 body {
-    background-color: #121212;
+    background-color: #1c1c1c;
     font-family: "Titillium Web", sans-serif;
     margin: 0;
     padding: 0;
@@ -11,7 +11,7 @@ body {
 
 #sticky_nav {
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: none;
     display: flex;
     justify-content: space-between;
     padding: 15px 0;
@@ -32,13 +32,9 @@ body {
     transition: 0.3s ease-in-out;
 }
 
-#sticky_nav .nav-left a:focus {
-    box-shadow: 0 0 3px 3px rgba(4, 0, 107, 0.4);
-}
-
 #sticky_nav .nav-left a img {
     height: auto;
-    width: 35px;
+    width: 100px;
 }
 
 #sticky_nav .nav-left form input {
@@ -57,7 +53,18 @@ body {
 }
 
 #sticky_nav .nav-right {
+    align-items: center;
+    display: flex;
     margin-right: 100px;
+}
+
+#sticky_nav .nav-right img {
+    background-color: #1c1c1c;
+    border-radius: 50%;
+    height: 35px;
+    margin: 0 15px;
+    padding: 5px;
+    width: auto;
 }
 
 #sticky_nav .nav-right a {
@@ -74,22 +81,111 @@ body {
     background-color: rgba(28, 28, 28, 0.4);
 }
 
+
+/* Login Page */
+#login {
+    align-items: center;
+    color: #f1f1f1;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+
+#login .login-form {
+    background-color: #212023;
+    padding: 50px;
+}
+
+#login .login-form .info-text {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+#login .login-form .info-text .web-welcome {
+    margin: -15px;
+}
+
+#login .login-form p label {
+    margin: 0 10px;
+}
+
+#login .login-form p label[for="id_username"]::before {
+    content: "\f007";
+    font-family: "FontAwesome", "Titillium Web", sans-serif;
+    margin: 0 5px;
+}
+
+#login .login-form p label[for="id_password"]::before {
+    content: "\f084";
+    font-family: "FontAwesome", "Titillium Web", sans-serif;
+    margin: 0 5px;
+}
+
+#login .login-form p input {
+    background-color: #2e2e2e;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 10px 15px;
+    /* width: 100%; */
+}
+
+#login .login-form p input:-webkit-autofill,
+#login .login-form p input:-webkit-autofill:hover, 
+#login .login-form p input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f1f1f1;
+    -webkit-box-shadow: 0 0 0px 1000px #2e2e2e inset;
+    border: 1px solid #3500d3;
+    box-shadow: 0 0 0px 1000px #2e2e2e inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#login .login-btn {
+    background-color: #3500d3;
+    border: none;
+    border-radius: 3px;
+    color: #f1f1f1;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+}
+
+#login .login-btn:hover,
+#login .login-btn:focus {
+    cursor: pointer;
+    box-shadow: 0 5px 0 0 #1c1c1c;
+}
+
+#login .login-btn:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+#login a {
+    color: #3500d3;
+    text-decoration: none;
+}
+
 @media only screen {
 
     @media (max-width: 765px) {
 
         #sticky_nav .nav-left {
-            margin-left: 35px;
+            margin-left: 25px;
         }
 
         #sticky_nav .nav-left form input {
-            width: 100%;
+            display: none;
         }
 
         #sticky_nav .nav-right {
-            margin-right: 35px;
+            margin-right: 25px;
         }
 
+        #sticky_nav .nav-right img {
+            margin: 0 5px;
+        }
 
     }
 
