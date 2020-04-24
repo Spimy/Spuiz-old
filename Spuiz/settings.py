@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1^_xz8iv*k&9z1wir%vz3xo3#^w0tt+7_qq7ye+4962o^a(uss'
+SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_SPUIZ')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG_DJANGO_SPUIZ')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['spuiz.herokuapp.com']
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,
