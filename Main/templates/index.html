@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+            <meta charset="UTF-8">
+            <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon">
+            <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+
+            <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+            <link rel="stylesheet" href="{% static 'tinymce/css/prism.css' %}">
+            <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+
+            <script src="{% static 'tinymce/js/prism.js' %}"></script>
+            <script src="https://kit.fontawesome.com/653eb1b940.js"></script>
+
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Spuiz - {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+
+        {% include 'parts/navbar.html' %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% include 'parts/footer.html' %}
+
+    </body>
+</html>
