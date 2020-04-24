@@ -20,8 +20,19 @@
 	</div>
 	
 	<div class="nav-right">
-		<a href="/login/">Login</a>
-		<a href="/register/">Register</a>
+
+		{% if user.is_authenticated %}
+			
+			<img src="{% static 'assets/img/default.png' %}">
+			<a href="/logout/?next={{ request.path }}">Log out</a>
+
+		{% else %}
+
+			<a href="/login/">Login</a>
+			<a href="/register/">Register</a>
+
+		{% endif %}
+
 	</div>
 
 </nav>
