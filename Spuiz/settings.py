@@ -108,9 +108,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'spuiz',
-        'HOST': 'mongodb+srv://spimy:<password>@spuiz-dyemp.gcp.mongodb.net/test?retryWrites=true&w=majority',
+        'HOST': os.environ.get('DATABASE_URL_DJANGO_SPUIZ'),
         'USER': 'spimy',
-        'PASSWORD': 'd4taB453Us3r4Spimy',
+        'PASSWORD': os.environ.get('DATABASE_PASS_DJANGO_SPUIZ'),
         'PORT': 27017,
     }
 }
