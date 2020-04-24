@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <section id="login">
+        <form class="login-form" method="POST">
+
+            <div class="info-text">
+                <h2 class="web-welcome">Welcome to Spuiz</h2>
+                <p class="web-description">A place to create and answer quizzes</p>
+            </div>
+
+            {% csrf_token %}
+            {{ form.as_p }}
+
+        <button class="login-btn" type="submit">Login</button>
+        <a href="/register">Create an account</a>
+        </form>
+    </section>
+    
+{% endblock %}
