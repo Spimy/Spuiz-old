@@ -74,7 +74,15 @@ def register_page(request):
             return redirect("Main:home_page")
         else:
             
+            username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password1")
+            
+            if username is None:
+                messages.error(request, "Username must not contain any spaces.")
+            
+            if (password == username):
+                 messages.error(request, "Password should not be the same as username.")
+            
             validation = validate_password_strength(password)
             
             if (validation != password):
