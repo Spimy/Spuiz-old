@@ -99,20 +99,3 @@
     font-size: 12px;
     margin-left: 5px;
 }
-
-/* @media only screen {
-
-    @media (max-width: 765px) {
-
-        #login .login-form p label{
-            margin-right: 0;
-            margin-bottom: 5px;
-        }
-
-        #login .login-form p input {
-            width: 100%;
-        }
-
-    }
-
-} */
