@@ -1,0 +1,101 @@
+#register {
+    align-items: center;
+    color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+}
+
+#register .register-form {
+    background-color: #282828;
+    border-radius: 5px;
+    margin-top: 100px;
+    padding: 50px;
+    text-align: center;
+}
+
+#register .register-form .info-text {
+    font-weight: 300;
+    margin-bottom: 35px;
+}
+
+#register .register-form .info-text .web-welcome {
+    font-weight: 900;
+    margin: -15px;
+    margin-bottom: 5px;
+}
+
+#register .register-form p {
+    background-color: #2e2e2e;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+#register .register-form p label {
+    margin-bottom: 5px;
+}
+
+#register .register-form p input {
+    background-color: #282828;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-family: "Font Awesome 5 Free", "Titillium Web", sans-serif;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+#register .register-form p input::placeholder {
+    color: #f1f1f1;
+    font-weight: 900;
+}
+
+#register .register-form p input:-webkit-autofill,
+#register .register-form p input:-webkit-autofill:hover, 
+#register .register-form p input:-webkit-autofill:focus {
+    caret-color: #f1f1f1;
+    -webkit-text-fill-color: #f1f1f1;
+    -webkit-box-shadow: 0 0 0px 1000px #282828 inset;
+    border: 1px solid #3500d3;
+    box-shadow: 0 0 0px 1000px #282828 inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#register p ul {
+    text-align: initial;
+}
+
+#register .register-btn {
+    background-color: #3500d3;
+    border: none;
+    border-radius: 3px;
+    color: #f1f1f1;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+}
+
+#register .register-btn:hover,
+#register .register-btn:focus {
+    cursor: pointer;
+    box-shadow: 0 5px 0 0 #1c1c1c;
+}
+
+#register .register-btn:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+#register a {
+    color: #f1f1f1;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+#register a .fa-external-link-alt {
+    font-size: 12px;
+    margin-left: 5px;
+}
