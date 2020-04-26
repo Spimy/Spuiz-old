@@ -43,13 +43,14 @@
     border: none;
     border-radius: 3px;
     color: white;
-    font-family: "FontAwesome", "Titillium Web", sans-serif;
+    font-family: "Font Awesome 5 Free", "Titillium Web", sans-serif;
     padding: 10px 15px;
     width: 100%;
 }
 
 #login .login-form p input::placeholder {
     color: #f1f1f1;
+    font-weight: 900;
 }
 
 #login .login-form p input:-webkit-autofill,
