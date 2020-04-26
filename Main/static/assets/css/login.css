@@ -8,47 +8,48 @@
 }
 
 #login .login-form {
-    background-color: #212023;
-    padding: 50px;
+    background-color: #282828;
+    border-radius: 5px;
+    padding: 50px 30px;
+    text-align: center;
 }
 
 #login .login-form .info-text {
-    text-align: center;
+    font-weight: 300;
     margin-bottom: 35px;
 }
 
 #login .login-form .info-text .web-welcome {
+    font-weight: 900;
     margin: -15px;
     margin-bottom: 5px;
 }
 
 #login .login-form p {
+    background-color: #2e2e2e;
+    border-radius: 5px;
     display: flex;
     flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 10px;
 }
 
 #login .login-form p label {
-    margin-right: 10px;
-}
-
-#login .login-form p label[for="id_username"]::before {
-    content: "\f007";
-    font-family: "FontAwesome", "Titillium Web", sans-serif;
-    margin: 0 5px;
-}
-
-#login .login-form p label[for="id_password"]::before {
-    content: "\f084";
-    font-family: "FontAwesome", "Titillium Web", sans-serif;
-    margin: 0 5px;
+    margin-bottom: 5px;
 }
 
 #login .login-form p input {
-    background-color: #2e2e2e;
+    background-color: #282828;
     border: none;
     border-radius: 3px;
     color: white;
+    font-family: "FontAwesome", "Titillium Web", sans-serif;
     padding: 10px 15px;
+    width: 100%;
+}
+
+#login .login-form p input::placeholder {
+    color: #f1f1f1;
 }
 
 #login .login-form p input:-webkit-autofill,
@@ -56,9 +57,9 @@
 #login .login-form p input:-webkit-autofill:focus {
     caret-color: #f1f1f1;
     -webkit-text-fill-color: #f1f1f1;
-    -webkit-box-shadow: 0 0 0px 1000px #2e2e2e inset;
+    -webkit-box-shadow: 0 0 0px 1000px #282828 inset;
     border: 1px solid #3500d3;
-    box-shadow: 0 0 0px 1000px #2e2e2e inset;
+    box-shadow: 0 0 0px 1000px #282828 inset;
     transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -67,7 +68,10 @@
     border: none;
     border-radius: 3px;
     color: #f1f1f1;
-    margin-bottom: 10px;
+    font-family: "Titillium Web", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0 10px;
     padding: 10px 15px;
     transition: 0.3s ease-in-out;
     width: 100%;
@@ -85,11 +89,17 @@
 }
 
 #login a {
-    color: #3500d3;
+    color: #f1f1f1;
+    font-weight: 300;
     text-decoration: none;
 }
 
-@media only screen {
+#login a .fa-external-link-alt {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* @media only screen {
 
     @media (max-width: 765px) {
 
@@ -104,4 +114,4 @@
 
     }
 
-}
+} */
