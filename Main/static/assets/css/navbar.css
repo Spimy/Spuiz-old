@@ -27,7 +27,7 @@
 }
 
 #sticky_nav .nav-left form input {
-    background-color: #1c1c1c;
+    background-color: #212023;
     border: none;
     color: #f1f1f1;
     font-family: "FontAwesome", "Titillium Web", sans-serif;
@@ -67,7 +67,7 @@
 
 #sticky_nav .nav-right a:hover,
 #sticky_nav .nav-right a:focus {
-    background-color: rgba(28, 28, 28, 0.4);
+    background-color: #2e2e2e;
 }
 
 @media only screen {
