@@ -1,0 +1,107 @@
+#login {
+    align-items: center;
+    color: #f1f1f1;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+#login .login-form {
+    background-color: #212023;
+    padding: 50px;
+}
+
+#login .login-form .info-text {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+#login .login-form .info-text .web-welcome {
+    margin: -15px;
+    margin-bottom: 5px;
+}
+
+#login .login-form p {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#login .login-form p label {
+    margin-right: 10px;
+}
+
+#login .login-form p label[for="id_username"]::before {
+    content: "\f007";
+    font-family: "FontAwesome", "Titillium Web", sans-serif;
+    margin: 0 5px;
+}
+
+#login .login-form p label[for="id_password"]::before {
+    content: "\f084";
+    font-family: "FontAwesome", "Titillium Web", sans-serif;
+    margin: 0 5px;
+}
+
+#login .login-form p input {
+    background-color: #2e2e2e;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 10px 15px;
+}
+
+#login .login-form p input:-webkit-autofill,
+#login .login-form p input:-webkit-autofill:hover, 
+#login .login-form p input:-webkit-autofill:focus {
+    caret-color: #f1f1f1;
+    -webkit-text-fill-color: #f1f1f1;
+    -webkit-box-shadow: 0 0 0px 1000px #2e2e2e inset;
+    border: 1px solid #3500d3;
+    box-shadow: 0 0 0px 1000px #2e2e2e inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#login .login-btn {
+    background-color: #3500d3;
+    border: none;
+    border-radius: 3px;
+    color: #f1f1f1;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+}
+
+#login .login-btn:hover,
+#login .login-btn:focus {
+    cursor: pointer;
+    box-shadow: 0 5px 0 0 #1c1c1c;
+}
+
+#login .login-btn:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+#login a {
+    color: #3500d3;
+    text-decoration: none;
+}
+
+@media only screen {
+
+    @media (max-width: 765px) {
+
+        #login .login-form p label{
+            margin-right: 0;
+            margin-bottom: 5px;
+        }
+
+        #login .login-form p input {
+            width: 100%;
+        }
+
+    }
+
+}
