@@ -7,6 +7,7 @@
             <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
             
             <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/messages.css' %}">
             <link rel="stylesheet" href="{% static 'tinymce/css/prism.css' %}">
             <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
             {% block styles %}{% endblock %}
@@ -21,11 +22,12 @@
     <body>
 
         {% include 'static_html/navbar.html' %}
+        {% include 'static_html/messages.html' %}
 
         {% block content %}
         {% endblock %}
 
         {% include 'static_html/footer.html' %}
-
+        
     </body>
 </html>
