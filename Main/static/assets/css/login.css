@@ -49,6 +49,7 @@
 
 #login .login-form p input::placeholder {
     color: #f1f1f1;
+    font-size: 12px;
     font-weight: 900;
 }
 
