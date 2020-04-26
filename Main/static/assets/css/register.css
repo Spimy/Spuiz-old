@@ -74,12 +74,11 @@
     color: #f1f1f1;
     margin-bottom: 10px;
     padding: 10px 15px;
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
     width: 100%;
 }
 
-#register .register-btn:hover,
-#register .register-btn:focus {
+#register .register-btn:hover {
     cursor: pointer;
     box-shadow: 0 5px 0 0 #1c1c1c;
 }

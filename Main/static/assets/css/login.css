@@ -74,12 +74,11 @@
     font-weight: bold;
     margin: 10px 0 10px;
     padding: 10px 15px;
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
     width: 100%;
 }
 
-#login .login-btn:hover,
-#login .login-btn:focus {
+#login .login-btn:hover {
     cursor: pointer;
     box-shadow: 0 5px 0 0 #1c1c1c;
 }
