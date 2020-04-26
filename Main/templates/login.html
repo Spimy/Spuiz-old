@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 {% load static %}
 
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/login.css' %}">{% endblock %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
@@ -10,7 +11,7 @@
 
             <div class="info-text">
                 <h2 class="web-welcome">Welcome to Spuiz</h2>
-                <p class="web-description">A place to create and answer quizzes</p>
+                A place to create and answer quizzes
             </div>
 
             {% csrf_token %}
