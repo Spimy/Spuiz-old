@@ -2,12 +2,11 @@ import re
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 
 from .models import *
 from .forms import RegistrationForm
-from django.core.exceptions import ValidationError
 
 
 def validate_password_strength(value):
