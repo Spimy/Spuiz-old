@@ -9,7 +9,7 @@
     background-color: #282828;
     border-radius: 5px;
     margin-top: 100px;
-    padding: 50px;
+    padding: 50px 30px;
     text-align: center;
 }
 
@@ -63,16 +63,15 @@
     transition: background-color 5000s ease-in-out 0s;
 }
 
-#register p ul {
-    text-align: initial;
-}
-
 #register .register-btn {
     background-color: #3500d3;
     border: none;
     border-radius: 3px;
     color: #f1f1f1;
-    margin-bottom: 10px;
+    font-family: "Titillium Web", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0 10px;
     padding: 10px 15px;
     transition: 0.2s ease-in-out;
     width: 100%;
