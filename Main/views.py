@@ -1,22 +1,41 @@
+import re
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import user_passes_test
 
 from .models import *
 from .forms import RegistrationForm
+from django.core.exceptions import ValidationError
 
 
-def authenticated_check(user):
-    return not user.is_authenticated
+def validate_password_strength(value):
+    """Validates that a password is as least 10 characters long and has at least
+    2 digits and 1 Upper case letter.
+    """
+    min_length = 8
+
+    if len(value) < min_length:
+        return f"Password must be at least {min_length} characters long."
+    
+    if (not re.match(r"^(?=.*[a-zA-Z])(?=.*[0-9]){{{0},}}".format(min_length), value)):
+        return "Password must contain both letters and digits."
+
+    # check for uppercase letter
+    if not any(c.isupper() for c in value):
+        return "Password must contain at least 1 uppercase letter."
+
+    return value
 
 # Create your views here.
 def home_page(request):
     return render(request, "homepage.html")
 
 def login_page(request):
+    
+    if request.user.is_authenticated:
+        return redirect("Main:home_page")
     
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -39,9 +58,11 @@ def login_page(request):
     
     form = AuthenticationForm()
     return render(request,"login.html", context={"form": form})
-    
-@user_passes_test(authenticated_check, login_url="/")
+
 def register_page(request):
+    
+    if request.user.is_authenticated:
+        return redirect("Main:home_page")
     
     if request.method == "POST":
         form = RegistrationForm(request.POST)
@@ -53,6 +74,13 @@ def register_page(request):
         
             return redirect("Main:home_page")
         else:
+            
+            password = form.cleaned_data.get("password1")
+            validation = validate_password_strength(password)
+            
+            if (validation != password):
+                messages.error(request, validation)
+            
             for msg in form.error_messages:
                 messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}.")
     
