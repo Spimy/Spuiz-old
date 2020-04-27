@@ -1,0 +1,37 @@
+#quizzes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh
+}
+
+#quizzes .quiz-card {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    width: 250px;
+}
+
+#quizzes .quiz-card a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+#quizzes .quiz-card a .quiz-thumbnail {
+    border-radius: 3px;
+    height: 150px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#quizzes .quiz-card a .quiz-title {
+    margin: 15px;
+    white-space: pre-wrap;      /* CSS3 */   
+    white-space: -moz-pre-wrap; /* Firefox */    
+    white-space: -pre-wrap;     /* Opera <7 */   
+    white-space: -o-pre-wrap;   /* Opera 7 */    
+    word-wrap: break-word;      /* IE */
+}
