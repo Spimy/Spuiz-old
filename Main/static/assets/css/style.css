@@ -1,5 +1,5 @@
 body {
-    background-color: #1c1c1c;
+    background-color: var(--grey-dark);
     font-family: "Titillium Web", sans-serif;
     margin: 0;
     padding: 0;
@@ -7,4 +7,15 @@ body {
 
 * {
     outline: none;
+}
+
+:root {
+    --purple-darker: #0c0032;
+    --purple-dark: #190061;
+    --purple-normal: #240090;
+    --purple-light: #3500d3;
+
+    --grey-dark: #1c1c1c;
+    --grey-light: #282828;
+    --grey-lighter: #2e2e2e;
 }
