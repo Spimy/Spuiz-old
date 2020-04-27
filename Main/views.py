@@ -10,9 +10,7 @@ from .forms import RegistrationForm
 
 
 def validate_password_strength(value):
-    """Validates that a password is as least 10 characters long and has at least
-    2 digits and 1 Upper case letter.
-    """
+    
     min_length = 8
 
     if len(value) < min_length:
