@@ -53,9 +53,14 @@ class Quiz(models.Model):
 class UserProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=255, blank=True, null=True)
     avatar = models.ImageField(upload_to="User_Avatars", null=True, blank=True)
     
-    quizzes = models.ManyToManyField(Quiz, blank=True)
+    quizzes = models.ManyToManyField(Quiz, blank=True, related_name="user_profile")
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+        super(UserProfile, self).save(*args, **kwargs)
     
     def __str__(self):
         return self.user.username
