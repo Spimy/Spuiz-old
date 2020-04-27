@@ -31,7 +31,7 @@ class Question(models.Model):
     
 class Quiz(models.Model):
     
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=255)
     questions = models.ManyToManyField(Question)
     
