@@ -25,9 +25,31 @@ def validate_password_strength(value):
 
     return value
 
+def user_slug(request, user_slug):
+    users = [u.slug for u in UserProfile.objects.all()]
+    if user_slug in users:
+
+        matching_quizzes = Quiz.objects.filter(user_profile__slug=user_slug)
+        quiz_urls = {}
+
+        for quiz in matching_quizzes.all():
+            quiz_urls[quiz] = quiz.slug
+
+        return render(request, "user_profile.html", context={"quizzes": quiz_urls})
+
+def quiz_slug(request, user_slug, quiz_slug):
+    users = [u.slug for u in UserProfile.objects.all()]
+    if user_slug in users:
+
+        matching_quizzes = Quiz.objects.filter(user_profile__slug=user_slug)
+        selected_quiz = matching_quizzes.filter(slug=quiz_slug)
+
+        return render(request, "quiz_page.html", context={"quiz": selected_quiz})
+
 # Create your views here.
 def home_page(request):
-    return render(request, "homepage.html")
+    quizzes = Quiz.objects.all()[::-1]
+    return render(request, "homepage.html", context={"quizzes": quizzes})
 
 def login_page(request):
     
