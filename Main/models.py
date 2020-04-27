@@ -32,6 +32,8 @@ class Question(models.Model):
 class Quiz(models.Model):
     
     slug = models.SlugField(max_length=255, blank=True, null=True)
+    
+    thumbnail = models.ImageField(upload_to="Quiz_Thumbnails")
     title = models.CharField(max_length=255)
     questions = models.ManyToManyField(Question)
     
