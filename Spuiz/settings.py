@@ -108,12 +108,12 @@ WSGI_APPLICATION = 'Spuiz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'spuiz',
-        'HOST': os.environ.get('DATABASE_URL_DJANGO_SPUIZ'),
-        'USER': 'spimy',
-        'PASSWORD': os.environ.get('DATABASE_PASS_DJANGO_SPUIZ'),
-        'PORT': 27017,
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd1ao5fv69efuv3',
+        'HOST': os.environ.get('DATABASE_URL_POSTGRES_SPUIZ'),
+        'USER': 'zmrjogbdvobxhg',
+        'PASSWORD': os.environ.get('DATABASE_PASS_POSTGRES_SPUIZ'),
+        'PORT': 5432,
     }
 }
 
@@ -160,4 +160,4 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-django_heroku.settings(locals(), databases=False)
+django_heroku.settings(locals())
