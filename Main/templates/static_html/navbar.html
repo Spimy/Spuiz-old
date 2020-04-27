@@ -23,8 +23,15 @@
 	<div class="nav-right">
 
 		{% if user.is_authenticated %}
+
+			<div class="avatar-container">
+				{% if not user.userprofile.avatar %}
+					<img src="{% static 'assets/img/default.png' %}">
+				{% else %}
+					<img src="{{ MEDIA_URL }}{{ user.userprofile.avatar.url }}">
+				{% endif %}
+			</div>
 			
-			<img src="{% static 'assets/img/default.png' %}">
 			<a href="/logout/?next={{ request.path }}">Log out</a>
 
 		{% else %}
