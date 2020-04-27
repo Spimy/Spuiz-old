@@ -10,15 +10,24 @@ from django.contrib.postgres.fields import ArrayField
 class CorrectAnswer(models.Model):
     answer = models.CharField(max_length=255)
     
+    def __str__(self):
+        return self.answer
+    
 class WrongAnswer(models.Model):
     answer = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.answer
 
 class Question(models.Model):
     
     question = models.CharField(max_length=255)
     correct = models.ManyToManyField(CorrectAnswer)
     wrong = models.ManyToManyField(WrongAnswer, blank=True)
-    thumbnail = models.ImageField(upload_to="Question_Thumbnails")
+    thumbnail = models.ImageField(upload_to="Question_Thumbnails", blank=True, null=True)
+    
+    def __str__(self):
+        return self.question
     
 class Quiz(models.Model):
     
@@ -32,6 +41,9 @@ class Quiz(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Quiz, self).save(*args, **kwargs)
+        
+    def __str__(self):
+        return self.title
     
     class Meta:
         verbose_name_plural = "Quizzes"
