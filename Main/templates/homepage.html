@@ -2,9 +2,20 @@
 {% load static %}
 
 {% block title %}Home{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/homepage.css' %}">{% endblock %}
 
 {% block content %}
-
-	
+    
+    <section id="quizzes">
+        <div class="quiz-card">
+            {% for quiz in quizzes %}
+                <a href="/{{quiz.user_profile.all.0.slug}}/{{quiz.slug}}" class="quiz-link">
+                    <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                    <h2 class="quiz-title">{{ quiz.title }}</h2>
+                    <a href="/{{ quiz.user_profile.all.0.slug }}" class="quiz-author">{{ quiz.user_profile.all.0.user.username }}</a>
+                </a>
+                {% endfor %}
+            </div>
+    </section>
 
 {% endblock %}
