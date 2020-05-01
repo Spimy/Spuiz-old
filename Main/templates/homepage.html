@@ -11,10 +11,14 @@
             {% for quiz in quizzes %}
                 <a href="/{{quiz.user_profile.all.0.slug}}/{{quiz.slug}}" class="quiz-link">
                     <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
-                    <h2 class="quiz-title">{{ quiz.title }}</h2>
-                    <a href="/{{ quiz.user_profile.all.0.slug }}" class="quiz-author">{{ quiz.user_profile.all.0.user.username }}</a>
                 </a>
-                {% endfor %}
+                <div class="quiz-description">
+                    <a href="/{{ quiz.user_profile.all.0.slug }}" class="quiz-author">{{ quiz.user_profile.all.0.user.username }}</a>
+                    <a href="/{{quiz.user_profile.all.0.slug}}/{{quiz.slug}}" class="quiz-link">
+                        <h2 class="quiz-title">{{ quiz.title }}</h2>
+                    </a>
+                </div>
+            {% endfor %}
             </div>
     </section>
 
