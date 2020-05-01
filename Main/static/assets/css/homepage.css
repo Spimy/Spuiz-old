@@ -9,29 +9,44 @@
     background-color: var(--grey-light);
     border-radius: 5px;
     color: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-    width: 250px;
+    display: block;
+    width: 300px;
 }
 
-#quizzes .quiz-card a {
+#quizzes .quiz-card .quiz-link .quiz-thumbnail {
+    border-radius: 5px;
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+#quizzes .quiz-card .quiz-description {
+    align-items: center;
+    display: flex;
+}
+
+#quizzes .quiz-card .quiz-description a {
     color: #f1f1f1;
     text-decoration: none;
+    word-wrap: break-word
 }
 
-#quizzes .quiz-card a .quiz-thumbnail {
-    border-radius: 3px;
-    height: 150px;
-    width: auto;
-    display: block;
-    margin: 0 auto;
+#quizzes .quiz-card .quiz-description .quiz-author {
+    background-color: var(--purple-light);
+    border-radius: 5px;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 10px;
+    padding: 3px 10px;
 }
 
-#quizzes .quiz-card a .quiz-title {
-    margin: 15px;
-    white-space: pre-wrap;      /* CSS3 */   
-    white-space: -moz-pre-wrap; /* Firefox */    
-    white-space: -pre-wrap;     /* Opera <7 */   
-    white-space: -o-pre-wrap;   /* Opera 7 */    
-    word-wrap: break-word;      /* IE */
+#quizzes .quiz-card .quiz-description .quiz-title {
+    font-weight: 500;
+    font-size: 20px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-overflow: ellipsis;
+    width: 10.3em;
+    white-space: nowrap;
 }
