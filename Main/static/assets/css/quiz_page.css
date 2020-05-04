@@ -1,0 +1,29 @@
+#quiz {
+    height: 200vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#quiz .question-card {
+    background-color: #2e2e2e;
+    padding: 10px;
+    margin: 100px 0;
+    transition: .6s cubic-bezier(.15, .5, .35, 1);
+}
+
+#quiz .question-card.highlight--1 {
+    transform: scale(1.3);
+    opacity: 1;
+    text-shadow: 0 6px 8px rgba(black, .4);
+    transition: .5s ease-out;
+}
+
+#quiz .question-card.highlight--2 {
+    color: #ff4974;
+    transform: scale(1.5);
+    letter-spacing: 1px;
+    text-shadow: 0 7px 12px rgba(black, .25);
+    transition: .8s cubic-bezier(.15, .5, .35, 1);
+}
