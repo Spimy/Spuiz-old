@@ -2,21 +2,21 @@
 <html lang="en">
     <head>
         {% load static %}
-            <meta charset="UTF-8">
-            <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon">
-            <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
-            
-            <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-            <link rel="stylesheet" href="{% static 'assets/css/messages.css' %}">
-            <link rel="stylesheet" href="{% static 'tinymce/css/prism.css' %}">
-            <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
-            {% block styles %}{% endblock %}
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
 
-            <script src="{% static 'tinymce/js/prism.js' %}"></script>
-            <script src="https://kit.fontawesome.com/653eb1b940.js"></script>
+        <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/messages.css' %}">
+        <link rel="stylesheet" href="{% static 'tinymce/css/prism.css' %}">
+        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+        {% block styles %}{% endblock %}
 
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="{% static 'tinymce/js/prism.js' %}"></script>
+        <script src="https://kit.fontawesome.com/653eb1b940.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Spuiz - {% block title %}{% endblock %}</title>
     </head>
     <body>
@@ -28,6 +28,6 @@
         {% endblock %}
 
         {% include 'static_html/footer.html' %}
-        
+
     </body>
 </html>
