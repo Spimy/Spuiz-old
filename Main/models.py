@@ -40,6 +40,8 @@ class Quiz(models.Model):
     media_quiz = models.BooleanField(default=False)
     mcq = models.BooleanField(default=False)
     
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="author")
+    
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Quiz, self).save(*args, **kwargs)
@@ -52,11 +54,9 @@ class Quiz(models.Model):
     
 class UserProfile(models.Model):
     
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     slug = models.SlugField(max_length=255, blank=True, null=True)
     avatar = models.ImageField(upload_to="User_Avatars", null=True, blank=True)
-    
-    quizzes = models.ManyToManyField(Quiz, blank=True, related_name="user_profile")
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
