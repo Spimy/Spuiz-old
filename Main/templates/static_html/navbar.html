@@ -25,10 +25,10 @@
 		{% if user.is_authenticated %}
 
 			<div class="avatar-container">
-				{% if not user.userprofile.avatar %}
+				{% if not user.user_profile.avatar %}
 					<img src="{% static 'assets/img/default.png' %}">
 				{% else %}
-					<img src="{{ MEDIA_URL }}{{ user.userprofile.avatar.url }}">
+					<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
 				{% endif %}
 			</div>
 			
