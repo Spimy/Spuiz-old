@@ -33,7 +33,7 @@ class RegistrationForm(UserCreationForm):
         
         for field_name in ["username", "email", "password1", "password2"]:
             self.fields[field_name].help_text = None
-    
+
     username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "\uf007"}))
     email = forms.EmailField(required=True, label="Email", max_length=255, 
                              widget=forms.EmailInput(attrs={
@@ -63,13 +63,9 @@ class RegistrationForm(UserCreationForm):
     def clean_password1(self, *args, **kwargs):
         username = self.cleaned_data.get("username")
         password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
         
         if (SM(None, password1, username).ratio() * 100) >= 80:
             raise forms.ValidationError("Password is too similar to username")
-        
-        if password1 != password2:
-            raise forms.ValidationError("Passwords do not match")
             
         return validate_password_strength(password1)
 
