@@ -18,4 +18,8 @@ body {
     --grey-dark: #1c1c1c;
     --grey-light: #282828;
     --grey-lighter: #2e2e2e;
+
+    --grey-dark-rgb: 28, 28, 28;
+    --grey-light-rgb: 40, 40, 40;
+    --grey-lighter-rgb: 46, 46, 46;
 }
