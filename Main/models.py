@@ -40,6 +40,9 @@ class Quiz(models.Model):
     media_quiz = models.BooleanField(default=False)
     mcq = models.BooleanField(default=False)
     
+    upvotes = models.ManyToManyField(User, blank=True, related_name="upvotes")
+    downvotes = models.ManyToManyField(User, blank=True, related_name="downvotes")
+    
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="author")
     
     def save(self, *args, **kwargs):
