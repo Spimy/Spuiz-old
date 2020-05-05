@@ -2,24 +2,25 @@
 {% load static %}
 
 {% block styles %}<link rel="stylesheet" href="{% static 'assets/css/quiz_page.css' %}">{% endblock %}
-{% block title %}{{ quiz.title }}{% endblock %}
+{% block title %}{{ quiz.quiz_info.title }} by {{ quiz.quiz_info.author.username }}{% endblock %}
 
 {% block content %}
     
     <section id="quiz">
-        {% for quizz, questions in quiz.items %}
+        <form method="POST">
+            {% csrf_token %}
 
-            {% for question, answers in questions.items %}
+            {% for question, answers in quiz.questions.items %}
 
                 <div class="question-card">
 
                     <p>Question: {{ question }}<p>
                     <p>Answers: </p>
 
-                    {% if quizz.mcq %}
+                    {% if quiz.quiz_info.mcq %}
                         {% for answer in answers %}
-                            <input class="answers" type="radio" name="{{ question.question }}" id="tool-{{ forloop.counter }}" checked>
-                            <label class="for-answers" for="tool-{{ forloop.counter }}">
+                            <input class="answers" type="radio" name="{{ question.question }}"  value="{{ answer }}" required>
+                            <label class="for-answers" for="ans-{{ forloop.counter }}">
                                 {{ answer }}
                             </label>
                         {% endfor %}
@@ -29,9 +30,11 @@
 
             {% endfor %}
 
-        {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
     </section>
 
     <script src="{% static 'assets/js/quiz_page.js' %}"></script>
 
 {% endblock %}
+
