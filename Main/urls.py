@@ -25,6 +25,6 @@ urlpatterns = [
     path("logout/", views.logout_page, name="log_out"),
     path("login/", views.login_page, name="login_page"),
     path("register/", views.register_page, name="register_page"),
-    path(r"^(?P<user_slug>\w+)/$", views.user_slug, name="user_slug"),
-    path(r"^(?P<user_slug>\w+)/(?P<quiz_slug>\w+)/$", views.quiz_slug, name="quiz_slug"),
+    path("<user_slug>/", views.user_slug, name="user_slug"),
+    path("<user_slug>/<quiz_slug>/", views.quiz_slug, name="quiz_slug"),
 ]
