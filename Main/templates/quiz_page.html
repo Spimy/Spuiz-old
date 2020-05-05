@@ -7,30 +7,58 @@
 {% block content %}
     
     <section id="quiz">
-        <form method="POST">
+        <img class ="backdrop" src="{{ MEDIA_URL }}{{ quiz.quiz_info.thumbnail.url }}" alt="{{ quiz.quiz_info.title }}">
+        
+        <form class="quiz-info" method="POST">
             {% csrf_token %}
+            <img class="author-avatar" src={{ MEDIA_URL }}{{ quiz.quiz_info.author.user_profile.avatar.url }} alt="{{ quiz.quiz_info.author.username }}">
+            <div class="quiz-info-wrapper">
+                <div class="quiz-info-text">
+                    <a href="." class="quiz-title"><h2>{{ quiz.quiz_info.title }}</h2></a>
+                    <a href="/{{ quiz.quiz_info.author.user_profile.slug }}" class="quiz-author">by {{ quiz.quiz_info.author.username }}</a>
+                </div>
+                <div class="quiz-info-btns">
+                    <button class="quiz-updownvote" type="submit" value="upvote">{{ quiz.quiz_info.upvotes | length }} Upvote</button>
+                    <button class="quiz-updownvote" type="submit" value="downvote">{{ quiz.quiz_info.downvotes | length }} Downvote</button>
+                </div>
+            </div>
+        </form>
+        
+        <form class="quiz-card" method="POST">
 
+            {% csrf_token %}
             {% for question, answers in quiz.questions.items %}
 
                 <div class="question-card">
 
-                    <p>Question: {{ question }}<p>
-                    <p>Answers: </p>
+                    <div class="wrapper">
+                        {% if quiz.quiz_info.media_quiz %}
+                            <img src="{{ MEDIA_URL }}{{ question.thumbnail.url }}" alt="{{ question.question }}">
+                        {% else %}
+                            <p>Question: {{ question }}<p>
+                        {% endif %}
+                    </div>
 
                     {% if quiz.quiz_info.mcq %}
-                        {% for answer in answers %}
-                            <input class="answers" type="radio" name="{{ question.question }}"  value="{{ answer }}" required>
-                            <label class="for-answers" for="ans-{{ forloop.counter }}">
-                                {{ answer }}
-                            </label>
-                        {% endfor %}
+                        <div class="wrapper">
+                            <p>Answers: </p>
+                            
+                            <div class="answer-wrapper">
+                            {% for answer in answers %}
+                                <label class="answers-label">
+                                    <input class="answers" type="radio" name="{{ question.question }}"  value="{{ answer }}" required>
+                                    <span>{{ answer }}</span>
+                                </label>
+                            {% endfor %}
+                            </div>
+                        </div>
                     {% endif %}
 
                 </div>
 
             {% endfor %}
 
-            <button type="submit">Submit</button>
+            <button class="submit-btn" type="submit">Submit</button>
         </form>
     </section>
 

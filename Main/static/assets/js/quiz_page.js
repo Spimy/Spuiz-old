@@ -1,3 +1,5 @@
+// =====================================================
+// Check for viewport to change opacity and scale of question card
 const getElementsInArea = (function(docElm) {
     let viewportHeight = docElm.clientHeight;
 
@@ -24,8 +26,16 @@ const getElementsInArea = (function(docElm) {
     };
 })(document.documentElement);
 
-window.addEventListener("scroll", f)
-window.addEventListener("resize", f)
+window.addEventListener("scroll", f);
+window.addEventListener("resize", f);
+
+if (document.readyState !== "loading") {
+    f();
+} else {
+    document.addEventListener("DOMContentLoaded", f);
+}
+  
+if (document.addEventListener) document.addEventListener("DOMContentLoaded", f);
 
 function f(e){
     getElementsInArea(e, {
@@ -40,3 +50,4 @@ function f(e){
         zone        : [40, 40] // percentage distance from top & bottom
     });
 }
+// =====================================================
