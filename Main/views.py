@@ -1,14 +1,14 @@
 import json
 import random
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.contrib.auth import login, logout, authenticate
 
 from .models import *
 from .forms import RegistrationForm, LoginForm
-from django.http.response import HttpResponse
-
 
 # Create your views here.
 def home_page(request):
@@ -99,22 +99,6 @@ def quiz_slug(request, user_slug, quiz_slug):
         matching_quizzes = Quiz.objects.filter(author__user_profile__slug=user_slug)
         selected_quiz = matching_quizzes.filter(slug=quiz_slug)[0]
         
-        if request.method == "POST":
-            correct = 0
-            for key, answer in request.POST.items():
-                if key == "csrfmiddlewaretoken": continue
-                
-                for question in selected_quiz.questions.all():
-                    if key.lower() == question.question.lower():
-                        
-                        answers = question.correct.values("answer")
-                        answers = [ans["answer"] for ans in answers]
-                        
-                        if answer in answers:
-                            correct += 1
-                            
-            return HttpResponse(correct)
-        
         flatten = lambda l: [item for sublist in l for item in sublist]
         questions = {}
         
@@ -131,5 +115,76 @@ def quiz_slug(request, user_slug, quiz_slug):
             "questions": questions,
             "quiz_info": selected_quiz
             }
+        
+        if request.method == "POST":
+            print(request.is_ajax())
+            print(list(request.POST.keys()))
+            if "vote" in list(request.POST.keys()):
+                if not request.user.is_authenticated:
+                    messages.error(request, "You must be logged in to do this!")
+                    
+                    response = {
+                        'msg': render_to_string(
+                            'static_html/messages.html',
+                            {
+                                'messages': messages.get_messages(request),
+                            },
+                        ),
+                    }
+                    
+                    res =  HttpResponse(
+                        json.dumps(response),
+                        content_type='application/json',
+                    )
+                    res.status_code = 218
+                    
+                    return res
+                
+                if request.POST["vote"] == "upvote":
+                    
+                    if request.user in selected_quiz.downvotes.all():
+                        selected_quiz.downvotes.remove(request.user)
+                        
+                    if request.user in selected_quiz.upvotes.all():
+                        selected_quiz.upvotes.remove(request.user)
+                    else:
+                        selected_quiz.upvotes.add(request.user)
+                    
+                else:
+                    
+                    if request.user in selected_quiz.upvotes.all():
+                        selected_quiz.upvotes.remove(request.user)
+                        
+                    if request.user in selected_quiz.downvotes.all():
+                        selected_quiz.downvotes.remove(request.user)
+                    else:
+                        selected_quiz.downvotes.add(request.user)
+                    
+                response = {
+                        'updownvotebtns': render_to_string('quiz_page.html', 
+                                                           context={"quiz": quiz}, 
+                                                           request=request),
+                    }
+                
+                return HttpResponse(
+                        json.dumps(response),
+                        content_type='application/json',
+                )
+            
+            correct = 0
+            for key, answer in request.POST.items():
+                if key == "csrfmiddlewaretoken": continue
+                
+                
+                for question in selected_quiz.questions.all():
+                    if key.lower() == question.question.lower():
+                        
+                        answers = question.correct.values("answer")
+                        answers = [ans["answer"] for ans in answers]
+                        
+                        if answer in answers:
+                            correct += 1
+                            
+            return HttpResponse(correct)
 
         return render(request, "quiz_page.html", context={"quiz": quiz})
