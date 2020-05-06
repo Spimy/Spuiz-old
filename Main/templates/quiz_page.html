@@ -18,8 +18,8 @@
                     <a href="/{{ quiz.quiz_info.author.user_profile.slug }}" class="quiz-author">by {{ quiz.quiz_info.author.username }}</a>
                 </div>
                 <div class="quiz-info-btns">
-                    <button class="quiz-updownvote" type="submit" value="upvote">{{ quiz.quiz_info.upvotes | length }} Upvote</button>
-                    <button class="quiz-updownvote" type="submit" value="downvote">{{ quiz.quiz_info.downvotes | length }} Downvote</button>
+                    <button class="quiz-updownvote" type="submit" value="upvote">{{ quiz.quiz_info.upvotes.count }} Upvote</button>
+                    <button class="quiz-updownvote" type="submit" value="downvote">{{ quiz.quiz_info.downvotes.count }} Downvote</button>
                 </div>
             </div>
         </form>
