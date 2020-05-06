@@ -63,10 +63,10 @@ def register_page(request):
             print(errors)
             for msg in errors:
                 
-                error_msg = errors[msg][0]['message']
+                error_msg = errors[msg][0]["message"]
                 
-                if errors[msg][0]['code'] != "":
-                    error_msg = errors[msg][0]['code'].upper() + ": " + error_msg
+                if errors[msg][0]["code"] != "":
+                    error_msg = errors[msg][0]["code"].upper() + ": " + error_msg
                     
                 messages.error(request, error_msg)
     
@@ -123,17 +123,17 @@ def quiz_slug(request, user_slug, quiz_slug):
                     messages.error(request, "You must be logged in to do this!")
                     
                     response = {
-                        'msg': render_to_string(
-                            'static_html/messages.html',
+                        "msg": render_to_string(
+                            "static_html/messages.html",
                             {
-                                'messages': messages.get_messages(request),
+                                "messages": messages.get_messages(request),
                             },
                         ),
                     }
                     
                     res =  HttpResponse(
                         json.dumps(response),
-                        content_type='application/json',
+                        content_type="application/json",
                     )
                     res.status_code = 218
                     
@@ -160,14 +160,14 @@ def quiz_slug(request, user_slug, quiz_slug):
                         selected_quiz.downvotes.add(request.user)
                     
                 response = {
-                        'updownvotebtns': render_to_string('quiz_page.html', 
+                        "updownvotebtns": render_to_string("quiz_page.html", 
                                                            context={"quiz": quiz}, 
                                                            request=request),
                     }
                 
                 return HttpResponse(
                         json.dumps(response),
-                        content_type='application/json',
+                        content_type="application/json",
                 )
             
             correct = 0
