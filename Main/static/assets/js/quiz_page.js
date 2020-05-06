@@ -77,7 +77,7 @@ quiz_info_form.addEventListener("submit", event => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", window.location.href, true);
     xhr.setRequestHeader("X-CSRFToken", token);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.send(data);
 
     xhr.onreadystatechange = function() {
@@ -98,7 +98,7 @@ quiz_info_form.addEventListener("submit", event => {
                 wrapper.innerHTML = JSON.parse(xhr.responseText)["msg"];
                 msgs.innerHTML = wrapper.getElementsByClassName("msgs")[0].innerHTML
                 messageEvent("msg-error", 10);
-                
+
             }
         }  
     }
