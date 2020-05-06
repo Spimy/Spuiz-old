@@ -117,8 +117,7 @@ def quiz_slug(request, user_slug, quiz_slug):
             }
         
         if request.method == "POST":
-            print(request.is_ajax())
-            print(list(request.POST.keys()))
+
             if "vote" in list(request.POST.keys()):
                 if not request.user.is_authenticated:
                     messages.error(request, "You must be logged in to do this!")
