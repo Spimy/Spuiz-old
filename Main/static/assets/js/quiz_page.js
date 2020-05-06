@@ -1,6 +1,7 @@
 // =====================================================
 // Check for viewport to change opacity and scale of question card
 // =====================================================
+
 const getElementsInArea = (function(docElm) {
     let viewportHeight = docElm.clientHeight;
 
@@ -51,11 +52,12 @@ function f(e){
         zone        : [40, 40] // percentage distance from top & bottom
     });
 }
+
 // =====================================================
 
 
 // =====================================================
-// AJAX
+// AJAX for Upvotes and Downvotes
 // =====================================================
 
 const quiz_info_form = document.getElementsByClassName("quiz-info")[0];
@@ -104,5 +106,32 @@ quiz_info_form.addEventListener("submit", event => {
     }
 
 });
+
+// =====================================================
+
+// =====================================================
+// Invalid quiz form handling
+// =====================================================
+
+const quiz_form = document.getElementsByClassName("quiz-card")[0];
+const answers = quiz_form.getElementsByClassName("answers");
+
+for (const answer of answers) {
+
+    answer.addEventListener("invalid", event => {
+
+        event.preventDefault();
+
+        const question_card = answer.parentElement.parentElement.parentElement.parentElement;
+        const required_msg = question_card.getElementsByTagName("span")[0];
+        required_msg.classList.add("show");
+
+        setTimeout(function() {
+            required_msg.classList.remove("show");
+        }, 10*1000);
+
+    });
+
+}
 
 // =====================================================

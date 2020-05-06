@@ -117,6 +117,16 @@
     padding: 10px 15px;
 }
 
+#quiz .quiz-card .question-card .wrapper p .required {
+    color: red;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+}
+
+#quiz .quiz-card .question-card .wrapper p .required.show {
+    opacity: 1;
+}
+
 #quiz .quiz-card .question-card .wrapper .answer-wrapper {
     display: flex;
     flex-wrap: wrap;
