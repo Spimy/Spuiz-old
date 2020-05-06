@@ -69,6 +69,7 @@
 #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns .quiz-updownvote {
@@ -206,6 +207,10 @@
 
         #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns .quiz-updownvote:active {
             box-shadow: none;
+        }
+
+        #quiz .quiz-card .question-card {
+            width: 300px;
         }
     
         #quiz .quiz-card .question-card.highlight--1 {
