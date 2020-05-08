@@ -2,15 +2,16 @@
     align-items: center;
     color: #f1f1f1;
     display: flex;
+    height: 100vh;
     justify-content: center;
 }
 
 #login .login-form {
     background-color: var(--grey-light);
     border-radius: 5px;
-    margin-top: 100px;
     padding: 50px 30px;
     text-align: center;
+    width: 285px;
 }
 
 #login .login-form .info-text {
@@ -97,4 +98,32 @@
 #login a .fa-external-link-alt {
     font-size: 12px;
     margin-left: 5px;
+}
+
+@media only screen {
+
+    @media (max-width: 790px) {
+
+        #login {
+            height: initial;
+        }        
+
+        #login .login-form {
+            margin-top: 100px;
+        }
+
+    }
+
+    @media (max-height: 600px) {
+
+        #login {
+            height: initial;
+        }        
+
+        #login .login-form {
+            margin-top: 100px;
+        }
+
+    }
+
 }
