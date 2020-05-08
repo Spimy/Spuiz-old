@@ -120,7 +120,7 @@
 #quiz .quiz-card .question-card .wrapper p .required {
     color: red;
     opacity: 0;
-    transition: 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
 }
 
 #quiz .quiz-card .question-card .wrapper p .required.show {
@@ -234,7 +234,8 @@
 
         #quiz .quiz-card .question-card .wrapper p .required {
             font-size: 0;
-            transition: font-size 0.5s ease-in-out;
+            opacity: 1;
+            transition: font-size 0.3s ease-in-out;
         }
         
         #quiz .quiz-card .question-card .wrapper p .required.show {
