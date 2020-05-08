@@ -232,6 +232,15 @@
             transform: scale(1.1);
         }
 
+        #quiz .quiz-card .question-card .wrapper p .required {
+            font-size: 0;
+            transition: font-size 0.5s ease-in-out;
+        }
+        
+        #quiz .quiz-card .question-card .wrapper p .required.show {
+            font-size: inherit;
+        }
+
     }
 
 }
