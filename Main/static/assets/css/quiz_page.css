@@ -120,7 +120,7 @@
 #quiz .quiz-card .question-card .wrapper p .required {
     color: #ff4d4d;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 #quiz .quiz-card .question-card .wrapper p .required.show {
@@ -260,6 +260,18 @@
         #quiz .quiz-card .question-card.highlight--2 {
             letter-spacing: 0.5px;
             transform: scale(1.1);
+        }
+
+        #quiz .quiz-card .question-card .wrapper p .required {
+            color: #ff4d4d;
+            font-size: 0;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
+        
+        #quiz .quiz-card .question-card .wrapper p .required.show {
+            font-size: inherit;
+            opacity: 1;
         }
 
     }
