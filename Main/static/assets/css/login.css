@@ -102,6 +102,14 @@
 
 @media only screen {
 
+    @media (max-width: 790px) {
+
+        #login .login-form {
+            width: 300px;
+        }
+
+    }
+
     @media (max-height: 650px) {
 
         #login {
