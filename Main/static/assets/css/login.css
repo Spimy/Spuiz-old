@@ -38,6 +38,16 @@
     margin-bottom: 5px;
 }
 
+#login .login-form p label .required {
+    color: #ff4d4d;
+    opacity: 0;
+    transition: 0.3s ease-in-out
+}
+
+#login .login-form p label .required.show {
+    opacity: 1;
+}
+
 #login .login-form p input {
     background-color: var(--grey-light);
     border: none;

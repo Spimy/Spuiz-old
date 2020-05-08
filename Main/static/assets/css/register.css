@@ -39,6 +39,16 @@
     margin-bottom: 5px;
 }
 
+#register .register-form p label .required {
+    color: #ff4d4d;
+    opacity: 0;
+    transition: 0.3s ease-in-out
+}
+
+#register .register-form p label .required.show {
+    opacity: 1;
+}
+
 #register .register-form p input {
     background-color: var(--grey-light);
     border: none;
