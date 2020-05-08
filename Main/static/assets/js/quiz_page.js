@@ -118,8 +118,16 @@ for (const answer of answers) {
     answer.addEventListener("invalid", event => {
 
         event.preventDefault();
+        const mcq = document.activeElement.value;
+        
+        let question_card;
+        
+        if (mcq == "yes") {
+            question_card = answer.parentElement.parentElement.parentElement.parentElement;
+        } else {
+            question_card = answer.parentElement.parentElement;
+        }
 
-        const question_card = answer.parentElement.parentElement.parentElement.parentElement;
         const required_msg = question_card.getElementsByTagName("span")[0];
         required_msg.classList.add("show");
 

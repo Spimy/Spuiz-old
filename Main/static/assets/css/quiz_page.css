@@ -167,6 +167,36 @@
     box-shadow: 0 0 5px 5px var(--grey-dark);
 }
 
+#quiz .quiz-card .question-card .answer-wrapper {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+#quiz .quiz-card .question-card .answer-wrapper .answers {
+    background-color: var(--grey-lighter);
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-family: "Font Awesome 5 Free", "Titillium Web", sans-serif;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+#quiz .quiz-card .question-card .answer-wrapper .answers:-webkit-autofill,
+#quiz .quiz-card .question-card .answer-wrapper .answers:-webkit-autofill:hover, 
+#quiz .quiz-card .question-card .answer-wrapper .answers:-webkit-autofill:focus {
+    caret-color: #f1f1f1;
+    -webkit-text-fill-color: #f1f1f1;
+    -webkit-box-shadow: 0 0 0px 1000px var(--grey-light) inset;
+    border: 1px solid #3500d3;
+    box-shadow: 0 0 0px 1000px var(--grey-light) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 #quiz .quiz-card .question-card.highlight--1 {
     transform: scale(1.05);
     opacity: 1;
@@ -230,17 +260,6 @@
         #quiz .quiz-card .question-card.highlight--2 {
             letter-spacing: 0.5px;
             transform: scale(1.1);
-        }
-
-        #quiz .quiz-card .question-card .wrapper p .required {
-            font-size: 0;
-            opacity: 0;
-            transition: 0.3s ease-in-out;
-        }
-        
-        #quiz .quiz-card .question-card .wrapper p .required.show {
-            opacity: 1;
-            font-size: inherit;
         }
 
     }

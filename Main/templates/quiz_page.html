@@ -46,11 +46,16 @@
                             <div class="answer-wrapper">
                             {% for answer in answers %}
                                 <label class="answers-label">
-                                    <input class="answers" type="radio" name="{{ question.question }}"  value="{{ answer }}" required>
+                                    <input class="answers" type="radio" name="{{ question.question }}" value="{{ answer }}" required>
                                     <span>{{ answer }}</span>
                                 </label>
                             {% endfor %}
                             </div>
+                        </div>
+                    {% else %}
+                        <div class="answer-wrapper">
+                            <p>Answer: </p>
+                            <input class="answers" type="text" name="{{ question.question }}" placeholder="..." required>
                         </div>
                     {% endif %}
 
@@ -58,7 +63,7 @@
 
             {% endfor %}
 
-            <button class="submit-btn" type="submit">Submit</button>
+            <button class="submit-btn" type="submit" value="{{ quiz.quiz_info.mcq | yesno:'yes,no' }}">Submit</button>
         </form>
     </section>
 
