@@ -52,6 +52,7 @@
     background-color: var(--grey-light);
     border: none;
     border-radius: 3px;
+    box-sizing: border-box;
     color: white;
     font-family: "Font Awesome 5 Free", "Titillium Web", sans-serif;
     padding: 10px 15px;
