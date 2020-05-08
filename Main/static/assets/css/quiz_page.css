@@ -118,7 +118,7 @@
 }
 
 #quiz .quiz-card .question-card .wrapper p .required {
-    color: red;
+    color: #FF4D4D;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
@@ -234,11 +234,12 @@
 
         #quiz .quiz-card .question-card .wrapper p .required {
             font-size: 0;
-            opacity: 1;
-            transition: font-size 0.3s ease-in-out;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
         }
         
         #quiz .quiz-card .question-card .wrapper p .required.show {
+            opacity: 1;
             font-size: inherit;
         }
 
