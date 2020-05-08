@@ -102,19 +102,7 @@
 
 @media only screen {
 
-    @media (max-width: 790px) {
-
-        #login {
-            height: initial;
-        }        
-
-        #login .login-form {
-            margin-top: 100px;
-        }
-
-    }
-
-    @media (max-height: 600px) {
+    @media (max-height: 650px) {
 
         #login {
             height: initial;

@@ -103,19 +103,7 @@
 
 @media only screen {
 
-    @media (max-width: 790px) {
-
-        #register {
-            height: initial;
-        }        
-
-        #register .register-form {
-            margin-top: 100px;
-        }
-
-    }
-
-    @media (max-height: 700px) {
+    @media (max-height: 800px) {
 
         #register {
             height: initial;
