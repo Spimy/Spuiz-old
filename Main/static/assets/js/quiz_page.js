@@ -95,10 +95,7 @@ quiz_info_form.addEventListener("submit", event => {
             } else {
 
                 const msgs = document.getElementsByClassName("msgs")[0];
-                const wrapper = document.createElement("div");
-
-                wrapper.innerHTML = JSON.parse(xhr.responseText)["msg"];
-                msgs.innerHTML = wrapper.getElementsByClassName("msgs")[0].innerHTML
+                msgs.innerHTML = JSON.parse(xhr.responseText)["msg"];
                 messageEvent("msg-error", 10);
 
             }
