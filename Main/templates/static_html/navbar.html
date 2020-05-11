@@ -21,26 +21,17 @@
 	</div>
 	
 	<div class="nav-right">
-
 		{% if user.is_authenticated %}
-
-			<div class="avatar-container">
-				{% if not user.user_profile.avatar %}
-					<img src="{% static 'assets/img/default.png' %}">
-				{% else %}
-					<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
-				{% endif %}
-			</div>
-			
+			{% if not user.user_profile.avatar %}
+				<img src="{% static 'assets/img/default.png' %}">
+			{% else %}
+				<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
+			{% endif %}
 			<a href="/logout/?next={{ request.path }}">Log out</a>
-
 		{% else %}
-
 			<a href="/login/">Login</a>
 			<a href="/register/">Register</a>
-
 		{% endif %}
-
 	</div>
 
 </nav>

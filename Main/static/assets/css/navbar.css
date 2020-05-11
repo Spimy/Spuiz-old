@@ -57,14 +57,13 @@
     width: 40px;
 }
 
-#sticky_nav .nav-right .avatar-container img {
+#sticky_nav .nav-right img {
     background-color: var(--grey-lighter);
-    height: 65px;
-    left: 50%;
-    position: absolute;
-    top: -10%;
-    transform: translateX(-50%);
-    width: auto;
+    border-radius: 50%;
+    height: 35px;
+    object-fit: cover;
+    object-position: 30% 30%;
+    width: 35px;
 }
 
 #sticky_nav .nav-right a {
