@@ -64,7 +64,10 @@ class RegistrationForm(UserCreationForm):
         username = self.cleaned_data.get("username")
         password1 = self.cleaned_data.get("password1")
         
+        if username is None: return password1
+        
         if (SM(None, password1, username).ratio() * 100) >= 80:
+            print("password test")
             raise forms.ValidationError("Password is too similar to username")
             
         return validate_password_strength(password1)
@@ -79,6 +82,11 @@ class RegistrationForm(UserCreationForm):
         return user
 
 class LoginForm(AuthenticationForm):
+    
+    error_messages = {
+        "invalid_login": ("The username or password you have entered is invalid."),
+        "inactive": ("This account is inactive."),
+    }
     
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
