@@ -10,13 +10,16 @@
     border-radius: 5px;
     color: #f1f1f1;
     display: block;
+    margin: 5%;
     width: 300px;
 }
 
 #quizzes .quiz-card .quiz-link .quiz-thumbnail {
     border-radius: 5px;
     display: block;
-    height: auto;
+    height: 175px;
+    object-fit: cover;
+    object-position: center;
     width: 100%;
 }
 
@@ -37,7 +40,11 @@
     font-size: 17px;
     font-weight: 600;
     margin: 10px;
+    overflow: hidden;
     padding: 3px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 10.3em;
 }
 
 #quizzes .quiz-card .quiz-description .quiz-title {

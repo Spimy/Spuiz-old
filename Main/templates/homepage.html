@@ -7,8 +7,8 @@
 {% block content %}
     
     <section id="quizzes">
-        <div class="quiz-card">
-            {% for quiz in quizzes %}
+        {% for quiz in quizzes %}
+            <div class="quiz-card">
                 <a href="/{{ quiz.author.user_profile.slug }}/{{ quiz.slug }}" class="quiz-link">
                     <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
                 </a>
@@ -18,8 +18,8 @@
                         <h2 class="quiz-title">{{ quiz.title }}</h2>
                     </a>
                 </div>
-            {% endfor %}
             </div>
+        {% endfor %}
     </section>
 
 {% endblock %}
