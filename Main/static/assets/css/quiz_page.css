@@ -34,7 +34,9 @@
 #quiz .quiz-info .author-avatar {
     height: 100px;
     margin: 0 25px;
-    width: auto;
+    object-fit: cover;
+    object-position: 30% 30%;
+    width: 100px;
 }
 
 #quiz .quiz-info .quiz-info-wrapper {
