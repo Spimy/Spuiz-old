@@ -35,9 +35,43 @@ def login_page(request):
             else:
                 for msg in form.error_messages:
                     messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}")
+                
+                response = {
+                            "msg": render_to_string(
+                                "static_html/messages.html",
+                                {
+                                    "messages": messages.get_messages(request),
+                                },
+                            ),
+                        }
+                        
+            res =  HttpResponse(
+                json.dumps(response),
+                content_type="application/json",
+            )
+            res.status_code = 218
+        
+            return res
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}")
+                
+            response = {
+                            "msg": render_to_string(
+                                "static_html/messages.html",
+                                {
+                                    "messages": messages.get_messages(request),
+                                },
+                            ),
+                        }
+                        
+            res =  HttpResponse(
+                json.dumps(response),
+                content_type="application/json",
+            )
+            res.status_code = 218
+        
+            return res
     
     form = LoginForm()
     return render(request,"login.html", context={"form": form})
@@ -57,10 +91,9 @@ def register_page(request):
         
             return redirect("Main:home_page")
         else:
-            # for msg in form.error_messages:
-            #     messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}.")
+
             errors = json.loads(form.errors.as_json())
-            print(errors)
+
             for msg in errors:
                 
                 error_msg = errors[msg][0]["message"]
@@ -69,6 +102,23 @@ def register_page(request):
                     error_msg = errors[msg][0]["code"].upper() + ": " + error_msg
                     
                 messages.error(request, error_msg)
+                
+            response = {
+                            "msg": render_to_string(
+                                "static_html/messages.html",
+                                {
+                                    "messages": messages.get_messages(request),
+                                },
+                            ),
+                        }
+                        
+            res =  HttpResponse(
+                json.dumps(response),
+                content_type="application/json",
+            )
+            res.status_code = 218
+        
+            return res
     
     form = RegistrationForm()
     return render(request, "register.html", context={"form": form})
