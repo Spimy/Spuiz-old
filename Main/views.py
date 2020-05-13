@@ -32,8 +32,8 @@ def error_msg_response(request):
 
 # Create your views here.
 def home_page(request):
-    newest_quizzes = Quiz.objects.all()[::-1]
-    top_quizzes = Quiz.objects.annotate(up_count=Count("upvotes")).order_by("-up_count")
+    newest_quizzes = Quiz.objects.all()[::-1][:10]
+    top_quizzes = Quiz.objects.annotate(up_count=Count("upvotes")).order_by("-up_count")[:10]
     return render(request, "homepage.html", context={"newest_quizzes": newest_quizzes, 
                                                      "top_quizzes": top_quizzes})
 
