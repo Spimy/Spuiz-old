@@ -1,7 +1,7 @@
 import json
 import random
 from django.contrib import messages
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -9,6 +9,25 @@ from django.contrib.auth import login, logout, authenticate
 
 from .models import *
 from .forms import RegistrationForm, LoginForm
+
+
+def error_msg_response(request):
+    data = {
+                    "msg": render_to_string(
+                        "static_html/messages.html",
+                        {
+                            "messages": messages.get_messages(request),
+                        },
+                    ),
+                }
+                
+    response = HttpResponse(
+        json.dumps(data),
+        content_type="application/json",
+    )
+    response.status_code = 218
+    return response
+
 
 # Create your views here.
 def home_page(request):
@@ -56,22 +75,7 @@ def login_page(request):
             for msg in form.error_messages:
                 messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}")
                 
-            response = {
-                            "msg": render_to_string(
-                                "static_html/messages.html",
-                                {
-                                    "messages": messages.get_messages(request),
-                                },
-                            ),
-                        }
-                        
-            res =  HttpResponse(
-                json.dumps(response),
-                content_type="application/json",
-            )
-            res.status_code = 218
-        
-            return res
+            return error_msg_response(request)
     
     form = LoginForm()
     return render(request,"login.html", context={"form": form})
@@ -103,22 +107,7 @@ def register_page(request):
                     
                 messages.error(request, error_msg)
                 
-            response = {
-                            "msg": render_to_string(
-                                "static_html/messages.html",
-                                {
-                                    "messages": messages.get_messages(request),
-                                },
-                            ),
-                        }
-                        
-            res =  HttpResponse(
-                json.dumps(response),
-                content_type="application/json",
-            )
-            res.status_code = 218
-        
-            return res
+            return error_msg_response(request)
     
     form = RegistrationForm()
     return render(request, "register.html", context={"form": form})
@@ -128,112 +117,98 @@ def logout_page(request):
     messages.info(request, "You have been logged out.")
     return HttpResponseRedirect(request.GET.get("next", "/"))
 
-def user_slug(request, user_slug):
+def user_quiz_slug(request, user_slug, quiz_slug=None):
     
     users = [u.slug for u in UserProfile.objects.all()]
     if user_slug in users:
 
         matching_quizzes = Quiz.objects.filter(author__user_profile__slug=user_slug)
-        quiz_urls = {}
-
-        for quiz in matching_quizzes.all():
-            quiz_urls[quiz] = quiz.slug
-
-        return render(request, "user_profile.html", context={"quizzes": quiz_urls})
-
-def quiz_slug(request, user_slug, quiz_slug):
-    
-    users = [u.slug for u in UserProfile.objects.all()]
-    if user_slug in users:
-
-        matching_quizzes = Quiz.objects.filter(author__user_profile__slug=user_slug)
-        selected_quiz = matching_quizzes.filter(slug=quiz_slug)[0]
         
-        flatten = lambda l: [item for sublist in l for item in sublist]
-        questions = {}
-        
-        for question in selected_quiz.questions.all():
-            answers = []
-            answers.append([question.correct.first()])
-            answers.append(question.wrong.all())
+        if quiz_slug is not None:
             
-            answers = flatten(answers)
-            random.shuffle(answers)
-            questions[question] = answers
+            try:
+                selected_quiz = matching_quizzes.get(slug=quiz_slug)
+            except Quiz.DoesNotExist:
+                raise Http404("Quiz not found")
             
-        quiz = {
-            "questions": questions,
-            "quiz_info": selected_quiz
-            }
-        
-        if request.method == "POST":
+            flatten = lambda l: [item for sublist in l for item in sublist]
+            questions = {}
+            
+            for question in selected_quiz.questions.all():
+                answers = []
+                answers.append([question.correct.first()])
+                answers.append(question.wrong.all())
+                
+                answers = flatten(answers)
+                random.shuffle(answers)
+                questions[question] = answers
+                
+            quiz = {
+                "questions": questions,
+                "quiz_info": selected_quiz
+                }
+            
+            if request.method == "POST":
 
-            if "vote" in list(request.POST.keys()):
-                if not request.user.is_authenticated:
-                    messages.error(request, "You must be logged in to do this!")
+                if "vote" in list(request.POST.keys()):
+                    if not request.user.is_authenticated:
+                        messages.error(request, "You must be logged in to do this!")
+                        return error_msg_response(request)
                     
-                    response = {
-                        "msg": render_to_string(
-                            "static_html/messages.html",
-                            {
-                                "messages": messages.get_messages(request),
-                            },
-                        ),
-                    }
-                    
-                    res =  HttpResponse(
-                        json.dumps(response),
-                        content_type="application/json",
-                    )
-                    res.status_code = 218
-                    
-                    return res
-                
-                if request.POST["vote"] == "upvote":
-                    
-                    if request.user in selected_quiz.downvotes.all():
-                        selected_quiz.downvotes.remove(request.user)
+                    if request.POST["vote"] == "upvote":
                         
-                    if request.user in selected_quiz.upvotes.all():
-                        selected_quiz.upvotes.remove(request.user)
-                    else:
-                        selected_quiz.upvotes.add(request.user)
-                    
-                else:
-                    
-                    if request.user in selected_quiz.upvotes.all():
-                        selected_quiz.upvotes.remove(request.user)
-                        
-                    if request.user in selected_quiz.downvotes.all():
-                        selected_quiz.downvotes.remove(request.user)
-                    else:
-                        selected_quiz.downvotes.add(request.user)
-                    
-                response = {
-                        "updownvotebtns": render_to_string("quiz_page.html", 
-                                                           context={"quiz": quiz}, 
-                                                           request=request),
-                    }
-                
-                return HttpResponse(
-                        json.dumps(response),
-                        content_type="application/json",
-                )
-            
-            correct = 0
-            for key, answer in request.POST.items():
-                if key == "csrfmiddlewaretoken": continue
-                
-                
-                for question in selected_quiz.questions.all():
-                    if key.lower() == question.question.lower():
-                        
-                        answers = question.correct.values("answer")
-                        answers = [ans["answer"] for ans in answers]
-                        
-                        if answer in answers:
-                            correct += 1
+                        if request.user in selected_quiz.downvotes.all():
+                            selected_quiz.downvotes.remove(request.user)
                             
-            return HttpResponse(correct)
+                        if request.user in selected_quiz.upvotes.all():
+                            selected_quiz.upvotes.remove(request.user)
+                        else:
+                            selected_quiz.upvotes.add(request.user)
+                        
+                    else:
+                        
+                        if request.user in selected_quiz.upvotes.all():
+                            selected_quiz.upvotes.remove(request.user)
+                            
+                        if request.user in selected_quiz.downvotes.all():
+                            selected_quiz.downvotes.remove(request.user)
+                        else:
+                            selected_quiz.downvotes.add(request.user)
+                        
+                    response = {
+                            "updownvotebtns": render_to_string("quiz_page.html", 
+                                                            context={"quiz": quiz}, 
+                                                            request=request),
+                        }
+                    
+                    return HttpResponse(
+                            json.dumps(response),
+                            content_type="application/json",
+                    )
+                
+                correct = 0
+                for key, answer in request.POST.items():
+                    if key == "csrfmiddlewaretoken": continue
+                    
+                    
+                    for question in selected_quiz.questions.all():
+                        if key.lower() == question.question.lower():
+                            
+                            answers = question.correct.values("answer")
+                            answers = [ans["answer"] for ans in answers]
+                            
+                            if answer in answers:
+                                correct += 1
+                                
+                return HttpResponse(correct)
 
-        return render(request, "quiz_page.html", context={"quiz": quiz})
+            return render(request, "quiz_page.html", context={"quiz": quiz})
+        else :
+            quiz_urls = {}
+
+            for quiz in matching_quizzes.all():
+                quiz_urls[quiz] = quiz.slug
+
+            return render(request, "user_profile.html", context={"quizzes": quiz_urls})
+
+    raise Http404("User not found")
