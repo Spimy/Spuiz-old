@@ -9,6 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 
 from .models import *
 from .forms import RegistrationForm, LoginForm
+from django.db.models import Count
 
 
 def error_msg_response(request):
@@ -31,8 +32,10 @@ def error_msg_response(request):
 
 # Create your views here.
 def home_page(request):
-    quizzes = Quiz.objects.all()[::-1]
-    return render(request, "homepage.html", context={"quizzes": quizzes})
+    newest_quizzes = Quiz.objects.all()[::-1]
+    top_quizzes = Quiz.objects.annotate(up_count=Count("upvotes")).order_by("-up_count")
+    return render(request, "homepage.html", context={"newest_quizzes": newest_quizzes, 
+                                                     "top_quizzes": top_quizzes})
 
 def login_page(request):
     

@@ -6,20 +6,32 @@
 
 {% block content %}
     
-    <section id="quizzes">
-        {% for quiz in quizzes %}
-            <div class="quiz-card">
-                <a href="/{{ quiz.author.user_profile.slug }}/{{ quiz.slug }}" class="quiz-link">
-                    <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
-                </a>
-                <div class="quiz-description">
-                    <a href="/{{ quiz.author.user_profile.slug }}" class="quiz-author">{{ quiz.author.username }}</a>
-                    <a href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}" class="quiz-link">
-                        <h2 class="quiz-title">{{ quiz.title }}</h2>
+    <div id="homepage">
+
+        <section id="newest">
+            <h2>Newest</h2>
+            <div class="quizzes">
+                {% for quiz in newest_quizzes %}
+                    <a class="quiz" href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
+                        <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                        <p>{{ quiz.title }}</p>
                     </a>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </section>
+        </section>
+
+        <section id="top_rated">
+            <h2>Top Rated</h2>
+            <div class="quizzes">
+                {% for quiz in top_quizzes %}
+                    <a class="quiz" href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
+                        <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                        <p>{{ quiz.title }}</p>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+
+    </div>
 
 {% endblock %}
