@@ -212,3 +212,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None):
             return render(request, "user_profile.html", context={"quizzes": quiz_urls})
 
     raise Http404("User not found")
+
+def handler404(request, exception):
+    response = render(request, "errors/404.html", context={"exception": exception})
+    return response

@@ -1,0 +1,26 @@
+#page_not_found {
+    align-items: center;
+    color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+#page_not_found h1 {
+    background-image: url("../../img/404_text_img.jpg");
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: rgba(var(--grey-dark-rgb), 0.3);
+    font-size: 200px;
+    font-weight: 900;
+    margin: -50px 0;
+    padding: 0;
+}
+
+#page_not_found p {
+    font-size: 20px;
+    font-weight: 100;
+    padding: 0;
+}

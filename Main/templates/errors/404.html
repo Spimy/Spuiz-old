@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/errors/404.css' %}">{% endblock %}
+
+{% block content %}
+    
+    <section id="page_not_found">
+        <h1>404</h1>
+        <p>Oops. We couldn't find that page, sorry.</p>
+    </section>
+
+{% endblock %}
