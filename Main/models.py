@@ -54,12 +54,30 @@ class Quiz(models.Model):
     
     class Meta:
         verbose_name_plural = "Quizzes"
-    
+
 class UserProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     slug = models.SlugField(max_length=255, blank=True, null=True)
+    banner = models.ImageField(upload_to="User_Banners", null=True, blank=True)
     avatar = models.ImageField(upload_to="User_Avatars", null=True, blank=True)
+    
+    completed_quizzes = models.ManyToManyField(Quiz, related_name="completed_quizzes", blank=True)
+    following = models.ManyToManyField(User, related_name="following", blank=True)
+    
+    @classmethod
+    def follow(cls, current_user, new_follow):
+        user_profile, created = cls.objects.get_or_create(
+            user=current_user
+        )
+        user_profile.following.add(new_follow)
+    
+    @classmethod
+    def unfollow(cls, current_user, new_follow):
+        user_profile, created = cls.objects.get_or_create(
+            user=current_user
+        )
+        user_profile.following.remove(new_follow)
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
