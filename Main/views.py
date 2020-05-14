@@ -202,17 +202,23 @@ def user_quiz_slug(request, user_slug, quiz_slug=None):
                             
                             if answer in answers:
                                 correct += 1
-                                
+                
+                if request.user.is_authenticated:
+                    if not selected_quiz in request.user.user_profile.completed_quizzes.all():
+                        request.user.user_profile.completed_quizzes.add(selected_quiz)
+                
                 return HttpResponse(correct)
 
             return render(request, "quiz_page.html", context={"quiz": quiz})
-        else :
+        
+        else:
+            
+            user = UserProfile.objects.get(slug=user_slug).user
             quiz_urls = {}
 
             for quiz in matching_quizzes.all():
                 quiz_urls[quiz] = quiz.slug
-
-            return render(request, "user_profile.html", context={"quizzes": quiz_urls})
+            return render(request, "user_profile.html", context={"quizzes": quiz_urls, "viewing_user": user})
 
     raise Http404("User not found")
 
