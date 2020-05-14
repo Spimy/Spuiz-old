@@ -25,7 +25,7 @@
     -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(25%, rgba(0,0,0,1)), color-stop(100%, rgba(0,0,0,0))), -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0,0,0,0)), color-stop(25%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,0)));
 }
 
-#user_profile .user_info {
+#user_profile .user-info {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -34,7 +34,7 @@
     width: 100%;
 }
 
-#user_profile .user_info .user-avatar {
+#user_profile .user-info .user-avatar {
     border-radius: 5px;
     height: 200px;
     object-fit: cover;
@@ -42,28 +42,109 @@
     width: 200px;
 }
 
-#user_profile .user_info .user-info-content {
+#user_profile .user-info .user-info-content {
     align-self: center;
     width: calc(100% - 200px);
 }
 
-#user_profile .user_info .user-info-content .user-username {
+#user_profile .user-info .user-info-content .user-username {
     margin: 10px 25px;
 }
 
-#user_profile .user_info .user-info-content .user-nav {
-    background-color: var(--grey-light);
+#user_profile .user-info .user-info-content .user-nav {
+    background-color: var(--purple-dark);
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 20px 100px 20px 25px;
 }
 
-#user_profile .user_info .user-info-content .user-nav a {
+#user_profile .user-info .user-info-content .user-nav a {
     background-color: var(--purple-light);
     color: #f1f1f1;
     margin: 3px;
     padding: 5px 10px;
     text-decoration: none;
+}
+
+#user_content {
+    color: #f1f1f1;
+    /* padding: 25%; */
+}
+
+#user_content .user-content {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#user_content .user-content > div {
+    margin: auto;
+}
+
+#user_content .user-content h3 {
+    margin: 25px 0 10px 0;
+    padding: 0;
+}
+
+#user_content .user-content p {
+    margin: 0;
+    padding: 0;
+}
+
+#user_content .user-content .user-content-left {
+    display: flex;
+    flex-direction: column;
+}
+
+#user_content .user-content .user-content-left .user-bio {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    padding: 25px;
+}
+
+#user_content .user-content .user-content-left .user-following {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 65px 65px 65px 65px 65px;
+    grid-gap: 25px;
+    height: fit-content;
+    padding: 25px;
+}
+
+#user_content .user-content .user-content-left .user-following a {
+    width: fit-content;
+}
+
+#user_content .user-content .user-content-left .user-following a .user-following-avatar {
+    background-color: var(--grey-dark);
+    border-radius: 5px;
+    height: 65px;
+    object-fit: cover;
+    object-position: 30% 30%;
+    width: 65px;
+}
+
+#user_content .user-content .user-content-right {
+    display: flex;
+    flex-direction: column;
+}
+
+#user_content .user-content .user-content-right .quiz {
+    align-items: center;
+    background-color: var(--grey-light);
+    display: flex;
+    flex-direction: row;
+    margin: 25px 0;
+}
+
+#user_content .user-content .user-content-right .quiz img {
+    height: 25px;
+    object-fit: cover;
+    object-position: center;
+    width: 65px;
 }
 
 @media only screen {
@@ -74,13 +155,20 @@
             padding: 150px 0 100px 0;
         }
 
-        #user_profile .user_info .user-info-content {
+        #user_profile .user-info .user-info-content {
             width: 100%;
         }
 
-        #user_profile .user_info .user-info-content .user-username {
+        #user_profile .user-info .user-info-content .user-username {
             margin: 25px 0 10px;
             text-align: center;
+        }
+
+        #user_profile .user-info .user-info-content .user-nav {
+            background-color: var(--purple-dark);
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 25px 20px 25px;
         }
 
     }

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block styles %}<link rel="stylesheet" href="{% static 'assets/css/user_profile.css' %}">{% endblock %}
-{% block title %}Register{% endblock %}
+{% block title %}{{ viewing_user.username }}'s Profile{% endblock %}
 
 {% block content %}
     
@@ -14,7 +14,7 @@
             <img class="backdrop" src="{{ MEDIA_URL }}{{ viewing_user.user_profile.banner.url }}" alt="{{ quiz.quiz_info.title }}">
         {% endif %}
 
-        <div class="user_info">
+        <div class="user-info">
             {% if not viewing_user.user_profile.avatar %}
                     <img class="user-avatar" src="{% static 'assets/img/default.png' %}">
                 {% else %}
@@ -37,6 +37,48 @@
                     </div>
                 </nav>
             </div>
+        </div>
+
+
+    </section>
+
+    <section id="user_content">
+
+        <div class="user-content">
+
+            <div class="user-content-left">
+
+                {% if viewing_user.user_profile.bio|length > 0 %}
+                    <p class="user-bio">{{ viewing_user.user_profile.bio }}</p>
+                {% endif %}
+
+                <h3>Following</h3>
+                <div class="user-following">
+                    {% for following in viewing_user.user_profile.following.all %}
+                        {% if not following.user_profile.avatar %}
+                            <a href="/{{ following.user_profile.slug }}">
+                                <img class="user-following-avatar" src="{% static 'assets/img/default.png' %}" alt="{{ following.username }}">
+                            </a>
+                        {% else %}
+                            <a href="/{{ following.user_profile.slug }}">
+                                <img class="user-following-avatar" src="{{ MEDIA_URL }}{{ following.user_profile.avatar.url }}" alt="{{ following.username }}">
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+            
+            <div class="user-content-right">
+                <h3>Activity</h3>
+                {% for quiz in viewing_user.user_profile.completed_quizzes.all %}
+                    <div class="quiz">
+                        <img src="{{ MEDIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                        <h4>{{ quiz.title }}</h4>
+                    </div>
+                {% endfor %}
+            </div>
+
         </div>
 
     </section>
