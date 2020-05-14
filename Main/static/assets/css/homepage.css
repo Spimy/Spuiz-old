@@ -21,6 +21,7 @@
 #newest .quizzes .quiz {
     color: #f1f1f1;
     min-height: 150px;
+    position: relative;
     text-align: center;
     text-decoration: none;
     transition: 0.3s ease-in-out;
@@ -32,16 +33,43 @@
     -webkit-filter: brightness(1.2);
 }
 
-#newest .quizzes .quiz img {
+#newest .quizzes .quiz .quiz-author {
+    background-color: var(--purple-light);
+    border-radius: 2px;
+    box-shadow: 0 0 3px 2px rgba(var(--grey-dark-rgb), 0.8);
+    color: #f1f1f1;
+    font-weight: 700;
+    left: 10px;
+    overflow: hidden;
+    padding: 2px 5px;
+    position: absolute;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: 0.3s ease-in-out;
+    top: 10px;
+    width: 75px;
+}
+
+#newest .quizzes .quiz .quiz-author:hover {
+    filter: brightness(1.2);
+    -webkit-filter: brightness(1.2);
+}
+
+#newest .quizzes .quiz a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+#newest .quizzes .quiz a img {
     background: #3a3535;
     border-radius: 5px;
     height: 150px;
     object-fit: cover;
     object-position: center;
-    width: inherit;
+    width: 100%;
 }
 
-#newest .quizzes .quiz p {
+#newest .quizzes .quiz a p {
     display: -webkit-box;
     font-size: 12px;
     margin-top: 10px;
@@ -71,6 +99,7 @@
 #top_rated .quizzes .quiz {
     color: #f1f1f1;
     min-height: 150px;
+    position: relative;
     text-align: center;
     text-decoration: none;
     transition: 0.3s ease-in-out;
@@ -82,16 +111,43 @@
     -webkit-filter: brightness(1.2);
 }
 
-#top_rated .quizzes .quiz img {
+#top_rated .quizzes .quiz .quiz-author {
+    background-color: var(--purple-light);
+    border-radius: 2px;
+    box-shadow: 0 0 3px 2px rgba(var(--grey-dark-rgb), 0.8);
+    color: #f1f1f1;
+    font-weight: 700;
+    left: 10px;
+    overflow: hidden;
+    padding: 2px 5px;
+    position: absolute;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    transition: 0.3s ease-in-out;
+    top: 10px;
+    width: 75px;
+}
+
+#top_rated .quizzes .quiz .quiz-author:hover {
+    filter: brightness(1.2);
+    -webkit-filter: brightness(1.2);
+}
+
+#top_rated .quizzes .quiz a {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+#top_rated .quizzes .quiz a img {
     background: #3a3535;
     border-radius: 5px;
     height: 150px;
     object-fit: cover;
     object-position: center;
-    width: inherit;
+    width: 100%;
 }
 
-#top_rated .quizzes .quiz p {
+#top_rated .quizzes .quiz a p {
     display: -webkit-box;
     font-size: 12px;
     margin-top: 10px;

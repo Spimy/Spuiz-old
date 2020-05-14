@@ -12,10 +12,13 @@
             <h2>Newest</h2>
             <div class="quizzes">
                 {% for quiz in newest_quizzes %}
-                    <a class="quiz" href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
-                        <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
-                        <p>{{ quiz.title }}</p>
-                    </a>
+                    <div class="quiz">
+                        <a href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
+                            <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                            <p>{{ quiz.title }}</p>
+                        </a>
+                        <a class="quiz-author" href="/{{ quiz.author.user_profile.slug }}/">{{ quiz.author.username }}</a>
+                    </div>
                 {% endfor %}
             </div>
         </section>
@@ -24,10 +27,13 @@
             <h2>Top Rated</h2>
             <div class="quizzes">
                 {% for quiz in top_quizzes %}
-                    <a class="quiz" href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
-                        <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
-                        <p>{{ quiz.title }}</p>
-                    </a>
+                    <div class="quiz">
+                        <a href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
+                            <img class="quiz-thumbnail" src="{{ MEAIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                            <p>{{ quiz.title }}</p>
+                        </a>
+                        <a class="quiz-author" href="/{{ quiz.author.user_profile.slug }}/">{{ quiz.author.username }}</a>
+                    </div>
                 {% endfor %}
             </div>
         </section>
