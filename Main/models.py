@@ -61,6 +61,7 @@ class UserProfile(models.Model):
     slug = models.SlugField(max_length=255, blank=True, null=True)
     banner = models.ImageField(upload_to="User_Banners", null=True, blank=True)
     avatar = models.ImageField(upload_to="User_Avatars", null=True, blank=True)
+    bio = models.TextField(null=True, blank=True)
     
     completed_quizzes = models.ManyToManyField(Quiz, related_name="completed_quizzes", blank=True)
     following = models.ManyToManyField(User, related_name="following", blank=True)
