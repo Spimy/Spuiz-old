@@ -201,11 +201,20 @@
 
         #user_content .user-content .user-content-left,
         #user_content .user-content .user-content-right {
-            margin: 0 25px;
+            margin-left: 25px;
+            margin-right: 25px;
             width: inherit;
             width: -moz-available;
             width: -webkit-fill-available;
             width: fill-available;
+        }
+
+        #user_content .user-content .user-content-left {
+            margin-top: -50px;
+        }
+
+        #user_content .user-content .user-content-right {
+            margin-top: 25px;
         }
 
     }
