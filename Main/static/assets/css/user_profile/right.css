@@ -1,0 +1,22 @@
+#user_content .user-content {
+    justify-content: center;
+}
+
+#user_content .user-content .user-content-right {
+    margin: 0;
+    width: 50%;
+}
+
+@media only screen {
+    @media (max-width: 750px) {
+
+        #user_content .user-content .user-content-right {
+            margin: 0 25px;
+            width: inherit;
+            width: -moz-available;
+            width: -webkit-fill-available;
+            width: fill-available;
+        }
+
+    }
+}
