@@ -58,7 +58,7 @@ class Quiz(models.Model):
 class CompletedQuiz(models.Model):
     quiz = models.ForeignKey(Quiz, related_name="quiz", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
-    completed_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    completed_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.quiz.title} by {self.user.username}"
