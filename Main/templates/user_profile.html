@@ -93,6 +93,9 @@
                 <script>loadCSS("{% static 'assets/css/user_profile/left.css' %}");</script>
             {% endif %}
 
+            {% if viewing_user.user_profile.bio|length <= 0 or viewing_user.user_profile.following.all.count <= 0 or completed_quizzes.count <= 0 %}
+                <h3 style="text-align:center;">This user has not written a bio, followed anyone or done any quiz.</h3>
+            {% endif %}
         </div>
 
     </section>
