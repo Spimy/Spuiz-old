@@ -1,11 +1,12 @@
 {% extends "index.html" %}
 {% load static %}
 
-{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/user_profile.css' %}">{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/user_profile/main.css' %}">{% endblock %}
 {% block title %}{{ viewing_user.username }}'s Profile{% endblock %}
 
 {% block content %}
     
+    <script src="{% static 'assets/js/user_profile/functions.js' %}"></script>
     <section id="user_profile">
 
         {% if not viewing_user.user_profile.banner %}
@@ -29,10 +30,14 @@
                         <a href="/{{ viewing_user.user_profile.slug }}/social">Social</a>
                     </div>
                     <div class="user-nav-right">
-                        {% if not viewing_user in user.user_profile.following.all %}
-                            <a>Follow</a>
+                        {% if user.is_authenticated and user == viewing_user %}
+                            <a href="/settings">Edit Profile</a>
                         {% else %}
-                            <a>Unfollow</a>
+                            {% if not viewing_user in user.user_profile.following.all %}
+                                <a>Follow</a>
+                            {% else %}
+                                <a>Unfollow</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </nav>
@@ -46,38 +51,47 @@
 
         <div class="user-content">
 
-            <div class="user-content-left">
+            {% if viewing_user.user_profile.bio|length > 0 or viewing_user.user_profile.following.all.count > 0 %}
+                <div class="user-content-left">
+                    {% if viewing_user.user_profile.bio|length > 0 %}
+                        <h3 class="user-bio-heading">Biography</h3>
+                        <pre class="user-bio">{{ viewing_user.user_profile.bio }}</pre>
+                    {% endif %}
 
-                {% if viewing_user.user_profile.bio|length > 0 %}
-                    <p class="user-bio">{{ viewing_user.user_profile.bio }}</p>
-                {% endif %}
+                    {% if viewing_user.user_profile.following.all.count > 0 %}
+                        <h3 class="user-following-heading">Following</h3>
+                        <div class="user-following">
+                            {% for following in viewing_user.user_profile.following.all %}
+                                {% if not following.user_profile.avatar %}
+                                    <a href="/{{ following.user_profile.slug }}">
+                                        <img class="user-following-avatar" src="{% static 'assets/img/default.png' %}" alt="{{ following.username }}">
+                                    </a>
+                                {% else %}
+                                    <a href="/{{ following.user_profile.slug }}">
+                                        <img class="user-following-avatar" src="{{ MEDIA_URL }}{{ following.user_profile.avatar.url }}" alt="{{ following.username }}">
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                    <script>loadCSS("{% static 'assets/css/user_profile/right.css' %}");</script>
+            {% endif %}
 
-                <h3>Following</h3>
-                <div class="user-following">
-                    {% for following in viewing_user.user_profile.following.all %}
-                        {% if not following.user_profile.avatar %}
-                            <a href="/{{ following.user_profile.slug }}">
-                                <img class="user-following-avatar" src="{% static 'assets/img/default.png' %}" alt="{{ following.username }}">
-                            </a>
-                        {% else %}
-                            <a href="/{{ following.user_profile.slug }}">
-                                <img class="user-following-avatar" src="{{ MEDIA_URL }}{{ following.user_profile.avatar.url }}" alt="{{ following.username }}">
-                            </a>
-                        {% endif %}
+            {% if viewing_user.user_profile.completed_quizzes.all.count > 0 %}
+                <div class="user-content-right">
+                    <h3 class="activity-heading">Activity</h3>
+                    {% for quiz in viewing_user.user_profile.completed_quizzes.all %}
+                        <a class="quiz" href="/{{ quiz.author.user_profile.slug }}/{{ quiz.slug }}">
+                            <img src="{{ MEDIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                            <h4>{{ quiz.title }}</h4>
+                        </a>
                     {% endfor %}
                 </div>
-
-            </div>
-            
-            <div class="user-content-right">
-                <h3>Activity</h3>
-                {% for quiz in viewing_user.user_profile.completed_quizzes.all %}
-                    <div class="quiz">
-                        <img src="{{ MEDIA_URL }}{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
-                        <h4>{{ quiz.title }}</h4>
-                    </div>
-                {% endfor %}
-            </div>
+            {% else %}
+                <script>loadCSS("{% static 'assets/css/user_profile/left.css' %}");</script>
+            {% endif %}
 
         </div>
 
