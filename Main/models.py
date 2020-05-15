@@ -55,15 +55,25 @@ class Quiz(models.Model):
     class Meta:
         verbose_name_plural = "Quizzes"
 
+class CompletedQuiz(models.Model):
+    quiz = models.ForeignKey(Quiz, related_name="quiz", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
+    completed_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.quiz.title} by {self.user.username}"
+
+    class Meta:
+            verbose_name_plural = "Completed Quizzes"
+
 class UserProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_profile")
     slug = models.SlugField(max_length=255, blank=True, null=True)
-    banner = models.ImageField(upload_to="User_Banners", null=True, blank=True)
     avatar = models.ImageField(upload_to="User_Avatars", null=True, blank=True)
+    banner = models.ImageField(upload_to="User_Banners", null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
-    
-    completed_quizzes = models.ManyToManyField(Quiz, related_name="completed_quizzes", blank=True)
+
     following = models.ManyToManyField(User, related_name="following", blank=True)
     
     @classmethod
