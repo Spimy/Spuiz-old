@@ -9,7 +9,7 @@
     <section id="user_profile">
 
         {% if not viewing_user.user_profile.banner %}
-            <div class="backdrop"></div>
+            <div class="backdrop-div"></div>
         {% else %}
             <img class="backdrop" src="{{ MEDIA_URL }}{{ viewing_user.user_profile.banner.url }}" alt="{{ quiz.quiz_info.title }}">
         {% endif %}
