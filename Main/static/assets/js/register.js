@@ -37,13 +37,11 @@ for (const input of inputs) {
 register_form.addEventListener("submit", event => {
 
     event.preventDefault();
-
-    const token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     const data = new FormData(register_form);
 
     const xhr = new XMLHttpRequest()
     xhr.open("POST", window.location.href, true);
-    xhr.setRequestHeader("X-CSRFToken", token);
+    xhr.setRequestHeader("X-CSRFToken", data.get("csrfmiddlewaretoken"));
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.send(data);
 
@@ -55,6 +53,8 @@ register_form.addEventListener("submit", event => {
                 msgs.innerHTML = JSON.parse(xhr.responseText)["msg"];
                 messageEvent("msg-error", 10);
 
+            } else {
+                window.location = "/"
             }
         }  
     }
