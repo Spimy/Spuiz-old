@@ -138,7 +138,7 @@
 }
 
 #user_content .user-content .user-content-left .user-following a {
-    width: fit-content;
+    display: contents;
 }
 
 #user_content .user-content .user-content-left .user-following a .user-following-avatar {
