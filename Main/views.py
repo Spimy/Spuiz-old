@@ -11,6 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from .models import *
 from .forms import RegistrationForm, LoginForm
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.urls import reverse
 
 def error_msg_response(request):
     data = {
@@ -89,9 +90,13 @@ def login_page(request):
             user = authenticate(username=username, password=password)
             
             if user is not None:
-                messages.success(request, "You have successfully logged in.")
+                msg = "You have successfully logged in."
+                messages.success(request, msg)
                 login(request, user)
-                return redirect("Main:home_page")
+                
+                response = HttpResponse(msg)
+                response.status_code = 200
+                return response
             else:
                 for msg in form.error_messages:
                     messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}")
@@ -131,10 +136,14 @@ def register_page(request):
         
         if form.is_valid():
             user = form.save()
-            messages.success(request, "You have successfully registered and logged in.")
+            msg = "You have successfully registered and logged in."
+            
+            messages.success(request, msg)
             login(request, user)
         
-            return redirect("Main:home_page")
+            response = HttpResponse(msg)
+            response.status_code = 200
+            return response
         else:
 
             errors = json.loads(form.errors.as_json())
