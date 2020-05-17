@@ -61,7 +61,7 @@
                     {% if viewing_user.user_profile.following.all.count > 0 %}
                         <h3 class="user-following-heading">Following</h3>
                         <div class="user-following">
-                            {% for following in viewing_user.user_profile.following.all %}
+                            {% for following in followings %}
                                 {% if not following.user_profile.avatar %}
                                     <a href="/{{ following.user_profile.slug }}">
                                         <img class="user-following-avatar" src="{% static 'assets/img/default.png' %}" alt="{{ following.username }}">

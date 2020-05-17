@@ -213,6 +213,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None):
         else:
             
             user = UserProfile.objects.get(slug=user_slug).user
+            followings = user.user_profile.following.order_by("username")
             completed_quizzes = CompletedQuiz.objects.filter(
                 user__user_profile__slug=user_slug
             ).order_by("-completed_date")
@@ -222,6 +223,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None):
                 quiz_urls[quiz] = quiz.slug
             return render(request, "user_profile.html", context={"quizzes": quiz_urls,
                                                                  "viewing_user": user,
+                                                                 "followings": followings,
                                                                  "completed_quizzes": completed_quizzes})
 
     raise Http404("User not found")
