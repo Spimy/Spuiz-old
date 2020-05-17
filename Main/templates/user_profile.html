@@ -94,7 +94,7 @@
             {% endif %}
 
             {% if viewing_user.user_profile.bio|length <= 0 and viewing_user.user_profile.following.all.count <= 0 and completed_quizzes.count <= 0 %}
-                <h3 style="text-align:center;">This user has not written a bio, followed anyone or done any quiz.</h3>
+                <h3>{% if user.is_authenticated and user == viewing_user %}You have{% else %}This user has{% endif %} not written a bio, followed anyone or done any quiz.</h3>
             {% endif %}
         </div>
 

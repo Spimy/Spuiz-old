@@ -74,6 +74,11 @@
     color: #f1f1f1;
 }
 
+#user_content .user-content > h3 {
+    font-weight: 400;
+    text-align: center;
+}
+
 #user_content .user-content {
     display: flex;
     flex-direction: row;
@@ -105,6 +110,8 @@
     font-family: "Titillium Web", sans-serif;
     margin: 0;
     margin-bottom: 25px;
+    max-height: 500px;
+    overflow-y: hidden;
     padding: 25px;
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
@@ -112,6 +119,10 @@
     white-space: -o-pre-wrap;
     width: 100%;
     word-wrap: break-word;
+}
+
+#user_content .user-content .user-content-left .user-bio:hover {
+    overflow-y: auto;
 }
 
 #user_content .user-content .user-content-left .user-following {
@@ -197,6 +208,10 @@
             display: flex;
             justify-content: space-between;
             padding: 20px 25px 20px 25px;
+        }
+
+        #user_content .user-content > h3 {
+            margin: -50px 50px;
         }
 
         #user_content .user-content .user-content-left,
