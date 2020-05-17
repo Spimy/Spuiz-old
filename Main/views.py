@@ -193,7 +193,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
 
                 if "vote" in list(request.POST.keys()):
                     if not request.user.is_authenticated:
-                        messages.error(request, "You must be logged in to do this!")
+                        messages.error(request, "You must be logged in to do this.")
                         return error_msg_response(request)
                     
                     if request.POST["vote"] == "upvote":
@@ -272,7 +272,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                     elif action_slug == "unfollow":
                         
                         if request.user == user:
-                            messages.error(request, "You cannot unollow yourself.")
+                            messages.error(request, "You cannot unfollow yourself.")
                             return error_msg_response(request)
                         
                         if user in request.user.user_profile.following.all():
@@ -281,10 +281,13 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                             return follow_unfollow_success_response(request, user_slug, matching_quizzes)
                         else:
                             messages.error(request, f"You are not following {user.username}")
-                            return error_msg_response(request) 
+                            return error_msg_response(request)
                         
                     else:
                         raise Http404("Unknown action")
+                else:
+                    messages.error(request, "You must be logged in to do this")
+                    return error_msg_response(request)
             else:
                 return redirect("Main:user_slug", user_slug=user_slug)
         
