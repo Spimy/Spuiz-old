@@ -5,7 +5,8 @@
 {% block title %}{{ viewing_user.username }}'s Profile{% endblock %}
 
 {% block content %}
-    
+
+    {% csrf_token %}
     <script src="{% static 'assets/js/user_profile/functions.js' %}"></script>
     <section id="user_profile">
 
@@ -34,9 +35,9 @@
                             <a href="/settings">Edit Profile</a>
                         {% else %}
                             {% if not viewing_user in user.user_profile.following.all %}
-                                <a>Follow</a>
+                                <a class="follow-unfollow" href="/{{ viewing_user.user_profile.slug }}/action/follow/">Follow</a>
                             {% else %}
-                                <a>Unfollow</a>
+                                <a class="follow-unfollow" href="/{{ viewing_user.user_profile.slug }}/action/unfollow/">Unfollow</a>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -99,5 +100,6 @@
         </div>
 
     </section>
+    <script src="{% static 'assets/js/user_profile/ajax.js' %}"></script>
 
 {% endblock %}
