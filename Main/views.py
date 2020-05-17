@@ -3,30 +3,68 @@ import random
 from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponse
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.contrib.auth import login, logout, authenticate
 
 from .models import *
 from .forms import RegistrationForm, LoginForm
-from django.db.models import Count
-
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 def error_msg_response(request):
     data = {
-                    "msg": render_to_string(
-                        "static_html/messages.html",
-                        {
-                            "messages": messages.get_messages(request),
-                        },
-                    ),
-                }
+            "msg": render_to_string(
+                "static_html/messages.html",
+                {
+                    "messages": messages.get_messages(request),
+                },
+            ),
+        }
                 
     response = HttpResponse(
         json.dumps(data),
         content_type="application/json",
     )
     response.status_code = 218
+    return response
+
+def follow_unfollow_success_response(request, user_slug, matching_quizzes):
+    
+    user = UserProfile.objects.get(slug=user_slug).user
+    followings = user.user_profile.following.order_by("username")
+    completed_quizzes = CompletedQuiz.objects.filter(
+        user__user_profile__slug=user_slug
+    ).order_by("-completed_date")
+    quiz_urls = {}
+
+    for quiz in matching_quizzes.all():
+        quiz_urls[quiz] = quiz.slug
+                
+    data = {
+            "msg": render_to_string(
+                "static_html/messages.html",
+                {
+                    "messages": messages.get_messages(request),
+                },
+            ),
+            "new_page": render_to_string(
+                "user_profile.html",
+                context={
+                    "quizzes": quiz_urls,
+                    "viewing_user": user,
+                    "followings": followings,
+                    "completed_quizzes": completed_quizzes,
+                },
+                request=request
+            )
+        }
+                
+    response = HttpResponse(
+        json.dumps(data),
+        content_type="application/json",
+    )
+    response.status_code = 200
     return response
 
 
@@ -120,7 +158,7 @@ def logout_page(request):
     messages.info(request, "You have been logged out.")
     return HttpResponseRedirect(request.GET.get("next", "/"))
 
-def user_quiz_slug(request, user_slug, quiz_slug=None):
+def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
     
     users = [u.slug for u in UserProfile.objects.all()]
     if user_slug in users:
@@ -209,6 +247,46 @@ def user_quiz_slug(request, user_slug, quiz_slug=None):
                 return HttpResponse(correct)
 
             return render(request, "quiz_page.html", context={"quiz": quiz})
+        
+        elif action_slug is not None:
+            
+            if request.method == "POST":
+                if request.user.is_authenticated:
+                    
+                    user = UserProfile.objects.get(slug=user_slug).user
+                    
+                    if action_slug == "follow":
+                        
+                        if request.user == user:
+                            messages.error(request, "You cannot follow yourself.")
+                            return error_msg_response(request)
+                        
+                        if user not in request.user.user_profile.following.all():
+                            request.user.user_profile.following.add(user)
+                            messages.success(request, f"You are now following {user.username}.")
+                            return follow_unfollow_success_response(request, user_slug, matching_quizzes)
+                        else:
+                            messages.error(request, f"You are already following {user.username}")
+                            return error_msg_response(request)
+                            
+                    elif action_slug == "unfollow":
+                        
+                        if request.user == user:
+                            messages.error(request, "You cannot unollow yourself.")
+                            return error_msg_response(request)
+                        
+                        if user in request.user.user_profile.following.all():
+                            request.user.user_profile.following.remove(user)
+                            messages.success(request, f"You are no longer following {user.username}.")
+                            return follow_unfollow_success_response(request, user_slug, matching_quizzes)
+                        else:
+                            messages.error(request, f"You are not following {user.username}")
+                            return error_msg_response(request) 
+                        
+                    else:
+                        raise Http404("Unknown action")
+            else:
+                return redirect("Main:user_slug", user_slug=user_slug)
         
         else:
             
