@@ -12,6 +12,8 @@ body {
     font-family: "Titillium Web", sans-serif;
     margin: 0;
     padding: 0;
+    scrollbar-color: var(--purple-light) var(--grey-light);
+    scrollbar-width: thin;
 }
 
 :root {
@@ -27,4 +29,19 @@ body {
     --grey-dark-rgb: 28, 28, 28;
     --grey-light-rgb: 40, 40, 40;
     --grey-lighter-rgb: 46, 46, 46;
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--grey-light);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--purple-light);
+    border-radius: 5px;
 }

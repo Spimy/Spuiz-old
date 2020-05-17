@@ -5,6 +5,7 @@
 #newest h2 {
     color: #f1f1f1;
     font-size: 24px;
+    margin: 20px 0 -10px 0;
 }
 
 #newest .quizzes {
@@ -18,22 +19,9 @@
     scrollbar-width: thin;
 }
 
-#newest .quizzes::-webkit-scrollbar {
-    height: 5px;
-}
-
-#newest .quizzes::-webkit-scrollbar-track {
-    background: var(--grey-light);
-    border-radius: 5px;
-}
-
-#newest .quizzes::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background: var(--purple-light)
-}
-
 #newest .quizzes .quiz {
     color: #f1f1f1;
+    margin-bottom: -20px;
     min-height: 150px;
     position: relative;
     text-align: center;
@@ -97,6 +85,7 @@
 #top_rated h2 {
     color: #f1f1f1;
     font-size: 24px;
+    margin: 20px 0 -10px 0;
 }
 
 #top_rated .quizzes {
@@ -110,22 +99,9 @@
     scrollbar-width: thin;
 }
 
-#top_rated .quizzes::-webkit-scrollbar {
-    height: 5px;
-}
-
-#top_rated .quizzes::-webkit-scrollbar-track {
-    background: var(--grey-light);
-    border-radius: 5px;
-}
-
-#top_rated .quizzes::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background: var(--purple-light)
-}
-
 #top_rated .quizzes .quiz {
     color: #f1f1f1;
+    margin-bottom: -20px;
     min-height: 150px;
     position: relative;
     text-align: center;
