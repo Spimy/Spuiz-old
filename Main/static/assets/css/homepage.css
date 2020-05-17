@@ -1,11 +1,19 @@
 #homepage {
-    padding: 105px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 75px 105px;
+}
+
+#newest {
+    margin-top: auto;
 }
 
 #newest h2 {
     color: #f1f1f1;
     font-size: 24px;
     margin: 20px 0 -10px 0;
+    overflow-x: hidden;
 }
 
 #newest .quizzes {
@@ -82,10 +90,15 @@
 }
 
 
+#top_rated {
+    margin-bottom: auto;
+}
+
 #top_rated h2 {
     color: #f1f1f1;
     font-size: 24px;
     margin: 20px 0 -10px 0;
+    overflow-x: hidden;
 }
 
 #top_rated .quizzes {
@@ -159,16 +172,4 @@
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-}
-
-@media only screen {
-
-    @media (max-width: 790px) {
-
-        #homepage {
-            padding: 35% 60px;
-        }
-
-    }
-
 }
