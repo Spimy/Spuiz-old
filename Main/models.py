@@ -75,21 +75,7 @@ class UserProfile(models.Model):
     bio = models.TextField(null=True, blank=True)
 
     following = models.ManyToManyField(User, related_name="following", blank=True)
-    
-    @classmethod
-    def follow(cls, current_user, new_follow):
-        user_profile, created = cls.objects.get_or_create(
-            user=current_user
-        )
-        user_profile.following.add(new_follow)
-    
-    @classmethod
-    def unfollow(cls, current_user, new_follow):
-        user_profile, created = cls.objects.get_or_create(
-            user=current_user
-        )
-        user_profile.following.remove(new_follow)
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.user.username)
         super(UserProfile, self).save(*args, **kwargs)
