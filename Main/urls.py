@@ -27,6 +27,5 @@ urlpatterns = [
     path("register/", views.register_page, name="register_page"),
     path("<user_slug>/", views.user_quiz_slug, name="user_slug"),
     path("<user_slug>/action/<action_slug>/", views.user_quiz_slug, name="action_slug"),
-    path("<user_slug>/<quiz_slug>/<action>/", views.user_quiz_slug, name="user_quiz_completed_slug"),
     path("<user_slug>/<quiz_slug>/", views.user_quiz_slug, name="user_quiz_slug"),
 ]
