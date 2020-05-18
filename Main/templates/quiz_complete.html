@@ -2,12 +2,47 @@
 {% load static %}
 
 {% block styles %}<link rel="stylesheet" href="{% static 'assets/css/quiz_complete.css' %}">{% endblock %}
-{% block title %}{{ quiz.quiz_info.title }} by {{ quiz.quiz_info.author.username }}{% endblock %}
+{% block title %}{{ completed.quiz.quiz_info.title }} by {{ completed.quiz.quiz_info.author.username }}{% endblock %}
 
 {% block content %}
 
     {% with total_score=completed.quiz.questions.all.count %}
-        {{ total_score }}
+        
+        <section id="quiz_result">
+
+            <div class="result">
+
+                <h1 class="title">{{ completed.quiz.title }}</h1>
+                <img class="thumbnail" src="{{ MEDIA_URL }}{{ completed.quiz.thumbnail.url }}">
+
+                <div class="score">
+                    <h2>Your Score: {{ completed.score }} of {{ total_score }}</h2>
+                    <p>Percentage Score: {{ percent }}%</p>
+                </div>
+
+                <nav class="rate">
+                    <p class="stars">
+                    <span>Rating:</span>
+                        {% for i in stars %}
+                            <span class="fa fa-star star checked"></span>
+                        {% endfor %}
+                        {% for i in remainder %}
+                            <span class="fa fa-star star "></span>
+                        {% endfor %}
+                    </p>
+
+                    <div>
+                        <button class="updownvote-btn" type="submit" value="upvote">{{ completed.quiz.upvotes.count }} Upvote</button>
+                        <button class="updownvote-btn" type="submit" value="downvote">{{ completed.quiz.downvotes.count }} Downvote</button>
+                    </div>
+                </nav>
+
+                <a class="profile-btn" href="/{{ user.user_profile.slug }}">Go to Profile</a>
+            
+            </div>
+
+        </section>
+
     {% endwith %}
 
 {% endblock %}
