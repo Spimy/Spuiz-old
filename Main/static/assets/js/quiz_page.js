@@ -75,7 +75,8 @@ quiz_info_form.addEventListener("submit", event => {
     const data = new FormData();
     data.append("csrfmiddlewaretoken", token);
     data.append("vote", vote);
-    
+    data.append("from_complete", false);
+
     const xhr = new XMLHttpRequest();
     xhr.open("POST", window.location.href, true);
     xhr.setRequestHeader("X-CSRFToken", token);
