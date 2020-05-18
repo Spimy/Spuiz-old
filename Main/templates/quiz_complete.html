@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/quiz_complete.css' %}">{% endblock %}
+{% block title %}{{ quiz.quiz_info.title }} by {{ quiz.quiz_info.author.username }}{% endblock %}
+
+{% block content %}
+
+    {% with total_score=completed.quiz.questions.all.count %}
+        {{ total_score }}
+    {% endwith %}
+
+{% endblock %}
