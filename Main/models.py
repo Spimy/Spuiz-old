@@ -58,6 +58,7 @@ class Quiz(models.Model):
 class CompletedQuiz(models.Model):
     quiz = models.ForeignKey(Quiz, related_name="quiz", on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
+    score = models.IntegerField()
     completed_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
