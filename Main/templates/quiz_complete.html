@@ -5,11 +5,8 @@
 {% block title %}{{ completed.quiz.quiz_info.title }} by {{ completed.quiz.quiz_info.author.username }}{% endblock %}
 
 {% block content %}
-
     {% with total_score=completed.quiz.questions.all.count %}
-        
         <section id="quiz_result">
-
             <div class="result">
 
                 <h1 class="title">{{ completed.quiz.title }}</h1>
@@ -30,19 +27,15 @@
                             <span class="fa fa-star star "></span>
                         {% endfor %}
                     </p>
-
-                    <div>
+                    <form class="btns">
+                        {% csrf_token %}
                         <button class="updownvote-btn" type="submit" value="upvote">{{ completed.quiz.upvotes.count }} Upvote</button>
                         <button class="updownvote-btn" type="submit" value="downvote">{{ completed.quiz.downvotes.count }} Downvote</button>
-                    </div>
+                    </form>
                 </nav>
-
                 <a class="profile-btn" href="/{{ user.user_profile.slug }}">Go to Profile</a>
-            
             </div>
-
         </section>
-
+        <script src="{% static 'assets/js/quiz_complete.js' %}"></script>
     {% endwith %}
-
 {% endblock %}
