@@ -249,13 +249,28 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                             selected_quiz.downvotes.remove(request.user)
                         else:
                             selected_quiz.downvotes.add(request.user)
-                        
-                    response = {
-                            "updownvotebtns": render_to_string("quiz_page.html", 
-                                                            context={"quiz": quiz}, 
-                                                            request=request),
+
+                    if request.POST["from_complete"] != "true":
+                        response = {
+                                "updownvotebtns": render_to_string("quiz_page.html", 
+                                                                context={"quiz": quiz}, 
+                                                                request=request),
+                            }
+                    else:
+                        completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
+                        stars, remainder = calculate_rating(selected_quiz)
+                        percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
+                        response = {
+                            "updownvotebtns": render_to_string("quiz_complete.html",
+                                                               context={
+                                                                   "completed": completed,
+                                                                    "stars": range(stars),
+                                                                    "remainder": range(remainder),
+                                                                    "percent": percent
+                                                               },
+                                                               request=request)
                         }
-                    
+                        
                     return HttpResponse(
                             json.dumps(response),
                             content_type="application/json",
