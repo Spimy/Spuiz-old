@@ -28,6 +28,11 @@ h1, h2, p {
 #quiz_result .result .title {
     grid-area: title;
     justify-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 400px;
+    word-break: break-word;
 }
 
 #quiz_result .result .thumbnail {
@@ -115,6 +120,10 @@ h1, h2, p {
             grid-template-columns: 1fr 1fr;
             height: 450px;
             text-align: center;
+        }
+
+        #quiz_result .result .title {
+            width: 250px;
         }
 
         #quiz_result .result .thumbnail {
