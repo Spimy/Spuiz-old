@@ -69,6 +69,28 @@ def follow_unfollow_success_response(request, user_slug, matching_quizzes):
     return response
 
 
+def calculate_rating(quiz):
+    upvotes = quiz.upvotes.count()
+    downvotes = quiz.downvotes.count()
+    fraction = round(upvotes / (upvotes + downvotes), 1)
+    
+    if fraction < 0.1:
+        stars = 0
+    elif fraction >= 0.1 and fraction < 0.3:
+        stars = 1
+    elif fraction >= 0.3 and fraction < 0.5:
+        stars = 2
+    elif fraction >= 0.5 and fraction < 0.7:
+        stars = 3
+    elif fraction >= 0.7 and fraction < 0.9:
+        stars = 4
+    elif fraction >= 0.9:
+        stars = 5
+        
+    remainder = 5 - stars
+
+    return [stars, remainder]
+
 # Create your views here.
 def home_page(request):
     newest_quizzes = Quiz.objects.all()[::-1][:10]
@@ -253,17 +275,46 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=
                     completed = CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
                                                                     user=request.user,
                                                                     score=score)
-                
-                return render(request, "quiz_complete.html", context={"completed": completed})
+                    stars, remainder = calculate_rating(selected_quiz)
+                    return render(request, "quiz_complete.html",
+                                    context={
+                                        "completed": completed,
+                                        "stars": range(stars),
+                                        "remainder": range(remainder)
+                                        }
+                                    )
+                else:
+                    completed = {
+                        "score": score,
+                        "quiz": selected_quiz
+                    }
+                    stars, remainder = calculate_rating(selected_quiz)
+                    return render(request, "quiz_complete.html",
+                                    context={
+                                        "completed": completed,
+                                        "stars": range(stars),
+                                        "remainder": range(remainder)
+                                        }
+                                    )
 
             if action is not None:
                 if action == "complete":
                     if request.user.is_authenticated:
                         try:
                             completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
-                            return render(request, "quiz_complete.html", context={"completed": completed})
+                            stars, remainder = calculate_rating(selected_quiz)
+                            
+                            return render(request, "quiz_complete.html",
+                                          context={
+                                              "completed": completed,
+                                              "stars": range(stars),
+                                              "remainder": range(remainder)
+                                              }
+                                          )
                         except CompletedQuiz.DoesNotExist:
                             return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+                    else:
+                        return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
                 else:
                     raise Http404("Unknown action")
                     
