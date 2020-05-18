@@ -91,6 +91,9 @@ def calculate_rating(quiz):
 
     return [stars, remainder]
 
+def calculate_percentage_score(score, total_score):
+    return round((score / total_score) * 100, 1)
+
 # Create your views here.
 def home_page(request):
     newest_quizzes = Quiz.objects.all()[::-1][:10]
@@ -276,11 +279,13 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=
                                                                     user=request.user,
                                                                     score=score)
                     stars, remainder = calculate_rating(selected_quiz)
+                    percent = calculate_percentage_score(score, selected_quiz.questions.count())
                     return render(request, "quiz_complete.html",
                                     context={
                                         "completed": completed,
                                         "stars": range(stars),
-                                        "remainder": range(remainder)
+                                        "remainder": range(remainder),
+                                        "percent": percent
                                         }
                                     )
                 else:
@@ -289,11 +294,13 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=
                         "quiz": selected_quiz
                     }
                     stars, remainder = calculate_rating(selected_quiz)
+                    percent = calculate_percentage_score(score, selected_quiz.questions.count())
                     return render(request, "quiz_complete.html",
                                     context={
                                         "completed": completed,
                                         "stars": range(stars),
-                                        "remainder": range(remainder)
+                                        "remainder": range(remainder),
+                                        "percent": percent
                                         }
                                     )
 
@@ -303,12 +310,14 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=
                         try:
                             completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
                             stars, remainder = calculate_rating(selected_quiz)
+                            percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
                             
                             return render(request, "quiz_complete.html",
                                           context={
                                               "completed": completed,
                                               "stars": range(stars),
-                                              "remainder": range(remainder)
+                                              "remainder": range(remainder),
+                                              "percent": percent
                                               }
                                           )
                         except CompletedQuiz.DoesNotExist:
