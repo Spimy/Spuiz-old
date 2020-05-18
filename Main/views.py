@@ -167,7 +167,7 @@ def logout_page(request):
     messages.info(request, "You have been logged out.")
     return HttpResponseRedirect(request.GET.get("next", "/"))
 
-def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
+def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=None):
     
     users = [u.slug for u in UserProfile.objects.all()]
     if user_slug in users:
@@ -236,10 +236,9 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                             content_type="application/json",
                     )
                 
-                correct = 0
+                score = 0
                 for key, answer in request.POST.items():
                     if key == "csrfmiddlewaretoken": continue
-                    
                     
                     for question in selected_quiz.questions.all():
                         if key.lower() == question.question.lower():
@@ -248,13 +247,36 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                             answers = [ans["answer"] for ans in answers]
                             
                             if answer in answers:
-                                correct += 1
+                                score += 1
                 
                 if request.user.is_authenticated:
-                    CompletedQuiz.objects.get_or_create(quiz=selected_quiz, user=request.user)
+                    completed = CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
+                                                                    user=request.user,
+                                                                    score=score)
                 
-                return HttpResponse(correct)
+                return render(request, "quiz_complete.html", context={"completed": completed})
 
+            if action is not None:
+                if action == "complete":
+                    if request.user.is_authenticated:
+                        try:
+                            completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
+                            return render(request, "quiz_complete.html", context={"completed": completed})
+                        except CompletedQuiz.DoesNotExist:
+                            return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+                else:
+                    raise Http404("Unknown action")
+                    
+            if request.user.is_authenticated:
+                try:
+                    completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
+                    return redirect("Main:user_quiz_completed_slug",
+                                    user_slug=user_slug,
+                                    quiz_slug=quiz_slug,
+                                    action="complete")
+                except CompletedQuiz.DoesNotExist:
+                    return render(request, "quiz_page.html", context={"quiz": quiz})
+        
             return render(request, "quiz_page.html", context={"quiz": quiz})
         
         elif action_slug is not None:
