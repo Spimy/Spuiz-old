@@ -75,7 +75,7 @@
 }
 
 #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns .quiz-updownvote {
-    background-color: #3500d3;
+    background-color: var(--purple-light);
     border: none;
     border-radius: 3px;
     color: #f1f1f1;
@@ -194,7 +194,7 @@
     caret-color: #f1f1f1;
     -webkit-text-fill-color: #f1f1f1;
     -webkit-box-shadow: 0 0 0px 1000px var(--grey-light) inset;
-    border: 1px solid #3500d3;
+    border: 1px solid var(--purple-light);
     box-shadow: 0 0 0px 1000px var(--grey-light) inset;
     transition: background-color 5000s ease-in-out 0s;
 }
@@ -212,7 +212,7 @@
 }
 
 #quiz .quiz-card .submit-btn {
-    background-color: #3500d3;
+    background-color: var(--purple-light);
     border: none;
     border-radius: 3px;
     color: #f1f1f1;
