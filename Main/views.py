@@ -192,7 +192,7 @@ def logout_page(request):
     messages.info(request, "You have been logged out.")
     return HttpResponseRedirect(request.GET.get("next", "/"))
 
-def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=None):
+def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
     
     users = [u.slug for u in UserProfile.objects.all()]
     if user_slug in users:
@@ -278,23 +278,28 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=
                     completed = CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
                                                                     user=request.user,
                                                                     score=score)
-                    stars, remainder = calculate_rating(selected_quiz)
-                    percent = calculate_percentage_score(score, selected_quiz.questions.count())
-                    return render(request, "quiz_complete.html",
-                                    context={
-                                        "completed": completed,
-                                        "stars": range(stars),
-                                        "remainder": range(remainder),
-                                        "percent": percent
-                                        }
-                                    )
                 else:
                     completed = {
                         "score": score,
                         "quiz": selected_quiz
                     }
+
+                stars, remainder = calculate_rating(selected_quiz)
+                percent = calculate_percentage_score(score, selected_quiz.questions.count())
+                return render(request, "quiz_complete.html",
+                                context={
+                                    "completed": completed,
+                                    "stars": range(stars),
+                                    "remainder": range(remainder),
+                                    "percent": percent
+                                    }
+                                )
+
+            if request.user.is_authenticated:
+                try:
+                    completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
                     stars, remainder = calculate_rating(selected_quiz)
-                    percent = calculate_percentage_score(score, selected_quiz.questions.count())
+                    percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
                     return render(request, "quiz_complete.html",
                                     context={
                                         "completed": completed,
@@ -303,37 +308,6 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None, action=
                                         "percent": percent
                                         }
                                     )
-
-            if action is not None:
-                if action == "complete":
-                    if request.user.is_authenticated:
-                        try:
-                            completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
-                            stars, remainder = calculate_rating(selected_quiz)
-                            percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
-                            
-                            return render(request, "quiz_complete.html",
-                                          context={
-                                              "completed": completed,
-                                              "stars": range(stars),
-                                              "remainder": range(remainder),
-                                              "percent": percent
-                                              }
-                                          )
-                        except CompletedQuiz.DoesNotExist:
-                            return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
-                    else:
-                        return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
-                else:
-                    raise Http404("Unknown action")
-                    
-            if request.user.is_authenticated:
-                try:
-                    completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
-                    return redirect("Main:user_quiz_completed_slug",
-                                    user_slug=user_slug,
-                                    quiz_slug=quiz_slug,
-                                    action="complete")
                 except CompletedQuiz.DoesNotExist:
                     return render(request, "quiz_page.html", context={"quiz": quiz})
         
