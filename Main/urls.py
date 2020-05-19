@@ -25,6 +25,7 @@ urlpatterns = [
     path("logout/", views.logout_page, name="log_out"),
     path("login/", views.login_page, name="login_page"),
     path("register/", views.register_page, name="register_page"),
+    path("settings/", views.settings_page, name="settings_page"),
     path("<user_slug>/", views.user_quiz_slug, name="user_slug"),
     path("<user_slug>/action/<action_slug>/", views.user_quiz_slug, name="action_slug"),
     path("<user_slug>/<quiz_slug>/", views.user_quiz_slug, name="user_quiz_slug"),
