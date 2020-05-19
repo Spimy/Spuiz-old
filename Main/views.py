@@ -290,14 +290,13 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                                 score += 1
                 
                 if request.user.is_authenticated:
-                    completed = CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
+                    CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
                                                                     user=request.user,
                                                                     score=score)
-                else:
-                    completed = {
-                        "score": score,
-                        "quiz": selected_quiz
-                    }
+                completed = {
+                    "score": score,
+                    "quiz": selected_quiz
+                }
 
                 stars, remainder = calculate_rating(selected_quiz)
                 percent = calculate_percentage_score(score, selected_quiz.questions.count())
