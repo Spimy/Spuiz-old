@@ -50,12 +50,49 @@
 }
 
 #sticky_nav .nav-right .avatar-container {
-    border-radius: 50%;
-    height: 40px;
-    overflow: hidden;
+    cursor: pointer;
     position: relative;
-    width: 40px;
 }
+
+#sticky_nav .nav-right .avatar-container .user-dropdown {
+    background-color: var(--purple-normal);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    min-width: 200px;
+    opacity: 0;
+    padding: 10px 30px;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: visibility 0s, opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+    top: 50%;
+    visibility: hidden;
+}   
+
+#sticky_nav .nav-right .avatar-container:hover .user-dropdown,
+#sticky_nav .nav-right .avatar-container:focus .user-dropdown {
+    opacity: 1;
+    transition: visibility 1s, opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+    top: 100%;
+    visibility: visible;
+}
+
+#sticky_nav .nav-right .avatar-container .user-dropdown a {
+    font-size: 12px;
+    font-weight: 300;
+    margin: 0;
+    padding: 5px 10px;
+}
+
+#sticky_nav .nav-right .avatar-container .user-dropdown a:hover {
+    background-color: var(--purple-light);
+}
+
+#sticky_nav .nav-right .avatar-container .user-dropdown a i {
+    margin-right: 10px;
+}
+
 
 #sticky_nav .nav-right img {
     background-color: var(--grey-lighter);
