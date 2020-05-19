@@ -100,6 +100,7 @@
         </div>
 
     </section>
-    <script src="{% static 'assets/js/user_profile/ajax.js' %}"></script>
+
+    {% if user.is_authenticated and user != viewing_user %}<script src="{% static 'assets/js/user_profile/ajax.js' %}"></script>{% endif %}
 
 {% endblock %}
