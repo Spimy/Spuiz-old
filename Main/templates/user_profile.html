@@ -56,7 +56,7 @@
                 <div class="user-content-left">
                     {% if viewing_user.user_profile.bio|length > 0 %}
                         <h3 class="user-bio-heading">Biography</h3>
-                        <pre class="user-bio">{{ viewing_user.user_profile.bio }}</pre>
+                        <div class="user-bio">{{ viewing_user.user_profile.bio }}</div>
                     {% endif %}
 
                     {% if viewing_user.user_profile.following.all.count > 0 %}
@@ -102,5 +102,13 @@
     </section>
 
     {% if user.is_authenticated and user != viewing_user %}<script src="{% static 'assets/js/user_profile/ajax.js' %}"></script>{% endif %}
+
+    <script>
+        const user_bio = document.getElementsByClassName("user-bio")[0];
+        const content = user_bio.innerHTML;
+        const marked_content = marked(content);
+        user_bio.innerHTML = marked_content;
+    </script>
+
 
 {% endblock %}

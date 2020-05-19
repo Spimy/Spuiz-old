@@ -107,6 +107,8 @@
 #user_content .user-content .user-content-left .user-bio {
     background-color: var(--grey-light);
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
     font-family: "Titillium Web", sans-serif;
     margin: 0;
     margin-bottom: 25px;
@@ -119,6 +121,16 @@
     white-space: -o-pre-wrap;
     width: 100%;
     word-wrap: break-word;
+}
+
+#user_content .user-content .user-content-left .user-bio > * {
+    margin: 0;
+}
+
+#user_content .user-content .user-content-left .user-bio > ul,
+#user_content .user-content .user-content-left .user-bio > ol {
+    display: flex;
+    flex-direction: column;
 }
 
 #user_content .user-content .user-content-left .user-bio:hover {
@@ -185,6 +197,7 @@
 #user_content .user-content .user-content-right .quiz h4 {
     margin: 0 25px;
 }
+
 
 @media only screen {
 
