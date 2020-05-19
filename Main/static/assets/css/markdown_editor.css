@@ -1,0 +1,79 @@
+.editor-toolbar {
+    border: none;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+    transition: 0.3s ease-in-out;
+}
+
+.editor-toolbar a {
+    border: none;
+    color: #f1f1f1 !important;
+    width: 100%;
+    transition: 0.3s ease-in-out;
+}
+
+.editor-toolbar a.active, 
+.editor-toolbar a:hover {
+    background: none;
+    border: none;
+    color: var(--purple-light) !important;
+}
+
+.editor-toolbar.disabled-for-preview a:not(.no-disable) {
+    border: none;
+    color: #f1f1f1 !important;
+    width: 100%;
+    pointer-events: none;
+    background: none;
+    border-color: none;
+    text-shadow: none;
+}
+
+.editor-preview pre, .editor-preview-side pre {
+    background-color: var(--grey-lighter);
+}
+
+.editor-toolbar i.separator {
+    border: none;
+    color: transparent;
+    text-indent: 0;
+    margin: 0;
+}
+
+.editor-preview-active, .editor-preview-active-side {
+    background-color: var(--grey-dark);
+    border: none;
+    border-radius: 5px;
+    color: #f1f1f1;
+}
+
+.CodeMirror {
+    background-color: var(--grey-dark);
+    border: none;
+    border-radius: 5px;
+}
+
+.CodeMirror-code {
+    border: none;
+    color: #f1f1f1;
+}
+
+
+.CodeMirror-cursor {
+    border-left: 1px solid #f1f1f1;
+    border-right: none;
+    width: 0;
+}
+
+.CodeMirror, .CodeMirror-scroll {
+	min-height: fit-content;
+}
+
+.CodeMirror-wrap pre {
+    background-color: var(--grey-dark);
+}
+
+span.CodeMirror-selectedtext {
+    background-color: var(--grey-lighter);
+}
