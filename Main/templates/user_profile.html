@@ -82,7 +82,7 @@
 
             {% if completed_quizzes.count > 0 %}
                 <div class="user-content-right">
-                    <h3 class="activity-heading">Activity</h3>
+                    <h3 class="activity-heading">Completed Quiz{% if completed_quizzes.count > 1 %}zes{% endif %}</h3>
                     {% for completed_quiz in completed_quizzes %}
                         <a class="quiz" href="/{{ completed_quiz.quiz.author.user_profile.slug }}/{{ completed_quiz.quiz.slug }}">
                             <img src="{{ MEDIA_URL }}{{ completed_quiz.quiz.thumbnail.url }}" alt="{{ completed_quiz.quiz.title }}">
