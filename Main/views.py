@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth import login, logout, authenticate
 
 from .models import *
-from .forms import RegistrationForm, LoginForm
+from .forms import *
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.urls import reverse
 
@@ -193,6 +193,36 @@ def logout_page(request):
     return HttpResponseRedirect(request.GET.get("next", "/"))
 
 def settings_page(request):
+    
+    if not request.user.is_authenticated:
+        return redirect("Main:home_page")
+    
+    if request.method == "POST":
+        
+        if "bio" in list(request.POST.keys()):
+            
+            user_profile = request.user.user_profile
+            user_profile.bio = request.POST["bio"]
+            user_profile.save()
+            
+            messages.success(request, "Your biography has been successfully edited.")
+            
+            data = {
+                    "msg": render_to_string(
+                        "static_html/messages.html",
+                        {
+                            "messages": messages.get_messages(request),
+                        },
+                    ),
+                }
+                        
+            response = HttpResponse(
+                json.dumps(data),
+                content_type="application/json",
+            )
+            response.status_code = 200
+            return response
+    
     return render(request, "settings.html")
 
 def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
