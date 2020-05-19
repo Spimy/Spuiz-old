@@ -6,15 +6,18 @@
         <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
 
+        <!-- Load CSS -->
         <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'assets/css/messages.css' %}">
-        <link rel="stylesheet" href="{% static 'tinymce/css/prism.css' %}">
         <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
         {% block styles %}{% endblock %}
-
-        <script src="{% static 'tinymce/js/prism.js' %}"></script>
+        
+        <!-- Load Scripts -->
+        <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.1.0/marked.min.js"></script>
         <script src="https://kit.fontawesome.com/653eb1b940.js"></script>
-
+        
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Spuiz - {% block title %}{% endblock %}</title>
