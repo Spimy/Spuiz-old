@@ -32,6 +32,7 @@
 }
 
 #quiz .quiz-info .author-avatar {
+    border-radius: 5px;
     height: 100px;
     margin: 0 25px;
     object-fit: cover;
