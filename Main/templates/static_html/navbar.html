@@ -5,28 +5,27 @@
 	<div class="nav-left">
 		<a href="/"><img src="{% static 'assets/img/logo.png' %}"></a>
 		
-		{% csrf_token %}
 		<form method="GET" autocomplete="off">
-
-			<input 
-	            action="/search" 
-	            name="query" 
-	            class="search-bar" 
-	            type="text", 
-	            placeholder="&#xf002 Search", 
-	            value="{{ request.GET.q }}"
-	        >
-
+			{% csrf_token %}
+			<input action="/search" name="query" class="search-bar" type="text", placeholder="&#xf002 Search", value="{{ request.GET.q }}">
 		</form>
 	</div>
 	
 	<div class="nav-right">
 		{% if user.is_authenticated %}
-			{% if not user.user_profile.avatar %}
-				<img src="{% static 'assets/img/default.png' %}">
-			{% else %}
-				<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
-			{% endif %}
+			<div class="avatar-container" tabindex="0">
+				{% if not user.user_profile.avatar %}
+					<img src="{% static 'assets/img/default.png' %}">
+				{% else %}
+					<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
+				{% endif %}
+				<div class="user-dropdown">
+					<a href="/{{ user.user_profile.slug }}"><i class="fas fa-user"></i>Profile</a>
+					<a href="/create-quiz"><i class="fas fa-pen-square"></i>Create Quiz</a>
+					<a href="/notifications"><i class="fas fa-envelope"></i>Notifications</a>
+					<a href="/settings"><i class="fas fa-cog"></i>Settings</a>
+				</div>
+			</div>
 			<a href="/logout/?next={{ request.path }}">Log out</a>
 		{% else %}
 			<a href="/login/">Login</a>
