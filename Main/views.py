@@ -376,7 +376,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
             followings = user.user_profile.following.order_by("username")
             completed_quizzes = CompletedQuiz.objects.filter(
                 user__user_profile__slug=user_slug
-            ).order_by("-completed_date")
+            ).order_by("-completed_date")[:4]
             quiz_urls = {}
 
             for quiz in matching_quizzes.all():
