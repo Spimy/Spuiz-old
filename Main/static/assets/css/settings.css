@@ -1,0 +1,154 @@
+a, i {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+button {
+    font-family: "Titillium Web", sans-serif;
+}
+
+#settings {
+    color: #f1f1f1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 100px;
+}
+
+#settings .options {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    width: 250px;
+}
+
+#settings .options button {
+    background-color: transparent;
+    border: none;
+    color: #f1f1f1;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    text-align: left;
+    transition: 0.3s ease-in-out;
+}
+
+#settings .options button.active {
+    background-color: var(--purple-normal);
+    border-radius: 3px;
+}
+
+#settings .card {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    display: none;
+    height: fit-content;
+    padding: 25px;
+    width: 65%;
+}
+
+#settings .card.active {
+    display: initial;
+}
+
+#settings .card form {
+    margin-bottom: 30px;
+}
+
+#settings .card form .dropbox {
+    align-items: center;
+    background: var(--grey-dark);
+    border-radius: 4px;
+    color: #f1f1f1;
+    cursor: pointer;
+    display: inline-flex;
+    height: 200px;
+    justify-content: center;
+    margin-right: 20px;
+    outline-offset: -12px;
+    outline: 2px dashed #f1f1f1;
+    padding: 18px 20px;
+    position: relative;
+    transition: 0.3s ease-in-out;
+    vertical-align: text-top;
+    width: 200px;
+}
+
+#settings .card form .dropbox:hover {
+    color: var(--purple-normal);
+    outline: 2px dashed var(--purple-normal);
+}
+
+#settings .card form .dropbox input {
+    cursor: pointer;
+    height: 200px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+
+#settings .card form .dropbox p {
+    font-size: 15px;
+    padding: 50px 0;
+    text-align: center;
+}
+
+#settings .card form .save-btn {
+    background-color: var(--purple-normal);
+    border: none;
+    border-radius: 3px;
+    color: #f1f1f1;
+    cursor: pointer;
+    display: none;
+    margin-top: -15px;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+}
+
+#settings .card form .save-btn:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 0 0 rgba(var(--grey-dark-rgb), 0.5);
+}
+
+#settings .card form .save-btn:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+#settings .card img {
+    object-fit: cover;
+    border-radius: 4px;
+    display: inline-block;
+    height: 200px;
+    vertical-align: text-top;
+    width: 200px;
+}
+
+#settings .card img.banner {
+    width: calc(100% - 230px);
+}
+
+@media only screen {
+
+    @media (max-width: 935px) {
+
+        #settings {
+            justify-content: initial;
+            padding: 100px 25px;
+        }
+
+        #settings .card {
+            width: 100%
+        }
+
+    }
+
+}
