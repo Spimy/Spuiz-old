@@ -291,8 +291,8 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                 
                 if request.user.is_authenticated:
                     CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
-                                                                    user=request.user,
-                                                                    score=score)
+                                                        user=request.user,
+                                                        score=score)
                 completed = {
                     "score": score,
                     "quiz": selected_quiz
