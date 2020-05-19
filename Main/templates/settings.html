@@ -1,8 +1,56 @@
 {% extends "index.html" %}
 {% load static %}
 
-{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/settings.css' %}">{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'assets/css/markdown_editor.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/settings.css' %}">
+{% endblock %}
 {% block title %}Settings{% endblock %}
 
 {% block content %}
+    <section id="settings">
+    
+        <div class="options">
+            <h2>Settings</h2>
+            <button class="option-btn active">Profile</a>
+            <button class="option-btn">Account</a>
+        </div>
+        
+        <div class="card active">
+            <form id="bio-form" method="post">
+                {% csrf_token %}
+                <h2>Biography</h2>
+                <textarea id="bio" name="bio"></textarea>
+                <button class="save-btn" type="submit">Save</button>
+            </form>
+
+            <form id="avatar-form" method="post">
+                {% csrf_token %}
+                <h2>Avatar</h2>
+                <div class="dropbox">
+                    <input type="file" name="avatar" accept="image/x-png,image/jpeg" class="input-file">
+                    <p>Drop image here or click to upload</p>
+                </div>
+                <img src="{{ user.user_profile.avatar.url }}" alt="{{ user.username }}'s avatar'">
+            </form>
+
+            <form id="banner-form" method="post">
+                {% csrf_token %}
+                <h2>Banner</h2>
+                <div class="dropbox">
+                    <input type="file" name="avatar" accept="image/x-png,image/jpeg" class="input-file">
+                    <p>Drop image here or click to upload</p>
+                </div>
+                <img class="banner" src="{{ user.user_profile.banner.url }}" alt="{{ user.username }}'s banner'">
+            </form>
+        </div>
+
+        <div class="card">
+            <h1 style="margin:0;">This is a work in progress...</h1>
+        </div>
+        
+    </section>
+
+    <script>let original_bio = `{{ user.user_profile.bio }}`;</script>
+    <script src="{% static 'assets/js/settings.js' %}"></script>
 {% endblock %}
