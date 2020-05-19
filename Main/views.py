@@ -192,6 +192,9 @@ def logout_page(request):
     messages.info(request, "You have been logged out.")
     return HttpResponseRedirect(request.GET.get("next", "/"))
 
+def settings_page(request):
+    return render(request, "settings.html")
+
 def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
     
     users = [u.slug for u in UserProfile.objects.all()]
