@@ -6,7 +6,7 @@ from django.http.response import HttpResponse
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
 from .models import *
 from .forms import *
@@ -226,7 +226,42 @@ def settings_page(request):
             user_profile.save()
             
             messages.success(request, "Your banner has been successfully updated.")
-            
+                    
+        else:
+            form = UserEditForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                messages.success(request, "Your account information has been successfully updated.")
+            else:
+                # messages.error(request, "An error has occurred while trying to save your account information.")
+                errors = json.loads(form.errors.as_json())
+
+                for msg in errors:
+                    
+                    error_msg = errors[msg][0]["message"]
+                    
+                    if errors[msg][0]["code"] != "":
+                        error_msg = errors[msg][0]["code"].upper() + ": " + error_msg
+                        
+                    messages.error(request, error_msg)
+                 
+                data = {
+                        "msg": render_to_string(
+                            "static_html/messages.html",
+                            {
+                                "messages": messages.get_messages(request),
+                            },
+                        )
+                    }
+                            
+                response = HttpResponse(
+                    json.dumps(data),
+                    content_type="application/json",
+                )
+                response.status_code = 218
+                return response
+                        
         data = {
                 "msg": render_to_string(
                     "static_html/messages.html",
@@ -246,8 +281,9 @@ def settings_page(request):
         )
         response.status_code = 200
         return response
-    
-    return render(request, "settings.html")
+                    
+    form = UserEditForm(instance=request.user)
+    return render(request, "settings.html", context={"form": form})
 
 def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
     
