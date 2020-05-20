@@ -319,7 +319,7 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                     if key == "csrfmiddlewaretoken": continue
                     
                     for question in selected_quiz.questions.all():
-                        if key.lower() == question.question.lower():
+                        if int(key) == question.pk:
                             
                             answers = question.correct.values("answer")
                             answers = [ans["answer"] for ans in answers]
