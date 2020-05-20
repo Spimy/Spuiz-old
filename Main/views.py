@@ -74,7 +74,7 @@ def calculate_rating(quiz):
     upvotes = quiz.upvotes.count()
     downvotes = quiz.downvotes.count()
     
-    if upvotes <= downvotes:
+    if (upvotes + downvotes) == 0:
         return [0, 5]
     
     fraction = round(upvotes / (upvotes + downvotes), 1)
