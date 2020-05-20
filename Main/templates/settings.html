@@ -17,14 +17,14 @@
         </div>
         
         <div class="card active">
-            <form id="bio-form" method="post">
+            <form id="bio-form" class="bio-form" method="post">
                 {% csrf_token %}
                 <h2>Biography</h2>
                 <textarea id="bio" name="bio"></textarea>
                 <button class="save-btn" type="submit">Save</button>
             </form>
 
-            <form id="avatar-form" method="post">
+            <form id="avatar-form" class="avatar-form" method="post">
                 {% csrf_token %}
                 <h2>Avatar</h2>
                 <div class="dropbox">
@@ -38,7 +38,7 @@
                 {% endif %}
             </form>
 
-            <form id="banner-form" method="post">
+            <form id="banner-form" class="banner-form" method="post">
                 {% csrf_token %}
                 <h2>Banner</h2>
                 <div class="dropbox">
