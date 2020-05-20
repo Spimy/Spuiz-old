@@ -133,6 +133,11 @@
     flex-direction: column;
 }
 
+#user_content .user-content .user-content-left .user-bio img {
+    height: 100%;
+    width: 100%;
+}
+
 #user_content .user-content .user-content-left .user-bio:hover {
     overflow-y: auto;
 }
