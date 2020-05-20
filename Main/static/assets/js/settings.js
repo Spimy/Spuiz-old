@@ -159,4 +159,83 @@ avatar_input.addEventListener("change", () => { ajaxUpload("avatar-form", true) 
 const banner_form = document.getElementById("banner-form");
 const banner_input = banner_form.getElementsByTagName("input")[1];
 banner_input.addEventListener("change", () => { ajaxUpload("banner-form") });
+
+// =====================================================
+
+
+const account_form = document.getElementById("account-form");
+const inputs = account_form.getElementsByTagName("input");
+// =====================================================
+// Invalid update form handling
+// =====================================================
+
+for (const input of inputs) {
+
+    if (input.name == "csrfmiddlewaretoken") continue;
+    
+    const field_label = input.parentElement.getElementsByTagName("label")[0];
+    field_label.innerHTML += " <span class='required'>— field required</span>";
+
+    input.addEventListener("invalid", event => {
+
+        event.preventDefault();
+
+        const required_msg = field_label.getElementsByTagName("span")[0];
+        required_msg.classList.add("show");
+
+        setTimeout(function() {
+            required_msg.classList.remove("show");
+        }, 10*1000);
+
+    })
+
+}
+
+// =====================================================
+
+
+// =====================================================
+// AJAX for update form
+// =====================================================
+
+account_form.addEventListener("submit", event => {
+
+    event.preventDefault();
+    const data = new FormData(account_form);
+    
+    fetch(window.location.href, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": data.get("csrfmiddlewaretoken"),
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: data
+    }).then(async res => {
+
+        const msgs = document.getElementsByClassName("msgs")[0];
+
+        if (res.status === 200) {
+            res.json().then(data => {
+                msgs.innerHTML = data.msg;
+                messageEvent("msg-success", 3);
+
+                for (let i=3; i<inputs.length; i++) {
+                    inputs[i].value = ""
+                }
+            });
+        } else {
+            res.json().then(data => {
+                msgs.innerHTML = data.msg;
+                messageEvent("msg-error", 10);
+
+                for (let i=3; i<inputs.length; i++) {
+                    inputs[i].value = ""
+                }
+            });
+        }
+
+    });
+
+});
+
 // =====================================================
