@@ -59,6 +59,6 @@
         
     </section>
 
-    <script>let original_bio = `{{ user.user_profile.bio }}`;</script>
+    <script>let original_bio = `{{ user.user_profile.bio }}` != "None" ? `{{ user.user_profile.bio }}` : "";</script>
     <script src="{% static 'assets/js/settings.js' %}"></script>
 {% endblock %}
