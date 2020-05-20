@@ -54,7 +54,11 @@
         </div>
 
         <div class="card">
-            <h1 style="margin:0;">This is a work in progress...</h1>
+            <form id="account-form" class="account-form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="save-account-btn" type="submit">Save</button>
+            </form>
         </div>
         
     </section>

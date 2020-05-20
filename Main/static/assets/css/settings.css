@@ -58,6 +58,8 @@ button {
     display: initial;
 }
 
+
+/* Profile section */
 #settings .card form {
     margin-bottom: 30px;
 }
@@ -134,6 +136,87 @@ button {
 
 #settings .card img.banner {
     width: calc(100% - 230px);
+}
+
+
+/* Account section */
+#settings .card .account-form {
+    text-align: center;
+    margin: 0
+}
+
+#settings .card .account-form p {
+    background-color: var(--grey-lighter);
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+#settings .card .account-form label {
+    margin-bottom: 5px;
+}
+
+#settings .card .account-form p label .required {
+    color: #ff4d4d;
+    opacity: 0;
+    transition: 0.3s ease-in-out
+}
+
+#settings .card .account-form p label .required.show {
+    opacity: 1;
+}
+
+#settings .card .account-form p input {
+    background-color: var(--grey-light);
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-family: "Font Awesome 5 Free", "Titillium Web", sans-serif;
+    padding: 10px 15px;
+    width: 100%;
+}
+
+#settings .card .account-form p input::placeholder {
+    color: #f1f1f1;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+#settings .card .account-form p input:-webkit-autofill,
+#settings .card .account-form p input:-webkit-autofill:hover, 
+#settings .card .account-form p input:-webkit-autofill:focus {
+    caret-color: #f1f1f1;
+    -webkit-text-fill-color: #f1f1f1;
+    -webkit-box-shadow: 0 0 0px 1000px var(--grey-light) inset;
+    border: 1px solid #3500d3;
+    box-shadow: 0 0 0px 1000px var(--grey-light) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#settings .card .account-form .save-account-btn {
+    background-color: #3500d3;
+    border: none;
+    border-radius: 3px;
+    color: #f1f1f1;
+    font-family: "Titillium Web", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0 10px;
+    padding: 10px 15px;
+    transition: 0.2s ease-in-out;
+    width: 100%;
+}
+
+#settings .card .account-form .save-account-btn:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 0 0 var(--grey-dark);
+}
+
+#settings .card .account-form .save-account-btn:active {
+    box-shadow: none;
+    transform: translateY(5px);
 }
 
 @media only screen {
