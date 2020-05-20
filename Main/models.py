@@ -21,7 +21,7 @@ class WrongAnswer(models.Model):
 
 class Question(models.Model):
     
-    question = models.CharField(max_length=255, null=True, blank=True)
+    question = models.CharField(max_length=255)
     correct = models.ManyToManyField(CorrectAnswer)
     wrong = models.ManyToManyField(WrongAnswer, blank=True)
     thumbnail = models.ImageField(upload_to="Question_Thumbnails", blank=True, null=True)
