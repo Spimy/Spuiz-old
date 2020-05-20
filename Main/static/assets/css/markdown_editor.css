@@ -46,6 +46,26 @@
     border: none;
     border-radius: 5px;
     color: #f1f1f1;
+    padding-right: calc(100% - 407.69px);
+}
+
+.editor-preview-active > *,
+.editor-preview-active-side > * {
+    margin: 0;
+}
+
+.editor-preview-active > ul,
+.editor-preview-active-side > ul,
+.editor-preview-active > ol,
+.editor-preview-active-side > ol {
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-preview-active img,
+.editor-preview-active-side img {
+    height: 100% !important;
+    width: 100% !important;
 }
 
 .CodeMirror {
