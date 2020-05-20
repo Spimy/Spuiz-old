@@ -204,29 +204,48 @@ def settings_page(request):
     
     if request.method == "POST":
         
+        user_profile = request.user.user_profile
+        
         if "bio" in list(request.POST.keys()):
             
-            user_profile = request.user.user_profile
             user_profile.bio = request.POST["bio"]
             user_profile.save()
             
-            messages.success(request, "Your biography has been successfully edited.")
+            messages.success(request, "Your biography has been successfully updated.")
+        
+        elif "avatar" in list(request.FILES.keys()):
             
-            data = {
-                    "msg": render_to_string(
-                        "static_html/messages.html",
-                        {
-                            "messages": messages.get_messages(request),
-                        },
-                    ),
-                }
-                        
-            response = HttpResponse(
-                json.dumps(data),
-                content_type="application/json",
-            )
-            response.status_code = 200
-            return response
+            user_profile.avatar = request.FILES["avatar"]
+            user_profile.save()
+            
+            messages.success(request, "Your avatar has been successfully updated.")
+        
+        elif "banner" in list(request.FILES.keys()):
+            
+            user_profile.banner = request.FILES["banner"]
+            user_profile.save()
+            
+            messages.success(request, "Your banner has been successfully updated.")
+            
+        data = {
+                "msg": render_to_string(
+                    "static_html/messages.html",
+                    {
+                        "messages": messages.get_messages(request),
+                    },
+                ),
+                "settings": render_to_string(
+                    "settings.html",
+                    request=request
+                )
+            }
+                    
+        response = HttpResponse(
+            json.dumps(data),
+            content_type="application/json",
+        )
+        response.status_code = 200
+        return response
     
     return render(request, "settings.html")
 
