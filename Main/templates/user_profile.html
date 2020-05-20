@@ -105,9 +105,11 @@
 
     <script>
         const user_bio = document.getElementsByClassName("user-bio")[0];
-        const content = user_bio.innerHTML;
-        const marked_content = marked(content);
-        user_bio.innerHTML = marked_content;
+        if (user_bio) {
+            const content = user_bio.innerHTML;
+            const marked_content = marked(content);
+            user_bio.innerHTML = marked_content;
+        }
     </script>
 
 
