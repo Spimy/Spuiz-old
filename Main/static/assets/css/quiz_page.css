@@ -130,6 +130,13 @@
     opacity: 1;
 }
 
+#quiz .quiz-card .question-card .wrapper img {
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+    width: 300px;
+}
+
 #quiz .quiz-card .question-card .wrapper .answer-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -275,6 +282,10 @@
         #quiz .quiz-card .question-card .wrapper p .required.show {
             font-size: inherit;
             opacity: 1;
+        }
+
+        #quiz .quiz-card .question-card .wrapper img {
+            width: 100%;
         }
 
     }
