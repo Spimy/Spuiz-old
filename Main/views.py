@@ -70,8 +70,13 @@ def follow_unfollow_success_response(request, user_slug, matching_quizzes):
 
 
 def calculate_rating(quiz):
+    
     upvotes = quiz.upvotes.count()
     downvotes = quiz.downvotes.count()
+    
+    if downvotes <= upvotes:
+        return [0, 5]
+    
     fraction = round(upvotes / (upvotes + downvotes), 1)
     
     if fraction < 0.1:
