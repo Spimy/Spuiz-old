@@ -87,7 +87,7 @@
 }
 
 .CodeMirror, .CodeMirror-scroll {
-	min-height: fit-content;
+	min-height: 200px;
 }
 
 .CodeMirror-wrap pre {
