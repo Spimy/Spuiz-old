@@ -32,10 +32,9 @@
                 <div class="question-card">
 
                     <div class="wrapper">
+                        <p>Question: {{ question }} <span class="required">— this question must be answered</span><p>
                         {% if quiz.quiz_info.media_quiz %}
                             <img src="{{ MEDIA_URL }}{{ question.thumbnail.url }}" alt="{{ question.question }}">
-                        {% else %}
-                            <p>Question: {{ question }} <span class="required">— this question must be answered</span><p>
                         {% endif %}
                     </div>
 
