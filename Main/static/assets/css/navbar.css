@@ -99,7 +99,7 @@
     border-radius: 50%;
     height: 35px;
     object-fit: cover;
-    object-position: 30% 30%;
+    object-position: center;
     width: 35px;
 }
 
