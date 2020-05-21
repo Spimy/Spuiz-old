@@ -141,7 +141,6 @@ button {
 
 /* Account section */
 #settings .card .account-form {
-    text-align: center;
     margin: 0
 }
 
@@ -232,6 +231,20 @@ button {
             width: 100%
         }
 
+    }
+
+    @media (max-width: 790px) {
+        #settings .card .account-form p label .required {
+            color: #ff4d4d;
+            font-size: 0;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+        }
+        
+        #settings .card .account-form p label .required.show {
+            font-size: inherit;
+            opacity: 1;
+        }
     }
 
 }
