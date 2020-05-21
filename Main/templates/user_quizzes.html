@@ -1,0 +1,92 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/user_quizzes.css' %}">{% endblock %}
+{% block title %}Quizzes by {{ viewing_user.username }}{% endblock %}
+
+{% block content %}
+
+    {% csrf_token %}
+    <section id="user_profile">
+
+        {% if not viewing_user.user_profile.banner %}
+            <div class="backdrop-div"></div>
+        {% else %}
+            <img class="backdrop" src="{{ MEDIA_URL }}{{ viewing_user.user_profile.banner.url }}" alt="{{ quiz.quiz_info.title }}">
+        {% endif %}
+
+        <div class="user-info">
+            {% if not viewing_user.user_profile.avatar %}
+                    <img class="user-avatar" src="{% static 'assets/img/default.png' %}">
+                {% else %}
+                    <img class="user-avatar" src="{{ MEDIA_URL }}{{ viewing_user.user_profile.avatar.url }}">
+            {% endif %}
+            <div class="user-info-content">
+                <h2 class="user-username">{{ viewing_user.username }}</h2>
+                <nav class="user-nav">
+                    <div class="user-nav-left">
+                        <a href="/{{ viewing_user.user_profile.slug }}">Overview</a>
+                        <a href="/{{ viewing_user.user_profile.slug }}/quizzes">Quizzes</a>
+                        <a href="/{{ viewing_user.user_profile.slug }}/social">Social</a>
+                    </div>
+                    <div class="user-nav-right">
+                        {% if user.is_authenticated and user == viewing_user %}
+                            <a href="/settings">Edit Profile</a>
+                        {% else %}
+                            {% if not viewing_user in user.user_profile.following.all %}
+                                <a class="follow-unfollow" href="/{{ viewing_user.user_profile.slug }}/action/follow/">Follow</a>
+                            {% else %}
+                                <a class="follow-unfollow" href="/{{ viewing_user.user_profile.slug }}/action/unfollow/">Unfollow</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section id="user_quizzes">
+        <div class="options">
+            <h2>Options</h2>
+            <button class="option-btn active">Created Quiz</button>
+            <button class="option-btn">Completed Quiz</button>
+            {% if user.is_authenticated and user == viewing_user %}<a class="option-btn-link" href="/create-quiz">Make Quiz</a>{% endif %}
+        </div>
+
+        <div class="card active">
+            {% if created_quiz.count == 0 %}
+                <h1 class="none">{% if user.is_authenticated and user == viewing_user %}You have{% else %}This user has{% endif %} not created any quizzes...</h1>
+            {% else %}
+                <h1>Created</h1>
+                {% for quiz in created_quiz %}
+                <a class="quiz" href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}">
+                    <img src="{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                    <h4>{{ quiz.title }}</h4>
+                    <div class="right">
+                        <span><i class="fas fa-thumbs-up"></i>{{ quiz.upvotes.count }}</span>
+                        <span><i class="fas fa-thumbs-down"></i>{{ quiz.downvotes.count }}</span>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="card">
+            {% if completed_quiz.count == 0 %}
+                <h1 class="none">{% if user.is_authenticated and user == viewing_user %}You have{% else %}This user has{% endif %} not completed any quizzes...</h1>
+            {% else %}
+                <h1>Completed</h1>
+                {% for completed in completed_quiz %}
+                <a class="quiz" href="/{{ viewing_user.user_profile.slug }}/{{ completed.quiz.slug }}">
+                    <img src="{{ completed.quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                    <h4>{{ completed.quiz.title }}</h4>
+                    <div class="right">
+                        <span><i class="fas fa-star"></i>{{ completed.score }}/{{ completed.quiz.questions.count }}</span>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+    <script src="{% static '/assets/js/user_quizzes.js' %}"></script>
+{% endblock %}
