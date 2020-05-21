@@ -489,7 +489,7 @@ def user_quizzes(request, user_slug):
         return render(request, "user_quizzes.html", context={"viewing_user": viewing_user,
                                                              "created_quiz": created_quiz,
                                                              "completed_quiz": completed_quiz})
-    except:
+    except UserProfile.DoesNotExist:
         raise Http404("User not found")
 
 def user_social(request, user_slug):
