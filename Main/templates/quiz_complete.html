@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block styles %}<link rel="stylesheet" href="{% static 'assets/css/quiz_complete.css' %}">{% endblock %}
-{% block title %}{{ completed.quiz.quiz_info.title }} by {{ completed.quiz.quiz_info.author.username }}{% endblock %}
+{% block title %}{{ completed.quiz.title }} by {{ completed.quiz.author.username }}{% endblock %}
 
 {% block content %}
     {% with total_score=completed.quiz.questions.all.count %}
