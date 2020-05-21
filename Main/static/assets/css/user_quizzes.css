@@ -191,10 +191,23 @@ button {
 
 @media only screen {
 
+    @media (max-width: 935px) {
+
+        #user_quizzes {
+            justify-content: initial;
+            padding: 0 25px 100px 25px;
+        }
+
+        #user_quizzes .card {
+            width: 100%
+        }
+
+    }
+
     @media (max-width: 750px) {
 
         #user_profile {
-            padding: 50% 0 100px 0;
+            padding: 50% 0 5% 0;
         }
 
         #user_profile .user-info .user-info-content {
@@ -216,6 +229,21 @@ button {
         #user_quizzes .card .none {
             font-size: 15px;
         }
-        
+
     }
+
+    @media (max-width: 500px) {
+
+        #user_quizzes .card .quiz h4 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #user_quizzes .card .quiz .right {
+            display: none;
+        }
+
+    }
+
 }
