@@ -493,7 +493,15 @@ def user_quizzes(request, user_slug):
         raise Http404("User not found")
 
 def user_social(request, user_slug):
-    return HttpResponse(404)
+    try:
+        viewing_user = UserProfile.objects.get(slug=user_slug).user
+        followings = viewing_user.user_profile.following.order_by("username").all()
+        followers = UserProfile.objects.filter(following__in=[viewing_user]).all()
+        return render(request, "user_social.html", context={"viewing_user": viewing_user,
+                                                             "followings": followings,
+                                                             "followers": followers})
+    except:
+        raise Http404("User not found")
 
 def handler404(request, exception):
     response = render(request, "errors/404.html", context={"exception": exception})
