@@ -28,5 +28,7 @@ urlpatterns = [
     path("settings/", views.settings_page, name="settings_page"),
     path("<user_slug>/", views.user_quiz_slug, name="user_slug"),
     path("<user_slug>/action/<action_slug>/", views.user_quiz_slug, name="action_slug"),
+    path("<user_slug>/quizzes/", views.user_quizzes, name="user_quizzes"),
+    path("<user_slug>/social/", views.user_social, name="user_social"),
     path("<user_slug>/<quiz_slug>/", views.user_quiz_slug, name="user_quiz_slug"),
 ]
