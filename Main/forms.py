@@ -110,8 +110,6 @@ class UserEditForm(forms.ModelForm):
         model = User
         fields = ("username", "email")
     
-    current_password_flag = True
-    
     username = forms.CharField(widget=forms.TextInput(attrs={"placeholder": "\uf007"}))
     email = forms.EmailField(required=True, label="Email", max_length=255, 
                              widget=forms.EmailInput(attrs={
@@ -122,10 +120,6 @@ class UserEditForm(forms.ModelForm):
     password = forms.CharField(label="New Password", widget=forms.PasswordInput(attrs={"placeholder": "\uf023"}), required=False)
     password_confirm = forms.CharField(label="New Password confirmation", widget=forms.PasswordInput(attrs={"placeholder": "\uf023"}), required=False)
     current_password = forms.CharField(label="Current Password Confirmation", widget=forms.PasswordInput(attrs={"placeholder": "\uf023"}))
-    
-    def set_current_password_flag(self): 
-        self.current_password_flag = False
-        return 0
     
     def clean(self):
         cleaned_data = super(UserEditForm, self).clean()
@@ -159,9 +153,9 @@ class UserEditForm(forms.ModelForm):
         current_password = self.cleaned_data.get('current_password')
 
         if not current_password:
-            raise forms.ValidationError("You must enter your old password.")
+            raise forms.ValidationError("Please enter your current password.")
 
-        if self.current_password_flag == False:
+        if not self.user.check_password(current_password):
             raise forms.ValidationError("Incorrect current password provided.")
             
         return cleaned_data
