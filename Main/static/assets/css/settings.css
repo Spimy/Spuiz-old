@@ -3,6 +3,10 @@ a, i {
     text-decoration: none;
 }
 
+h1 {
+    margin: 0;
+}
+
 h2 {
     font-size: 13px;
     font-weight: 500;
