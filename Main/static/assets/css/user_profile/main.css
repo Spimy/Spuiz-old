@@ -52,6 +52,8 @@
 }
 
 #user_profile .user-info .user-info-content .user-username {
+    font-size: 1.5em;
+    font-weight: bold;
     margin: 10px 25px;
 }
 
