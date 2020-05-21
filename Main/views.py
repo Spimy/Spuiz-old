@@ -482,16 +482,14 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
     raise Http404("User not found")
 
 def user_quizzes(request, user_slug):
-    
-    users = [u.slug for u in UserProfile.objects.all()]
-    if user_slug in users:
+    try:
         viewing_user = UserProfile.objects.get(slug=user_slug).user
         created_quiz = Quiz.objects.filter(author__user_profile__slug=user_slug)
         completed_quiz = CompletedQuiz.objects.filter(user__user_profile__slug=user_slug)
         return render(request, "user_quizzes.html", context={"viewing_user": viewing_user,
-                                                            "created_quiz": created_quiz,
-                                                            "completed_quiz": completed_quiz})
-    else:
+                                                             "created_quiz": created_quiz,
+                                                             "completed_quiz": completed_quiz})
+    except:
         raise Http404("User not found")
 
 def user_social(request, user_slug):
