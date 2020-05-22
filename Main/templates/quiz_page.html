@@ -11,7 +11,11 @@
         
         <form class="quiz-info" method="POST">
             {% csrf_token %}
+            {% if quiz.quiz_info.author.user_profile.avatar %}
             <img class="author-avatar" src={{ MEDIA_URL }}{{ quiz.quiz_info.author.user_profile.avatar.url }} alt="{{ quiz.quiz_info.author.username }}">
+            {% else %}
+            <img class="author-avatar" src="{% static 'assets/img/default.png' %}" alt="{{ quiz.quiz_info.author.username }}">
+            {% endif %}
             <div class="quiz-info-wrapper">
                 <div class="quiz-info-text">
                     <a href="." class="quiz-title"><h2>{{ quiz.quiz_info.title }}</h2></a>
