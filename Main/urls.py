@@ -26,6 +26,7 @@ urlpatterns = [
     path("login/", views.login_page, name="login_page"),
     path("register/", views.register_page, name="register_page"),
     path("settings/", views.settings_page, name="settings_page"),
+    path("create-quiz/", views.create_quiz_page, name="create_quiz_page"),
     path("<user_slug>/", views.user_quiz_slug, name="user_slug"),
     path("<user_slug>/action/<action_slug>/", views.user_quiz_slug, name="action_slug"),
     path("<user_slug>/quizzes/", views.user_quizzes, name="user_quizzes"),
