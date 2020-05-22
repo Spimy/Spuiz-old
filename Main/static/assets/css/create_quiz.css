@@ -1,0 +1,10 @@
+#create_quiz {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 75px 0 75px 0;
+}
+
+#create_quiz .quiz-creator {
+    margin: auto;
+}
