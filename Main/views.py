@@ -503,6 +503,63 @@ def user_social(request, user_slug):
     except:
         raise Http404("User not found")
 
+def create_quiz_page(request):
+    
+    if not request.user.is_authenticated:
+        return redirect("Main:home_page")
+    
+    if request.method == "POST":
+        quiz_info = json.loads(request.POST["quiz"])
+        quiz_files = request.FILES
+
+        quiz = Quiz.objects.create(title=quiz_info["title"],
+                                   thumbnail=quiz_files["thumbnail"],
+                                   media_quiz=quiz_info["media_quiz"],
+                                   mcq=quiz_info["mcq"],
+                                   author=request.user)
+        
+        quiz_questions = quiz_info["questions"]
+        
+        for item in quiz_questions:
+            for question, question_info in item.items():
+                
+                correct_answers = []
+                wrong_answers = []
+                
+                for correct_answer in question_info["correct"]:
+                    answer, created = CorrectAnswer.objects.get_or_create(answer=correct_answer)
+                    correct_answers.append(answer)
+                
+                for wrong_answer in question_info["wrong"]:
+                    if wrong_answer == "": continue
+                    answer, created = WrongAnswer.objects.get_or_create(answer=wrong_answer)
+                    wrong_answers.append(answer)
+                
+                created_question = Question.objects.create(question=question)
+                created_question.correct.set(correct_answers)
+                created_question.wrong.set(wrong_answers)
+                
+                if quiz_info["media_quiz"]:
+                    created_question.thumbnail = quiz_files[question_info["thumbnail"]]
+                    created_question.save()
+                    
+                quiz.questions.add(created_question)
+
+        messages.success(request, f"Successfully created the Quiz \"{quiz_info['title']}\"")
+        
+        data = {
+                "quiz_url": f"/{request.user.user_profile.slug}/{quiz.slug}"
+            }
+                    
+        response = HttpResponse(
+            json.dumps(data),
+            content_type="application/json",
+        )
+        response.status_code = 200
+        return response
+    
+    return render(request, "create_quiz.html")
+
 def handler404(request, exception):
     response = render(request, "errors/404.html", context={"exception": exception})
     return response
