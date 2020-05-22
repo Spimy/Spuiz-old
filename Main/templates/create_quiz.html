@@ -1,0 +1,67 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/create_quiz.css' %}">{% endblock %}
+{% block title %}Quiz Creator{% endblock %}
+
+{% block content %}
+    <section id="create_quiz">
+        <form id="quiz-creator" class="quiz-creator" method="post">
+
+            {% csrf_token %}
+
+            <div>
+                <h1>Quiz Title</h1>
+                <input id="quiz_title" name="quiz_title" type="text" required>
+            </div>
+            
+            <div>
+                <h2>Quiz Thumbnail</h2>
+                <input type="file" name="quiz_thumbnail" id="quiz_thumbnail" accept="image/x-png,image/jpeg" required>
+                <p>Drop image here or click to upload</p>
+            </div>
+
+            <div>
+                <label for="media_quiz">Media Quiz</label>
+                <input type="checkbox" name="media_quiz" id="media_quiz">
+            </div>
+
+            <div>
+                <label for="mcq">Multiple Choice</label>
+                <input type="checkbox" name="mcq" id="mcq">
+            </div>
+
+            <div class="questions-container">
+                <h2>Questions</h2>
+                <div class="question-container">
+                    <input type="text" name="question_1" required>
+                    <input type="button" name="question_position_1" value="+" onclick="addQuestion()">
+                    <div>
+                        <div class="correct-answer-container">
+                            <h3>Correct Answers</h3>
+                            <div class="correct-answers">
+                                <div>
+                                    <input type="text" name="correct_answer_1" placeholder="..." required>
+                                    <input type="button" name="correct_position_1" value="+" onclick="addAnswer('correct', 0)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrong-answer-container">
+                            <h3>Wrong Answers</h3>
+                            <div class="wrong-answers">
+                                <div>
+                                    <input type="text" name="wrong_answer_1" placeholder="...">
+                                    <input type="button" name="wrong_position_1" value="+" onclick="addAnswer('wrong', 0)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">Create Quiz</button>
+        </form>
+    </section>
+
+    <script src="{% static 'assets/js/create_quiz.js' %}"></script>
+{% endblock %}
