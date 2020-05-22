@@ -85,7 +85,9 @@
     padding: 5px 10px;
 }
 
-#sticky_nav .nav-right .avatar-container .user-dropdown a:hover {
+#sticky_nav .nav-right .avatar-container .user-dropdown a:hover,
+#sticky_nav .nav-right .avatar-container .user-dropdown a:active,
+#sticky_nav .nav-right .avatar-container .user-dropdown a:focus {
     background-color: var(--purple-light);
 }
 
