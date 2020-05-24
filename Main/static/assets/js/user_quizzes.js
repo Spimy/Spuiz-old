@@ -73,3 +73,49 @@ if (follow_unfollow_btn) {
 
 
 // =====================================================
+
+
+let selected_quiz;
+
+const editPage = (page) => {
+    event.preventDefault();
+    window.location = page;
+}
+
+const showConfirmation = (quiz_title, quiz_slug) => {
+    event.preventDefault();
+    const delete_confirmation = document.getElementById("delete_confirmation");
+
+    selected_quiz = quiz_slug;
+    delete_confirmation.getElementsByTagName("h1")[0].innerHTML = `Are you sure you want to delete "${quiz_title}"?`;
+    delete_confirmation.style.transform = "scale(1)";
+    delete_confirmation.style.backgroundColor = "rgba(var(--grey-dark-rgb), 0.8)";
+}
+
+const closeConfirmation = () => {
+    event.preventDefault();
+    const delete_confirmation = document.getElementById("delete_confirmation");
+    delete_confirmation.removeAttribute("style");
+}
+
+const deleteQuiz = () => {
+
+    const token = document.getElementsByTagName("input")[0].value;
+    const data = new FormData();
+    data.append("token", token);
+    data.append("delete", selected_quiz);
+
+    fetch(window.location.href, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": data.get("csrfmiddlewaretoken"),
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: data
+    }).then(async res => {
+        if (res === 200) {
+            location.reload();
+        }
+    });
+
+}
