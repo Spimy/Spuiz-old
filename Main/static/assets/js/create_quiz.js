@@ -210,6 +210,11 @@ quiz_creator_form.addEventListener("submit", event => {
             res.json().then(data => {
                 window.location = data.quiz_url;
             });
+        } else {
+            res.json().then(data => {
+                msgs.innerHTML = data.msg;
+                messageEvent("msg-error", 10);
+            });
         }
     });
 
