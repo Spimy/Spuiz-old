@@ -565,6 +565,54 @@ def create_quiz_page(request):
     
     return render(request, "create_quiz.html")
 
+def edit_quiz_slug(request, user_slug, quiz_slug):
+
+    if not request.user.is_authenticated:
+        return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+    try:
+        user = UserProfile.objects.get(slug=user_slug).user
+        if request.user != user:
+            return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+            
+        try:
+            quiz = Quiz.objects.get(slug=quiz_slug, author=user)
+
+            if request.method == "POST":
+                quiz.title = request.POST["title"]
+                quiz.thumbnail = request.FILES["thumbnail"]
+                quiz.save()
+
+                messages.success(request, f"Successfully updated quiz to \"{request.POST['title']}\"")
+                data = {
+                    "quiz_url": f"/{request.user.user_profile.slug}/{quiz.slug}"
+                }
+                    
+                response = HttpResponse(
+                    json.dumps(data),
+                    content_type="application/json",
+                )
+                response.status_code = 200
+                return response
+                    
+            return render(request, "edit_quiz.html", context={"quiz": quiz})
+        except:
+            raise Http404("Quiz not found")
+
+    except:
+        raise Http404("User not found")
+
+def delete_quiz_slug(request, user_slug, quiz_slug):
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+        try:
+            user = UserProfile.objects.get(slug=user_slug)
+            quiz = Quiz.objects.get(slug=quiz_slug, author=user).user
+        except:
+            return redirect("Main:home_page")
+    else:
+        return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+
 def handler404(request, exception):
     response = render(request, "errors/404.html", context={"exception": exception})
     return response
