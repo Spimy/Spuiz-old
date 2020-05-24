@@ -32,4 +32,6 @@ urlpatterns = [
     path("<user_slug>/quizzes/", views.user_quizzes, name="user_quizzes"),
     path("<user_slug>/social/", views.user_social, name="user_social"),
     path("<user_slug>/<quiz_slug>/", views.user_quiz_slug, name="user_quiz_slug"),
+    path("<user_slug>/<quiz_slug>/edit/", views.edit_quiz_slug, name="edit_quiz_slug"),
+    path("<user_slug>/<quiz_slug>/delete/", views.delete_quiz_slug, name="delete_quiz_slug"),
 ]
