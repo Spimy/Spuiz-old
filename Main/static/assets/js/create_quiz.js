@@ -207,7 +207,6 @@ quiz_creator_form.addEventListener("submit", event => {
         body: data
     }).then(async res => {
         if (res.status === 200) {
-            console.log("WORKED!")
             res.json().then(data => {
                 window.location = data.quiz_url;
             });
