@@ -101,7 +101,7 @@
 
     </section>
 
-    {% if user.is_authenticated and user != viewing_user %}<script src="{% static 'assets/js/user_profile/ajax.js' %}"></script>{% endif %}
+    {% if user.is_authenticated and user != viewing_user or not user.is_authenticated %}<script src="{% static 'assets/js/user_profile/ajax.js' %}"></script>{% endif %}
 
     <script>
         const user_bio = document.getElementsByClassName("user-bio")[0];
