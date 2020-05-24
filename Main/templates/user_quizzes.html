@@ -77,7 +77,7 @@
             {% else %}
                 <h1>Completed</h1>
                 {% for completed in completed_quiz %}
-                <a class="quiz" href="/{{ viewing_user.user_profile.slug }}/{{ completed.quiz.slug }}">
+                <a class="quiz" href="/{{ completed.quiz.author.user_profile.slug }}/{{ completed.quiz.slug }}">
                     <img src="{{ completed.quiz.thumbnail.url }}" alt="{{ quiz.title }}">
                     <h4>{{ completed.quiz.title }}</h4>
                     <div class="right">
