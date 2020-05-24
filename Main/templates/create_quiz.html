@@ -10,39 +10,48 @@
 
             {% csrf_token %}
 
+            <h1 class="form-title">Quiz Creator</h1>
+
             <div>
-                <h1>Quiz Title</h1>
-                <input id="quiz_title" name="quiz_title" type="text" required>
+                <h2>Quiz Title</h2>
+                <input id="quiz_title" name="quiz_title" type="text" placeholder="..." required>
             </div>
             
-            <div>
+            <div class="quiz_thumbnail">
                 <h2>Quiz Thumbnail</h2>
-                <input type="file" name="quiz_thumbnail" id="quiz_thumbnail" accept="image/x-png,image/jpeg" required>
-                <p>Drop image here or click to upload</p>
+                <div class="dropbox">
+                    <input type="file" name="quiz_thumbnail" id="quiz_thumbnail" accept="image/x-png,image/jpeg" onchange="showPreview(event)" required>
+                    <p>Drop image here or click to upload</p>
+                    <img style="display: none;" class="thumabnail-preview">
+                </div>
+                <input type="button" onclick="clearPreview(this)" value="Reset Thumbnail" class="reset-thumbnail-btn">
             </div>
 
-            <div>
-                <label for="media_quiz">Media Quiz</label>
-                <input type="checkbox" name="media_quiz" id="media_quiz">
-            </div>
-
-            <div>
-                <label for="mcq">Multiple Choice</label>
-                <input type="checkbox" name="mcq" id="mcq">
+            <div class="options">
+                <div>
+                    <input type="checkbox" name="media_quiz" id="media_quiz">
+                    <label for="media_quiz">Media Quiz</label>
+                </div>
+    
+                <div>
+                    <input type="checkbox" name="mcq" id="mcq">
+                    <label for="mcq">Multiple Choice</label>
+                </div>
             </div>
 
             <div class="questions-container">
                 <h2>Questions</h2>
                 <div class="question-container">
-                    <input type="text" name="question_1" required>
-                    <input type="button" name="question_position_1" value="+" onclick="addQuestion()">
+                    <h3>Question</h3>
+                    <input type="text" name="question_1" placeholder="..." required>
+                    <input type="button" name="question_position_1" value="Add more questions" onclick="addQuestion()" class="add-question-btn">
                     <div>
                         <div class="correct-answer-container">
                             <h3>Correct Answers</h3>
                             <div class="correct-answers">
                                 <div>
                                     <input type="text" name="correct_answer_1" placeholder="..." required>
-                                    <input type="button" name="correct_position_1" value="+" onclick="addAnswer('correct', 0)">
+                                    <input type="button" name="correct_position_1" value="+" onclick="addAnswer('correct')">
                                 </div>
                             </div>
                         </div>
@@ -51,7 +60,7 @@
                             <div class="wrong-answers">
                                 <div>
                                     <input type="text" name="wrong_answer_1" placeholder="...">
-                                    <input type="button" name="wrong_position_1" value="+" onclick="addAnswer('wrong', 0)">
+                                    <input type="button" name="wrong_position_1" value="+" onclick="addAnswer('wrong')">
                                 </div>
                             </div>
                         </div>
@@ -59,7 +68,7 @@
                 </div>
             </div>
 
-            <button type="submit">Create Quiz</button>
+            <button class="create-quiz-btn" type="submit">Create Quiz</button>
         </form>
     </section>
 
