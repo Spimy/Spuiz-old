@@ -18,6 +18,100 @@ button {
     font-family: "Titillium Web", sans-serif;
 }
 
+#delete_confirmation {
+    align-items: center;
+    background-color: none;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    transform: scale(0);
+    width: 100%;
+    transition: transform 0.3s ease-in-out, background-color 1s ease-in-out;
+}
+
+#delete_confirmation .card {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    color: #f1f1f1;
+    padding: 25px;
+}
+
+#delete_confirmation .card h1 {
+    font-size: 15px;
+    margin: 0;
+}
+
+#delete_confirmation .card .items {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#delete_confirmation .card .items button {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+#delete_confirmation .card .items button:first-child {
+    background-color: var(--grey-lighter);
+    color: #f1f1f1;
+    margin-right: 10px;
+}
+
+#delete_confirmation .card .items button:nth-child(2) {
+    background-color: #ff4d4d;
+    color: var(--grey-dark);
+}
+
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-container:hover .dropdown-options,
+.dropdown-container:focus .dropdown-options {
+    opacity: 1;
+    transition: visibility 1s, opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+    top: 100%;
+    visibility: visible;
+}
+
+.dropdown-options {
+    background-color: var(--grey-lighter);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    opacity: 0;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-15%);
+    transition: visibility 0s, opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+    visibility: hidden;
+    width: 110px;
+    z-index: 1;
+}
+
+.dropdown-options button {
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    color: #f1f1f1;
+    cursor: pointer;
+    margin: 5px 0;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+}
+
+.dropdown-options button:hover {
+    background-color: var(--purple-normal);
+}
+
 #user_profile {
     align-items: center;
     color: #f1f1f1;
