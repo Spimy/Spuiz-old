@@ -5,15 +5,15 @@
 const media_quiz_checkbox = document.getElementById("media_quiz");
 media_quiz_checkbox.addEventListener("change", () => {
     
-    const questions = document.querySelectorAll(".questions-container > div")
-    // const questions_input = document.querySelectorAll(".questions-container > div > input")
-    const questions_add_btn = document.querySelectorAll(".questions-container > div > input:nth-child(2)")
+    const questions = document.querySelectorAll(".questions-container > div");
+    const questions_add_btn = document.querySelectorAll(".questions-container > div > input:nth-child(2)");
 
     for (let i=0; i<questions.length; i++) {
         if (media_quiz_checkbox.checked) {
-            questions_add_btn[i].insertAdjacentHTML("afterend", `<input type="file" class="question_thumbnail" accept="image/x-png,image/jpeg" required>`);
+            questions_add_btn[i].insertAdjacentHTML("afterend", `<div class="dropbox"><input type="file" class="question_thumbnail" accept="image/x-png,image/jpeg" onchange="showPreview(event)" required><p>Drop image here or click to upload</p><img style="display: none;" class="thumabnail-preview"></div><input type="button" onclick="clearPreview(this)" value="Reset Thumbnail" class="reset-thumbnail-btn">`);
         } else {
-            questions[i].removeChild(questions[i].getElementsByClassName(`question_thumbnail`)[0]);
+            questions[i].removeChild(questions[i].getElementsByClassName("dropbox")[0]);
+            questions[i].removeChild(questions[i].getElementsByClassName("reset-thumbnail-btn")[0]);
         }
     } 
 
@@ -36,14 +36,14 @@ const addAnswer = (type) => {
         correct_answer_counter++;
     
         const div = document.createElement("div");
-        div.innerHTML = `<input type="text" name="correct_answer_${correct_answer_counter}"  placeholder="..."> <input type="button" name="correct_position_${correct_answer_counter}" value="-" onclick="removeAnswer(this, '${type}')">`
+        div.innerHTML = `<input class="created" type="text" name="correct_answer_${correct_answer_counter}"  placeholder="..."> <input type="button" name="correct_position_${correct_answer_counter}" value="-" onclick="removeAnswer(this, '${type}')">`
         
         document.activeElement.parentElement.parentElement.parentElement.getElementsByClassName("correct-answers")[0].appendChild(div);
     } else if (type == "wrong") {
         wrong_answer_counter++;
     
         const div = document.createElement("div");
-        div.innerHTML = `<input type="text" name="wrong_answer_${wrong_answer_counter}"  placeholder="..."> <input type="button" name="wrong_position_${wrong_answer_counter}" value="-" onclick="removeAnswer(this, '${type}')">`
+        div.innerHTML = `<input class="created" type="text" name="wrong_answer_${wrong_answer_counter}"  placeholder="..."> <input type="button" name="wrong_position_${wrong_answer_counter}" value="-" onclick="removeAnswer(this, '${type}')">`
         
         document.activeElement.parentElement.parentElement.parentElement.getElementsByClassName("wrong-answers")[0].appendChild(div);
     }
@@ -71,9 +71,10 @@ let question_counter = 1;
 
 const questionString = (counter) => {
     return `
-        <input type="text" name="question_${counter}" required>
+        <h3>Question</h3>
+        <input type="text" name="question_${counter}" placeholder="..." required>
         <input type="button" name="question_position_${counter}" value="-" onclick=removeQuestion(this)>
-        ${media_quiz_checkbox.checked ? '<input type="file" name="question_thumbnail" class="question_thumbnail" accept="image/x-png,image/jpeg" required>' : ''}
+        ${media_quiz_checkbox.checked ? `<div class="dropbox"><input type="file" class="question_thumbnail" accept="image/x-png,image/jpeg" onchange="showPreview(event)" required><p>Drop image here or click to upload</p><img style="display: none;" class="thumabnail-preview"></div><input type="button" onclick="clearPreview(this)" value="Reset Thumbnail" class="reset-thumbnail-btn">` : ''}
         <div>
             <div class="correct-answer-container">
                 <h3>Correct Answers</h3>
@@ -219,5 +220,43 @@ quiz_creator_form.addEventListener("submit", event => {
     });
 
 });
+
+// =====================================================
+
+
+
+// =====================================================
+// Image preview for thumbnails
+// =====================================================
+
+const dropboxes = document.getElementsByClassName("dropbox");
+for (const dropbox of dropboxes) {
+    dropbox.addEventListener("dragover", () => {
+        dropbox.style.color = "var(--purple-normal)";
+        dropbox.style.outline = "2px dashed var(--purple-normal)";
+    });
+    dropbox.addEventListener("dragleave", () => {
+        dropbox.removeAttribute("style");
+    });
+}
+
+const showPreview = (event) => {
+    if (event.target.files.length > 0) {
+        const src = URL.createObjectURL(event.target.files[0]);
+        const preview = event.target.parentElement.getElementsByClassName("thumabnail-preview")[0];
+
+        preview.src = src;
+        preview.style.display = "block";
+        preview.style.cursor = "initial";
+    }
+}
+
+const clearPreview = (btn) => {
+    const preview = btn.parentElement.getElementsByClassName("thumabnail-preview")[0];
+    preview.src = "";
+    preview.style.display = "none";
+    preview.parentElement.removeAttribute("style");
+    preview.parentElement.getElementsByTagName("input")[0].value = "";
+}
 
 // =====================================================
