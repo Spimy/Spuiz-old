@@ -511,8 +511,13 @@ def create_quiz_page(request):
     if request.method == "POST":
         quiz_info = json.loads(request.POST["quiz"])
         quiz_files = request.FILES
+        
+        if Quiz.objects.filter(title=quiz_info["title"].strip(),
+                               author=request.user).exists():
+            messages.error(request, "You have already created a quiz of the same title.")
+            return error_msg_response(request)
 
-        quiz = Quiz.objects.create(title=quiz_info["title"],
+        quiz = Quiz.objects.create(title=quiz_info["title"].strip(),
                                    thumbnail=quiz_files["thumbnail"],
                                    media_quiz=quiz_info["media_quiz"],
                                    mcq=quiz_info["mcq"],
