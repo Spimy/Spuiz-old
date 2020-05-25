@@ -37,8 +37,13 @@ const submitForm = (event) => {
     }).then(async res => {
         if (res.status === 200) {
             res.json().then(data => {
-                console.log(data.quiz_url)
                 window.location = data.quiz_url;
+            });
+        } else {
+            const msgs = document.getElementsByClassName("msgs")[0];
+            res.json().then(value => {
+                msgs.innerHTML = value.msg;
+                messageEvent("msg-error", 10);
             });
         }
     });
