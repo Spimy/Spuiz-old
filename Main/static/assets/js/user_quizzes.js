@@ -82,37 +82,41 @@ const editPage = (page) => {
     window.location = page;
 }
 
-const showConfirmation = (quiz_title) => {
+const showConfirmation = (event) => {
     event.preventDefault();
-    const delete_confirmation = document.getElementById("delete_confirmation");
-
-    delete_confirmation.getElementsByTagName("h1")[0].innerHTML = `Are you sure you want to delete "${quiz_title}"?`;
+    const delete_confirmation = event.target.parentElement.parentElement.parentElement.getElementsByClassName("delete_confirmation")[0];
     delete_confirmation.style.transform = "scale(1)";
     delete_confirmation.style.backgroundColor = "rgba(var(--grey-dark-rgb), 0.8)";
 }
 
-const closeConfirmation = () => {
-    event.preventDefault();
-    const delete_confirmation = document.getElementById("delete_confirmation");
+const closeConfirmation = (btn) => {
+    const delete_confirmation = btn.parentElement.parentElement.parentElement;
     delete_confirmation.removeAttribute("style");
 }
 
-const deleteQuiz = () => {
+const deleteQuiz = (event) => {
+
+    event.preventDefault();
 
     const token = document.getElementsByTagName("input")[0].value;
     const data = new FormData();
-    data.append("token", token);
+    data.append("csrfmiddlewaretoken", token);
 
-    fetch(`${window.location.href}${selected_quiz}/delete/`, {
-        method: "POST",
+    fetch(event.target.href, {
+        method: "DELETE",
         headers: {
             "X-CSRFToken": data.get("csrfmiddlewaretoken"),
             "X-Requested-With": "XMLHttpRequest"
-        },
-        body: data
+        }
     }).then(async res => {
         if (res.status === 200) {
             location.reload();
+        } else {
+            const msgs = document.getElementsByClassName("msgs")[0];
+            res.json().then(value => {
+                msgs.innerHTML = value.msg;
+                messageEvent("msg-error", 10);
+            });
         }
     });
 
