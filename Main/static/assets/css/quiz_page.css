@@ -72,7 +72,6 @@
 #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns .quiz-updownvote {
@@ -258,6 +257,11 @@
 
         #quiz .quiz-info {
             text-align: center;
+        }
+        
+        #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns {
+            justify-content: center;
+
         }
 
         #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns .quiz-updownvote:hover {
