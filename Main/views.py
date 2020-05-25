@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponse
 from django.db.models import Count
+from django.utils.text import slugify
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -377,9 +378,9 @@ def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
                         if int(key) == question.pk:
                             
                             answers = question.correct.values("answer")
-                            answers = [ans["answer"] for ans in answers]
+                            answers = [ans["answer"].lower() for ans in answers]
                             
-                            if answer in answers:
+                            if answer.lower() in answers:
                                 score += 1
                 
                 if request.user.is_authenticated:
@@ -512,7 +513,7 @@ def create_quiz_page(request):
         quiz_info = json.loads(request.POST["quiz"])
         quiz_files = request.FILES
         
-        if Quiz.objects.filter(title=quiz_info["title"].strip(),
+        if Quiz.objects.filter(slug=slugify(quiz_info["title"].strip()),
                                author=request.user).exists():
             messages.error(request, "You have already created a quiz of the same title.")
             return error_msg_response(request)
@@ -578,10 +579,20 @@ def edit_quiz_slug(request, user_slug, quiz_slug):
             quiz = Quiz.objects.get(slug=quiz_slug, author=user)
 
             if request.method == "POST":
-                quiz.title = request.POST["title"]
-                quiz.thumbnail = request.FILES["thumbnail"]
+                
+                title = request.POST["title"].strip()
+                
+                if Quiz.objects.filter(slug=slugify(title), author=user).exists():
+                    messages.error(request, f"You already have a quiz titled \"{title}\"")
+                    return error_msg_response(request)
+                    
+                quiz.title = title
+                
+                if len(list(request.FILES)) > 0:
+                    quiz.thumbnail = request.FILES["thumbnail"]
+                    
                 quiz.save()
-
+                
                 messages.success(request, f"Successfully updated quiz to \"{request.POST['title']}\"")
                 data = {
                     "quiz_url": f"/{request.user.user_profile.slug}/{quiz.slug}"
@@ -602,14 +613,35 @@ def edit_quiz_slug(request, user_slug, quiz_slug):
         raise Http404("User not found")
 
 def delete_quiz_slug(request, user_slug, quiz_slug):
-    if request.method == "POST":
-        if not request.user.is_authenticated:
-            return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+    
+    try:
+        user = UserProfile.objects.get(slug=user_slug).user
+    except:
+        raise Http404("User not found")
+    
+    if not request.user.is_authenticated:
+        messages.error(request, "You must be logged in to do this.")
+        return error_msg_response(request)
+    
+    if request.user != user:
+        return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
+    
+    if request.method == "DELETE":
         try:
-            user = UserProfile.objects.get(slug=user_slug)
-            quiz = Quiz.objects.get(slug=quiz_slug, author=user).user
+            quiz = Quiz.objects.get(slug=quiz_slug, author=user)
+            
+            for question in quiz.questions.all():
+                question.delete()
+                
+            quiz.delete()
+            
+            messages.success(request, f"Successfully deleted the quiz \"{quiz.title}\"")
+            response = HttpResponse(200)
+            response.status = 200
+            return response
         except:
-            return redirect("Main:home_page")
+            messages.error(request, "An error has occured trying to do this.")
+            return error_msg_response(request)
     else:
         return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
 
