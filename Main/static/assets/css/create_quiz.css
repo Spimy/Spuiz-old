@@ -235,6 +235,36 @@ h1, h2, h3 {
             width: 100%;
         }
 
+        .dropbox {
+            height: 175px;
+        }
+
+        .options {
+            justify-content: space-evenly;
+            margin-bottom: 25px;
+            margin-top: 15px;
+        }
+
+        .options input[type=checkbox] {
+            display: none;
+        }
+
+        .options label {
+            margin: 0;
+        }
+
+    }
+
+    @media (max-width: 400px) {
+
+        #create_quiz .quiz-creator .questions-container .question-container .dropbox {
+            height: 125px;
+        }
+
+        #create_quiz .quiz-creator .questions-container .question-container .dropbox p {
+            font-size: 12px;
+        }
+
     }
 
 }

@@ -83,7 +83,7 @@
     font-family: "Titillium Web", sans-serif;
     font-size: 14px;
     font-weight: bold;
-    margin: 10px 10px 10px 0;
+    margin: 10px 5px;
     padding: 10px 15px;
     text-transform: uppercase;
     transition: 0.2s ease-in-out;
@@ -259,6 +259,10 @@
         #quiz .quiz-info .quiz-info-wrapper .quiz-info-btns .quiz-updownvote:active {
             box-shadow: none;
         }
+
+    }
+
+    @media (max-width: 574px) {
 
         #quiz .quiz-card .question-card {
             width: 300px;
