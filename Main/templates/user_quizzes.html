@@ -59,25 +59,35 @@
             {% else %}
                 <h1>Created</h1>
                 {% for quiz in created_quiz %}
-                <a class="quiz" href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}">
+                <div class="quiz" href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}">
                     {% if user.is_authenticated and user == viewing_user %}
                     <div class="dropdown-container">
                         <img src="{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
                         <div class="dropdown-options">
-                            <button onclick="event.preventDefault(); editPage('/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}/edit');"><i class="fas fa-edit"></i> Edit</button>
-                            <button onclick="event.preventDefault(); showConfirmation('{{ quiz.title }}', '{{ quiz.slug }}');"><i class="fas fa-trash-alt"></i> Delete</button>
+                            <a href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}/edit"><i class="fas fa-edit"></i> Edit</a>
+                            <a href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}/delete" onclick="showConfirmation(event);"><i class="fas fa-trash-alt"></i> Delete</a>
+                        </div>
+                    </div>
+                    <div class="delete_confirmation">
+                        <div class="delete-card">
+                            <h1>Are you sure you want to delete "{{ quiz.title }}"?</h1>
+                            <hr>
+                            <div class="items">
+                                <button onclick="closeConfirmation(this)">Cancel</button>
+                                <a href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}/delete" onclick="deleteQuiz(event)">Delete</a>
+                            </div>
                         </div>
                     </div>
                     {% else %}
                     <img src="{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
                     {% endif %}
 
-                    <h4>{{ quiz.title }}</h4>
+                    <a href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}"><h4>{{ quiz.title }}</h4></a>
                     <div class="right">
                         <span><i class="fas fa-thumbs-up"></i>{{ quiz.upvotes.count }}</span>
                         <span><i class="fas fa-thumbs-down"></i>{{ quiz.downvotes.count }}</span>
                     </div>
-                </a>
+                </div>
                 {% endfor %}
             {% endif %}
         </div>
@@ -88,38 +98,36 @@
             {% else %}
                 <h1>Completed</h1>
                 {% for completed in completed_quiz %}
-                <a class="quiz" href="/{{ completed.quiz.author.user_profile.slug }}/{{ completed.quiz.slug }}">
+                <div class="quiz" href="/{{ completed.quiz.author.user_profile.slug }}/{{ completed.quiz.slug }}">
                     {% if user.is_authenticated and user == viewing_user and user == completed.quiz.author %}
                     <div class="dropdown-container">
                         <img src="{{ completed.quiz.thumbnail.url }}" alt="{{ completed.quiz.title }}">
                         <div class="dropdown-options">
-                            <button onclick="event.preventDefault(); editPage('/{{ completed.quiz.author.user_profile.slug }}/{{ completed.quiz.slug }}/edit');"><i class="fas fa-edit"></i> Edit</button>
-                            <button onclick="event.preventDefault(); showConfirmation('{{ completed.quiz.title }}', '{{ completed.quiz.slug }}');"><i class="fas fa-trash-alt"></i> Delete</button>
+                            <a href="/{{ completed.quiz.author.user_profile.slug }}/{{ quiz.slug }}/edit"><i class="fas fa-edit"></i> Edit</a>
+                            <a href="/{{ completed.quiz.author.user_profile.slug }}/{{ quiz.slug }}/delete" onclick="showConfirmation(event);"><i class="fas fa-trash-alt"></i> Delete</a>
+                        </div>
+                    </div>
+                    <div class="delete_confirmation">
+                        <div class="delete-card">
+                            <h1>Are you sure you want to delete "{{ quiz.title }}"?</h1>
+                            <hr>
+                            <div class="items">
+                                <button onclick="closeConfirmation(this)">Cancel</button>
+                                <a href="/{{ completed.quiz.author.user_profile.slug }}/{{ completed.quiz.slug }}/delete" onclick="deleteQuiz(event)">Delete</a>
+                            </div>
                         </div>
                     </div>
                     {% else %}
                     <img src="{{ completed.quiz.thumbnail.url }}" alt="{{ completed.quiz.title }}">
                     {% endif %}
-                    <h4>{{ completed.quiz.title }}</h4>
+                    <a href="/{{ completed.quiz.thumbnail.url }}/{{ completed.quiz.slug }}"><h4>{{ completed.quiz.title }}</h4></a>
                     <div class="right">
                         <span><i class="fas fa-star"></i>{{ completed.score }}/{{ completed.quiz.questions.count }}</span>
                     </div>
-                </a>
+                </div>
                 {% endfor %}
             {% endif %}
         </div>
     </section>
-
-    <div id="delete_confirmation">
-        <div class="card">
-            <h1>Are you sure you want to delete "Quiz Title"?</h1>
-            <hr>
-            <div class="items">
-                <button onclick="closeConfirmation()" href="">Cancel</button>
-                <button onclick="deleteQuiz()">Delete</button>
-            </div>
-        </div>
-    </div>
-
     <script src="{% static 'assets/js/user_quizzes.js' %}"></script>
 {% endblock %}
