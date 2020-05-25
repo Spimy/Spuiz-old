@@ -18,37 +18,45 @@ button {
     font-family: "Titillium Web", sans-serif;
 }
 
-#delete_confirmation {
+.delete_confirmation {
     align-items: center;
     background-color: none;
     display: flex;
     justify-content: center;
     height: 100%;
+    left: 0;
     position: fixed;
     top: 0;
     transform: scale(0);
     width: 100%;
     transition: transform 0.3s ease-in-out, background-color 1s ease-in-out;
+    z-index: 5;
 }
 
-#delete_confirmation .card {
+.delete_confirmation .delete-card {
     background-color: var(--grey-light);
     border-radius: 5px;
     color: #f1f1f1;
+    display: initial !important;
     padding: 25px;
+    width: initial !important;
 }
 
-#delete_confirmation .card h1 {
+.delete_confirmation .delete-card h1 {
     font-size: 15px;
     margin: 0;
 }
 
-#delete_confirmation .card .items {
+.delete_confirmation .delete-card .items {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    color: #f1f1f1;
     display: flex;
     justify-content: flex-end;
 }
 
-#delete_confirmation .card .items button {
+.delete_confirmation .delete-card .items button,
+.delete_confirmation .delete-card .items a {
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -56,13 +64,13 @@ button {
     padding: 10px 15px;
 }
 
-#delete_confirmation .card .items button:first-child {
+.delete_confirmation .delete-card .items button {
     background-color: var(--grey-lighter);
     color: #f1f1f1;
     margin-right: 10px;
 }
 
-#delete_confirmation .card .items button:nth-child(2) {
+.delete_confirmation .delete-card .items a {
     background-color: #ff4d4d;
     color: var(--grey-dark);
 }
@@ -96,7 +104,7 @@ button {
     z-index: 1;
 }
 
-.dropdown-options button {
+.dropdown-options a {
     background-color: transparent;
     border: none;
     border-radius: 5px;
@@ -108,7 +116,7 @@ button {
     width: 100%;
 }
 
-.dropdown-options button:hover {
+.dropdown-options a:hover {
     background-color: var(--purple-normal);
 }
 
@@ -256,19 +264,22 @@ button {
 
 #user_quizzes .card .quiz img {
     border-radius: 5px;
+    cursor: pointer;
     height: 50px;
     object-fit: cover;
     object-position: center;
+    position: relative;
     width: 80px;
+}
+
+#user_quizzes .card .quiz:hover {
+    background-color: var(--grey-dark);
 }
 
 #user_quizzes .card .quiz h4 {
     margin: 0 25px;
 }
 
-#user_quizzes .card .quiz:hover {
-    background-color: var(--grey-dark);
-}
 
 #user_quizzes .card .quiz .right {
     margin-left: auto;
