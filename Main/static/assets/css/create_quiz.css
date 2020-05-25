@@ -225,20 +225,8 @@ h1, h2, h3 {
 
 @media only screen {
 
-    @media (max-width: 750px) {
-
-        #create_quiz {
-            padding: 100px 25px;
-        }
-
-        #create_quiz .quiz-creator {
-            width: 100%;
-        }
-
-        .dropbox {
-            height: 175px;
-        }
-
+    @media (max-width: 860px) {
+        
         .options {
             justify-content: space-evenly;
             margin-bottom: 25px;
@@ -251,6 +239,22 @@ h1, h2, h3 {
 
         .options label {
             margin: 0;
+        }
+
+    }
+
+    @media (max-width: 750px) {
+
+        #create_quiz {
+            padding: 100px 25px;
+        }
+
+        #create_quiz .quiz-creator {
+            width: 100%;
+        }
+
+        .dropbox {
+            height: 175px;
         }
 
     }
