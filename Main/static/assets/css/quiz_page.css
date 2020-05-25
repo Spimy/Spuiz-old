@@ -246,6 +246,14 @@
 
 @media only screen {
 
+    @media (min-width: 790px) {
+
+        #quiz .quiz-info .quiz-info-wrapper .quiz-info-text {
+            margin-left: 10px;
+        }
+
+    }
+
     @media (max-width: 790px) {
 
         #quiz .quiz-info {
