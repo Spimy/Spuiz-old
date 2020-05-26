@@ -7,7 +7,7 @@
 		
 		{% csrf_token %}
 		<form method="GET" autocomplete="off" action="{% url 'Main:search_page' %}">
-			<input name="query" class="search-bar" type="text", placeholder="&#xf002 Search", value="{{ request.GET.q }}">
+			<input onfocusout="showBtns()" onclick="hideBtns()" name="query" class="search-bar" type="text", placeholder="&#xf002 Search", value="{{ request.GET.q }}">
 		</form>
 	</div>
 	
@@ -25,12 +25,13 @@
 					<a href="/create-quiz"><i class="fas fa-pen-square"></i>Create Quiz</a>
 					<a href="/notifications"><i class="fas fa-envelope"></i>Notifications</a>
 					<a href="/settings"><i class="fas fa-cog"></i>Settings</a>
+					<a class="dropdown-logout" href="/logout/?next={{ request.path }}"><i class="fas fa-sign-out-alt"></i>Log out</a>
 				</div>
 			</div>
 			<a href="/logout/?next={{ request.path }}">Log out</a>
 		{% else %}
-			<a href="/login/">Login</a>
-			<a href="/register/">Register</a>
+			<a class="unlogged" href="/login/">Login</a>
+			<a class="unlogged" href="/register/">Register</a>
 		{% endif %}
 	</div>
 
