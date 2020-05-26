@@ -1,5 +1,6 @@
 import json
 import random
+from django.db.models import Q
 from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponse
@@ -681,6 +682,27 @@ def notification_read(request, notification_id):
         return HttpResponse(status=204)
         
     return redirect("Main:notifications_page")
+
+def search_page(request):
+    
+    quizzes = Quiz.objects.order_by("-pk")
+    user_profiles = UserProfile.objects.order_by("-pk")
+    
+    query = request.GET.get("query")
+    if query:
+        quizzes = Quiz.objects.filter(Q(title__icontains=query)|
+                                      Q(author__username__icontains=query)).distinct().order_by("-pk")
+        user_profiles = UserProfile.objects.filter(Q(user__username__icontains=query)|
+                                                   Q(user__author__title__icontains=query)).distinct().order_by("-pk")
+    
+    total_results = len(quizzes) + len(user_profiles)
+    
+    return render(request=request, 
+                  template_name="search.html", 
+                  context={"quizzes": quizzes,
+                           "user_profiles": user_profiles,
+                           "total_results": total_results,
+                           "query": query})
 
 def handler404(request, exception):
     response = render(request, "errors/404.html", context={"exception": exception})
