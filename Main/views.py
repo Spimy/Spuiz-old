@@ -32,18 +32,14 @@ def error_msg_response(request):
     response.status_code = 218
     return response
 
-def follow_unfollow_success_response(request, user_slug, matching_quizzes):
+def follow_unfollow_success_response(request, user_slug):
     
     user = UserProfile.objects.get(slug=user_slug).user
     followings = user.user_profile.following.order_by("username")
     completed_quizzes = CompletedQuiz.objects.filter(
         user__user_profile__slug=user_slug
     ).order_by("-completed_date")
-    quiz_urls = {}
 
-    for quiz in matching_quizzes.all():
-        quiz_urls[quiz] = quiz.slug
-                
     data = {
             "msg": render_to_string(
                 "static_html/messages.html",
@@ -54,7 +50,6 @@ def follow_unfollow_success_response(request, user_slug, matching_quizzes):
             "new_page": render_to_string(
                 "user_profile.html",
                 context={
-                    "quizzes": quiz_urls,
                     "viewing_user": user,
                     "followings": followings,
                     "completed_quizzes": completed_quizzes,
@@ -287,223 +282,227 @@ def settings_page(request):
     form = UserEditForm(instance=request.user)
     return render(request, "settings.html", context={"form": form})
 
-def user_quiz_slug(request, user_slug, quiz_slug=None, action_slug=None):
+def user_profile(request, user_slug):
+    try:
+        user = UserProfile.objects.get(slug=user_slug).user
+    except UserProfile.DoesNotExist:
+        raise Http404("User not found")
     
-    users = [u.slug for u in UserProfile.objects.all()]
-    if user_slug in users:
+    followings = user.user_profile.following.order_by("username")
+    completed_quizzes = CompletedQuiz.objects.filter(
+        user__user_profile__slug=user_slug
+    ).order_by("-completed_date")[:4]
 
-        matching_quizzes = Quiz.objects.filter(author__user_profile__slug=user_slug)
-        
-        if quiz_slug is not None:
-            
-            try:
-                selected_quiz = matching_quizzes.get(slug=quiz_slug)
-            except Quiz.DoesNotExist:
-                raise Http404("Quiz not found")
-            
-            flatten = lambda l: [item for sublist in l for item in sublist]
-            questions = {}
-            
-            for question in selected_quiz.questions.all():
-                answers = []
-                answers.append([question.correct.first()])
-                answers.append(question.wrong.all())
-                
-                answers = flatten(answers)
-                random.shuffle(answers)
-                questions[question] = answers
-                
-            quiz = {
-                "questions": questions,
-                "quiz_info": selected_quiz
-                }
-            
-            if request.method == "POST":
-
-                if "vote" in list(request.POST.keys()):
-                    if not request.user.is_authenticated:
-                        messages.error(request, "You must be logged in to do this.")
-                        return error_msg_response(request)
-                    
-                    if request.POST["vote"] == "upvote":
-                        
-                        if request.user in selected_quiz.downvotes.all():
-                            selected_quiz.downvotes.remove(request.user)
-                            
-                        if request.user in selected_quiz.upvotes.all():
-                            selected_quiz.upvotes.remove(request.user)
-                        else:
-                            selected_quiz.upvotes.add(request.user)
-                        
-                    else:
-                        
-                        if request.user in selected_quiz.upvotes.all():
-                            selected_quiz.upvotes.remove(request.user)
-                            
-                        if request.user in selected_quiz.downvotes.all():
-                            selected_quiz.downvotes.remove(request.user)
-                        else:
-                            selected_quiz.downvotes.add(request.user)
-
-                    if request.POST["from_complete"] != "true":
-                        response = {
-                                "updownvotebtns": render_to_string("quiz_page.html", 
-                                                                context={"quiz": quiz}, 
-                                                                request=request),
-                            }
-                    else:
-                        completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
-                        stars, remainder = calculate_rating(selected_quiz)
-                        percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
-                        response = {
-                            "updownvotebtns": render_to_string("quiz_complete.html",
-                                                               context={
-                                                                   "completed": completed,
-                                                                    "stars": range(stars),
-                                                                    "remainder": range(remainder),
-                                                                    "percent": percent
-                                                               },
-                                                               request=request)
-                        }
-                        
-                    return HttpResponse(
-                            json.dumps(response),
-                            content_type="application/json",
-                    )
-                
-                score = 0
-                for key, answer in request.POST.items():
-                    if key == "csrfmiddlewaretoken": continue
-                    
-                    for question in selected_quiz.questions.all():
-                        if int(key) == question.pk:
-                            
-                            answers = question.correct.values("answer")
-                            answers = [ans["answer"].lower() for ans in answers]
-                            
-                            if answer.lower() in answers:
-                                score += 1
-                
-                if request.user.is_authenticated:
-                    CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
-                                                        user=request.user,
-                                                        score=score)
-                completed = {
-                    "score": score,
-                    "quiz": selected_quiz
-                }
-
-                stars, remainder = calculate_rating(selected_quiz)
-                percent = calculate_percentage_score(score, selected_quiz.questions.count())
-                return render(request, "quiz_complete.html",
-                                context={
-                                    "completed": completed,
-                                    "stars": range(stars),
-                                    "remainder": range(remainder),
-                                    "percent": percent
-                                    }
-                                )
-
-            if request.user.is_authenticated:
-                try:
-                    completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
-                    stars, remainder = calculate_rating(selected_quiz)
-                    percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
-                    return render(request, "quiz_complete.html",
-                                    context={
-                                        "completed": completed,
-                                        "stars": range(stars),
-                                        "remainder": range(remainder),
-                                        "percent": percent
-                                        }
-                                    )
-                except CompletedQuiz.DoesNotExist:
-                    return render(request, "quiz_page.html", context={"quiz": quiz})
-        
-            return render(request, "quiz_page.html", context={"quiz": quiz})
-        
-        elif action_slug is not None:
-            
-            if request.method == "POST":
-                if request.user.is_authenticated:
-                    
-                    user = UserProfile.objects.get(slug=user_slug).user
-                    
-                    if action_slug == "follow":
-                        
-                        if request.user == user:
-                            messages.error(request, "You cannot follow yourself.")
-                            return error_msg_response(request)
-                        
-                        if user not in request.user.user_profile.following.all():
-                            request.user.user_profile.following.add(user)
-                            messages.success(request, f"You are now following {user.username}.")
-                            return follow_unfollow_success_response(request, user_slug, matching_quizzes)
-                        else:
-                            messages.error(request, f"You are already following {user.username}")
-                            return error_msg_response(request)
-                            
-                    elif action_slug == "unfollow":
-                        
-                        if request.user == user:
-                            messages.error(request, "You cannot unfollow yourself.")
-                            return error_msg_response(request)
-                        
-                        if user in request.user.user_profile.following.all():
-                            request.user.user_profile.following.remove(user)
-                            messages.success(request, f"You are no longer following {user.username}.")
-                            return follow_unfollow_success_response(request, user_slug, matching_quizzes)
-                        else:
-                            messages.error(request, f"You are not following {user.username}")
-                            return error_msg_response(request)
-                        
-                    else:
-                        raise Http404("Unknown action")
-                else:
-                    messages.error(request, "You must be logged in to do this")
-                    return error_msg_response(request)
-            else:
-                return redirect("Main:user_slug", user_slug=user_slug)
-        
-        else:
-            
-            user = UserProfile.objects.get(slug=user_slug).user
-            followings = user.user_profile.following.order_by("username")
-            completed_quizzes = CompletedQuiz.objects.filter(
-                user__user_profile__slug=user_slug
-            ).order_by("-completed_date")[:4]
-            quiz_urls = {}
-
-            for quiz in matching_quizzes.all():
-                quiz_urls[quiz] = quiz.slug
-            return render(request, "user_profile.html", context={"quizzes": quiz_urls,
-                                                                 "viewing_user": user,
-                                                                 "followings": followings,
-                                                                 "completed_quizzes": completed_quizzes})
-
-    raise Http404("User not found")
+    return render(request, "user_profile.html", context={"viewing_user": user,
+                                                        "followings": followings,
+                                                        "completed_quizzes": completed_quizzes})
 
 def user_quizzes(request, user_slug):
     try:
         viewing_user = UserProfile.objects.get(slug=user_slug).user
-        created_quiz = Quiz.objects.filter(author__user_profile__slug=user_slug)
-        completed_quiz = CompletedQuiz.objects.filter(user__user_profile__slug=user_slug)
-        return render(request, "user_quizzes.html", context={"viewing_user": viewing_user,
-                                                             "created_quiz": created_quiz,
-                                                             "completed_quiz": completed_quiz})
     except:
         raise Http404("User not found")
+
+    created_quiz = Quiz.objects.filter(author__user_profile__slug=user_slug)
+    completed_quiz = CompletedQuiz.objects.filter(user__user_profile__slug=user_slug)
+    return render(request, "user_quizzes.html", context={"viewing_user": viewing_user,
+                                                         "created_quiz": created_quiz,
+                                                         "completed_quiz": completed_quiz})
 
 def user_social(request, user_slug):
     try:
         viewing_user = UserProfile.objects.get(slug=user_slug).user
-        followings = viewing_user.user_profile.following.order_by("username").all()
-        followers = UserProfile.objects.filter(following__in=[viewing_user]).all()
-        return render(request, "user_social.html", context={"viewing_user": viewing_user,
-                                                             "followings": followings,
-                                                             "followers": followers})
     except:
         raise Http404("User not found")
+
+    followings = viewing_user.user_profile.following.order_by("username").all()
+    followers = UserProfile.objects.filter(following__in=[viewing_user]).all()
+    return render(request, "user_social.html", context={"viewing_user": viewing_user,
+                                                        "followings": followings,
+                                                        "followers": followers})
+
+def user_action(request, user_slug, action):
+    try:
+        user = UserProfile.objects.get(slug=user_slug).user
+    except UserProfile.DoesNotExist:
+        raise Http404("User not found")
+
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            if action == "follow":
+                
+                if request.user == user:
+                    messages.error(request, "You cannot follow yourself.")
+                    return error_msg_response(request)
+                
+                if user not in request.user.user_profile.following.all():
+                    request.user.user_profile.following.add(user)
+                    messages.success(request, f"You are now following {user.username}.")
+                    return follow_unfollow_success_response(request, user_slug)
+                else:
+                    messages.error(request, f"You are already following {user.username}")
+                    return error_msg_response(request)
+                
+            elif action == "unfollow":
+            
+                if request.user == user:
+                    messages.error(request, "You cannot unfollow yourself.")
+                    return error_msg_response(request)
+                
+                if user in request.user.user_profile.following.all():
+                    request.user.user_profile.following.remove(user)
+                    messages.success(request, f"You are no longer following {user.username}.")
+                    return follow_unfollow_success_response(request, user_slug,)
+                else:
+                    messages.error(request, f"You are not following {user.username}")
+                    return error_msg_response(request)
+                
+            else:
+                messages.error(request, "You have tried to perform an unknown action")
+                return error_msg_response(request)
+        else:
+            messages.error(request, "You must be logged in to do this")
+            return error_msg_response(request)
+
+    return redirect("Main:user_profile", user_slug=user_slug)
+    
+def quiz_page(request, user_slug, quiz_slug):
+    try:
+        user = UserProfile.objects.get(slug=user_slug).user
+    except UserProfile.DoesNotExist:
+        raise Http404("User not found")
+    
+    user_quizzes = Quiz.objects.filter(author__user_profile__slug=user_slug)
+    
+    try:
+        selected_quiz = user_quizzes.get(slug=quiz_slug)
+    except Quiz.DoesNotExist:
+        raise Http404("Quiz not found")
+    
+    flatten = lambda l: [item for sublist in l for item in sublist]
+    questions = {}
+    
+    for question in selected_quiz.questions.all():
+        answers = []
+        answers.append([question.correct.first()])
+        answers.append(question.wrong.all())
+        
+        answers = flatten(answers)
+        random.shuffle(answers)
+        questions[question] = answers
+        
+    quiz = {
+        "questions": questions,
+        "quiz_info": selected_quiz
+        }
+    
+    if request.method == "POST":
+    
+        if "vote" in list(request.POST.keys()):
+            if not request.user.is_authenticated:
+                messages.error(request, "You must be logged in to do this.")
+                return error_msg_response(request)
+            
+            if request.POST["vote"] == "upvote":
+                
+                if request.user in selected_quiz.downvotes.all():
+                    selected_quiz.downvotes.remove(request.user)
+                    
+                if request.user in selected_quiz.upvotes.all():
+                    selected_quiz.upvotes.remove(request.user)
+                else:
+                    selected_quiz.upvotes.add(request.user)
+                
+            elif request.POST["vote"] == "downvote":
+                
+                if request.user in selected_quiz.upvotes.all():
+                    selected_quiz.upvotes.remove(request.user)
+                    
+                if request.user in selected_quiz.downvotes.all():
+                    selected_quiz.downvotes.remove(request.user)
+                else:
+                    selected_quiz.downvotes.add(request.user)
+                
+            else:
+                messages.error(request, "You have tried to perform an unknown action")
+                return error_msg_response(request)
+                
+            if request.POST["from_complete"] != "true":
+                response = {
+                        "updownvotebtns": render_to_string("quiz_page.html", 
+                                                        context={"quiz": quiz}, 
+                                                        request=request),
+                    }
+            else:
+                completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
+                stars, remainder = calculate_rating(selected_quiz)
+                percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
+                response = {
+                    "updownvotebtns": render_to_string("quiz_complete.html",
+                                                        context={
+                                                            "completed": completed,
+                                                            "stars": range(stars),
+                                                            "remainder": range(remainder),
+                                                            "percent": percent
+                                                        },
+                                                        request=request)
+                }
+                
+            return HttpResponse(
+                    json.dumps(response),
+                    content_type="application/json",
+            )
+        
+        score = 0
+        for key, answer in request.POST.items():
+            if key == "csrfmiddlewaretoken": continue
+            
+            for question in selected_quiz.questions.all():
+                if int(key) == question.pk:
+                    
+                    answers = question.correct.values("answer")
+                    answers = [ans["answer"].lower() for ans in answers]
+                    
+                    if answer.lower() in answers:
+                        score += 1
+        
+        if request.user.is_authenticated:
+            CompletedQuiz.objects.get_or_create(quiz=selected_quiz,
+                                                user=request.user,
+                                                score=score)
+        completed = {
+            "score": score,
+            "quiz": selected_quiz
+        }
+
+        stars, remainder = calculate_rating(selected_quiz)
+        percent = calculate_percentage_score(score, selected_quiz.questions.count())
+        return render(request, "quiz_complete.html",
+                        context={
+                            "completed": completed,
+                            "stars": range(stars),
+                            "remainder": range(remainder),
+                            "percent": percent
+                            }
+                        )
+    
+    if request.user.is_authenticated:
+        try:
+            completed = CompletedQuiz.objects.get(quiz=selected_quiz, user=request.user)
+            stars, remainder = calculate_rating(selected_quiz)
+            percent = calculate_percentage_score(completed.score, selected_quiz.questions.count())
+            return render(request, "quiz_complete.html",
+                            context={
+                                "completed": completed,
+                                "stars": range(stars),
+                                "remainder": range(remainder),
+                                "percent": percent
+                                }
+                            )
+        except CompletedQuiz.DoesNotExist:
+            return render(request, "quiz_page.html", context={"quiz": quiz})
+
+    return render(request, "quiz_page.html", context={"quiz": quiz})
 
 def create_quiz_page(request):
     
