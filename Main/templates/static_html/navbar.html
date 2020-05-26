@@ -19,6 +19,7 @@
 				{% else %}
 					<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
 				{% endif %}
+				{% if has_notification %}<div class="notification"></div>{% endif %}
 				<div class="user-dropdown">
 					<a href="/{{ user.user_profile.slug }}"><i class="fas fa-user"></i>Profile</a>
 					<a href="/create-quiz"><i class="fas fa-pen-square"></i>Create Quiz</a>
