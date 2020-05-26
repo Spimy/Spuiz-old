@@ -29,6 +29,7 @@ urlpatterns = [
     path("notifications/", views.notifications_page, name="notifications_page"),
     path("notifications/<action>/", views.notifications__read_delete, name="notifications__read_delete"),
     path("notifications/<notification_id>/read/", views.notification_read, name="notification_read"),
+    path("search/", views.search_page, name="search_page"),
     path("create-quiz/", views.create_quiz_page, name="create_quiz_page"),
     path("<user_slug>/", views.user_quiz_slug, name="user_slug"),
     path("<user_slug>/action/<action_slug>/", views.user_quiz_slug, name="action_slug"),
