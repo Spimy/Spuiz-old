@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/notifications.css' %}">{% endblock %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+
+    <section id="notifications">
+        <div class="container">
+            <h1>Notifications</h1>
+            <div class="buttons">
+                <a href="/notifications/read">Mark all as Read</a>
+                <a href="/notifications/delete">Delete all notifications</a>
+            </div>
+
+            <div class="card">
+                {% if notifications.count > 0 %}
+                {% for notification in notifications %}
+                <div href="{{ notification.pk }}/read" class="notification {% if notification.read %} read{% endif %}" onclick="toggleRead(this)">
+                    <div class="heading">
+                        {% if notification.from_user.user_profile.avatar %}
+                        <img src="{{ notification.from_user.user_profile.avatar.url }}">
+                        {% else %}
+                        <img src="{% static 'assets/img/default.png' %}">
+                        {% endif %}
+                        <h2>{{ notification.title }}</h2>
+                    </div>
+                    <a>{{ notification.message}} </a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h2 style="text-align:center;">You have no notifications...</h2>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <script src="{% static 'assets/js/notifications.js' %}"></script>
+
+{% endblock %}
