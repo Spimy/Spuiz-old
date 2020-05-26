@@ -139,7 +139,7 @@
     @media (max-width: 790px) {
 
         #sticky_nav .nav-left {
-            margin-left: 10px;
+            margin-left: 25px;
         }
 
         #sticky_nav .nav-left a {
@@ -152,11 +152,11 @@
 
         #sticky_nav .nav-left form input {
             display: initial;
-            width: 90%;
+            width: 85%;
         }
 
         #sticky_nav .nav-right {
-            margin-right: 10px;
+            margin-right: 25px;
         }
 
         #sticky_nav .nav-right .avatar-container .user-dropdown {
