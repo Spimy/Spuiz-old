@@ -646,6 +646,9 @@ def delete_quiz_slug(request, user_slug, quiz_slug):
         return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
 
 def notifications_page(request):
+    if not request.user.is_authenticated:
+        return redirect("Main:home_page")
+    
     notifications = Notification.objects.filter(for_user=request.user).order_by("-pk")
     return render(request, "notifications.html", context={"notifications": notifications})
 
