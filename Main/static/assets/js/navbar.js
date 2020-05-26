@@ -9,3 +9,28 @@ document.addEventListener("scroll", () => {
     }
 
 });
+
+const hideBtns = () => {
+    
+    const unlogged_btns = document.getElementById("sticky_nav").getElementsByClassName("unlogged");
+    
+    if (unlogged_btns) {
+        for (const btn of unlogged_btns) {
+            btn.style.display = "none";
+        }
+    }
+
+
+}
+
+const showBtns = () => {
+
+    const unlogged_btns = document.getElementById("sticky_nav").getElementsByClassName("unlogged");
+
+    if (unlogged_btns) {
+        for (const btn of unlogged_btns) {
+            btn.removeAttribute("style");
+        }
+    }
+
+}
