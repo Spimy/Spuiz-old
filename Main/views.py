@@ -645,6 +645,40 @@ def delete_quiz_slug(request, user_slug, quiz_slug):
     else:
         return redirect("Main:user_quiz_slug", user_slug=user_slug, quiz_slug=quiz_slug)
 
+def notifications_page(request):
+    notifications = Notification.objects.filter(for_user=request.user).order_by("-pk")
+    return render(request, "notifications.html", context={"notifications": notifications})
+
+def notifications__read_delete(request, action):
+    if not request.user.is_authenticated:
+        return redirect("Main:notifications_page")
+    
+    notifications = Notification.objects.filter(for_user=request.user)
+    
+    for notification in notifications:
+        if action == "read":
+            notification.read = True
+            notification.save()
+        elif action == "delete":
+            notification.delete()
+        else:
+            break
+        
+    return redirect("Main:notifications_page")
+
+def notification_read(request, notification_id):
+    if not request.user.is_authenticated:
+        return redirect("Main:notifications_page")
+    
+    if request.method == "PUT":
+        notification = Notification.objects.get(pk=notification_id)
+        notification.read = not notification.read
+        notification.save()
+        
+        return HttpResponse(status=204)
+        
+    return redirect("Main:notifications_page")
+
 def handler404(request, exception):
     response = render(request, "errors/404.html", context={"exception": exception})
     return response
