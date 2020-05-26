@@ -1,0 +1,83 @@
+a, i {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+h1, h2 {
+    color: #f1f1f1;
+    margin: 0;
+}
+
+#notifications {
+    display: flex;
+    padding: 100px 0;
+}
+
+#notifications .container {
+    margin: auto;
+    padding: 25px;
+}
+
+#notifications .container .buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 25px;
+}
+
+#notifications .container .buttons a {
+    background-color: var(--purple-normal);
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 10px;
+    padding: 10px 15px;
+    transition: 0.2s ease;
+}
+
+#notifications .container .buttons a:active {
+    transform: scale(0.95);
+}
+
+#notifications .container .card {
+    background-color: var(--grey-light);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+#notifications .container .card .notification {
+    border-radius: 5px;
+    color: #f1f1f1;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.2s ease;
+}
+
+#notifications .container .card .notification:hover {
+    background-color: var(--grey-dark);
+}
+
+#notifications .container .card .notification:active {
+    transform: scale(0.95);
+}
+
+#notifications .container .card .notification.read {
+    text-decoration: line-through;
+}
+
+#notifications .container .card .notification .heading {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+#notifications .container .card .notification .heading img {
+    border-radius: 50%;
+    height: 25px;
+    margin-right: 10px;
+    object-fit: cover;
+    object-position: center;
+    width: 25px;
+}
