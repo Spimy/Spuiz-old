@@ -54,6 +54,17 @@
     position: relative;
 }
 
+#sticky_nav .nav-right .avatar-container .notification {
+    background-color: orange;
+    border: 3px solid var(--grey-dark);
+    border-radius: 50%;
+    bottom: 0;
+    left: 60%;
+    position: absolute;
+    right: 0;
+    top: 65%;
+}
+
 #sticky_nav .nav-right .avatar-container .user-dropdown {
     background-color: var(--purple-normal);
     border-radius: 5px;
