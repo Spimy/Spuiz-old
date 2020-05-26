@@ -98,6 +98,12 @@ const closeConfirmation = (btn) => {
     delete_card.removeAttribute("style");
 }
 
+const closeConfirmationFromBg = (delete_confirmation) => {
+    const delete_card = delete_confirmation.getElementsByClassName("delete-card")[0];
+    delete_confirmation.removeAttribute("style");
+    delete_card.removeAttribute("style");
+}
+
 const deleteQuiz = (event) => {
 
     event.preventDefault();

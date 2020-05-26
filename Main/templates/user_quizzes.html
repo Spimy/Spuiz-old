@@ -68,7 +68,7 @@
                             <a href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}/delete" onclick="showConfirmation(event);"><i class="fas fa-trash-alt"></i> Delete</a>
                         </div>
                     </div>
-                    <div class="delete_confirmation">
+                    <div class="delete_confirmation" onclick="closeConfirmationFromBg(this)">
                         <div class="delete-card">
                             <h1>Are you sure you want to delete "{{ quiz.title }}"?</h1>
                             <hr>
