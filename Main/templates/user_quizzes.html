@@ -60,7 +60,7 @@
                 <h1>Created</h1>
                 {% for quiz in created_quiz %}
                 <div class="quiz" href="/{{ viewing_user.user_profile.slug }}/{{ quiz.slug }}">
-                    {% if user.is_authenticated and user == viewing_user %}
+                    {% if user.is_authenticated and user == quiz.author %}
                     <div class="dropdown-container">
                         <img src="{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
                         <div class="dropdown-options">
@@ -99,7 +99,7 @@
                 <h1>Completed</h1>
                 {% for completed in completed_quiz %}
                 <div class="quiz" href="/{{ completed.quiz.author.user_profile.slug }}/{{ completed.quiz.slug }}">
-                    {% if user.is_authenticated and user == viewing_user and user == completed.quiz.author %}
+                    {% if user.is_authenticated and user == completed.quiz.author %}
                     <div class="dropdown-container">
                         <img src="{{ completed.quiz.thumbnail.url }}" alt="{{ completed.quiz.title }}">
                         <div class="dropdown-options">
