@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/search.css' %}">{% endblock %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+    <section id="search">
+
+        <h1>Search Results for '{% if query %}{{ query }}{% else %}All Queries{% endif %}' ({{ total_results }})</h1>
+
+        <div class="results">
+
+            <div class="quizzes">
+                <h2>Quizzes</h2>
+                {% if quizzes.count > 0 %}
+                {% for quiz in quizzes  %}
+                <div class="quiz">
+                    <a href="/{{ quiz.author.user_profile.slug }}/{{quiz.slug}}">
+                        <img class="quiz-thumbnail" src="{{ quiz.thumbnail.url }}" alt="{{ quiz.title }}">
+                        <p>{{ quiz.title }}</p>
+                    </a>
+                    <a class="quiz-author" href="/{{ quiz.author.user_profile.slug }}/">{{ quiz.author.username }}</a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No quizzes were found with the given search query...</p>
+                {% endif %}
+            </div>
+
+            <div class="users">
+                <h2>Users</h2>
+                {% if user_profiles.count > 0 %}
+                {% for user_profile in user_profiles %}
+                    <a class="user" href="/{{ user_profile.slug }}">
+                        {% if not user_profile.avatar %}
+                        <img src="{% static 'assets/img/default.png' %}" alt="{{ user_profile.user.username }}'s avatar">
+                        {% else %}
+                        <img src="{{ user_profile.avatar.url }}" alt="{{ user_profile.user.username }}'s avatar">
+                        {% endif %}
+                        <p>{{ user_profile.user.username }}</p>
+                    </a>
+                {% endfor %}
+                {% else %}
+                <p>No quizzes were found with the given search query...</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}
+
+
