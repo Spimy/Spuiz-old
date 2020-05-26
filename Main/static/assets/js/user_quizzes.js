@@ -85,13 +85,17 @@ const editPage = (page) => {
 const showConfirmation = (event) => {
     event.preventDefault();
     const delete_confirmation = event.target.parentElement.parentElement.parentElement.getElementsByClassName("delete_confirmation")[0];
-    delete_confirmation.style.transform = "scale(1)";
+    const delete_card = delete_confirmation.getElementsByClassName("delete-card")[0];
     delete_confirmation.style.backgroundColor = "rgba(var(--grey-dark-rgb), 0.8)";
+    delete_confirmation.style.zIndex = "5";
+    delete_card.style.transform = "scale(1)";
 }
 
 const closeConfirmation = (btn) => {
     const delete_confirmation = btn.parentElement.parentElement.parentElement;
+    const delete_card = delete_confirmation.getElementsByClassName("delete-card")[0];
     delete_confirmation.removeAttribute("style");
+    delete_card.removeAttribute("style");
 }
 
 const deleteQuiz = (event) => {
