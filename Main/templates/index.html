@@ -27,8 +27,10 @@
         {% include 'static_html/navbar.html' %}
         {% include 'static_html/messages.html' %}
 
+        <div class="content-container">
         {% block content %}
         {% endblock %}
+        </div>
 
         {% include 'static_html/footer.html' %}
 

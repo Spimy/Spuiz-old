@@ -3,7 +3,7 @@
 <nav id="sticky_nav">
 
 	<div class="nav-left">
-		<a href="/"><img src="{% static 'assets/img/logo.png' %}"></a>
+		<a href="/"><img src="{% static 'assets/img/logo.png' %}"  alt="Spuiz's logo"></a>
 		
 		{% csrf_token %}
 		<form method="GET" autocomplete="off" action="{% url 'Main:search_page' %}">

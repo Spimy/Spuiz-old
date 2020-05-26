@@ -1,1 +1,10 @@
-<footer>Footer</footer>
+{% load static %}
+{% block styles %}<link rel="stylesheet" href="{% static 'assets/css/footer.css' %}">{% endblock %}
+
+<footer id="footer">
+    <div class="footer-items">
+        <p>© 2020 Spuiz</p>
+        <a href="/"><img src="{% static 'assets/img/logo.png' %}" alt="Spuiz's logo"></a>
+        <a href="https://github.com/Spimy"><p>@Spimy</p></a>
+    </div>
+</footer>

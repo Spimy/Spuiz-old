@@ -1,0 +1,32 @@
+.content-container {
+    min-height: 100vh;
+    padding-bottom: 25px;
+}
+
+#footer {
+    background-color: var(--grey-light);
+    color: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+#footer .footer-items {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#footer .footer-items a {
+    color: #f1f1f1;
+    display: content;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+#footer .footer-items img {
+    height: auto;
+    width: 100px;
+}
