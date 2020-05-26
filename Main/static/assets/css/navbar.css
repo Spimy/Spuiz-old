@@ -47,6 +47,7 @@
     align-items: center;
     display: flex;
     margin-right: 100px;
+    transition: 0.2s ease-in-out;
 }
 
 #sticky_nav .nav-right .avatar-container {

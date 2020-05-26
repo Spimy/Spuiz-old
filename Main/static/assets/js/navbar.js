@@ -12,25 +12,31 @@ document.addEventListener("scroll", () => {
 
 const hideBtns = () => {
     
+    const nav_right = document.getElementById("sticky_nav").getElementsByClassName("nav-right")[0];
     const unlogged_btns = document.getElementById("sticky_nav").getElementsByClassName("unlogged");
     
-    if (unlogged_btns) {
-        for (const btn of unlogged_btns) {
-            btn.style.display = "none";
+
+    nav_right.style.marginRight = "-500px";
+    setTimeout(() => {
+        if (unlogged_btns) {
+            for (const btn of unlogged_btns) {
+                btn.style.display = "none";
+            }
         }
-    }
+    }, 200);
 
 
 }
 
 const showBtns = () => {
 
+    const nav_right = document.getElementById("sticky_nav").getElementsByClassName("nav-right")[0];
     const unlogged_btns = document.getElementById("sticky_nav").getElementsByClassName("unlogged");
-
     if (unlogged_btns) {
         for (const btn of unlogged_btns) {
             btn.removeAttribute("style");
         }
     }
+    nav_right.removeAttribute("style");
 
 }
