@@ -5,9 +5,9 @@
 	<div class="nav-left">
 		<a href="/"><img src="{% static 'assets/img/logo.png' %}"></a>
 		
-		<form method="GET" autocomplete="off">
-			{% csrf_token %}
-			<input action="/search" name="query" class="search-bar" type="text", placeholder="&#xf002 Search", value="{{ request.GET.q }}">
+		{% csrf_token %}
+		<form method="GET" autocomplete="off" action="{% url 'Main:search_page' %}">
+			<input name="query" class="search-bar" type="text", placeholder="&#xf002 Search", value="{{ request.GET.q }}">
 		</form>
 	</div>
 	
