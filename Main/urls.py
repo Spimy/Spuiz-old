@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 
 from . import views
 
@@ -38,4 +39,6 @@ urlpatterns = [
     path("<user_slug>/<quiz_slug>/", views.quiz_page, name="quiz_page"),
     path("<user_slug>/<quiz_slug>/edit/", views.edit_quiz_slug, name="edit_quiz_slug"),
     path("<user_slug>/<quiz_slug>/delete/", views.delete_quiz_slug, name="delete_quiz_slug"),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
 ]
