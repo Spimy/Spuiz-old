@@ -14,14 +14,43 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, reverse_lazy
 from django.conf.urls import url
+from django.contrib.auth.views import (PasswordResetView,
+                                       PasswordResetDoneView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetCompleteView)
 
 from . import views
 
 app_name = "Main"
 
 urlpatterns = [
+    path("password-reset/", 
+        PasswordResetView.as_view(template_name="password_reset/password_reset_form.html",
+                                  email_template_name="password_reset/password_reset_email.html",
+                                  success_url=reverse_lazy('Main:password_reset_done')),
+        name="password_reset"),
+    
+    
+    path("password-reset/done/", 
+         PasswordResetDoneView.as_view(template_name="password_reset/password_reset_done.html"),
+         name="password_reset_done"),
+    
+    
+    path("password-reset-confirm/<uidb64>/<token>/",
+        PasswordResetConfirmView.as_view(
+            template_name="password_reset/password_reset_confirm.html",
+            success_url=reverse_lazy('Main:password_reset_complete')
+        ),
+        name="password_reset_confirm"),
+    
+    path("password-reset-complete/",
+        PasswordResetCompleteView.as_view(
+            template_name="password_reset/password_reset_complete.html"
+        ),
+        name="password_reset_complete"),
+    
     path("", views.home_page, name="home_page"),
     path("logout/", views.logout_page, name="log_out"),
     path("login/", views.login_page, name="login_page"),
@@ -39,6 +68,6 @@ urlpatterns = [
     path("<user_slug>/<quiz_slug>/", views.quiz_page, name="quiz_page"),
     path("<user_slug>/<quiz_slug>/edit/", views.edit_quiz_slug, name="edit_quiz_slug"),
     path("<user_slug>/<quiz_slug>/delete/", views.delete_quiz_slug, name="delete_quiz_slug"),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    url(r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         views.activate, name='activate'),
 ]
