@@ -9,9 +9,15 @@ from django.utils.text import slugify
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 
 from .models import *
 from .forms import *
+from .tokens import account_activation_token
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.urls import reverse
 
@@ -104,10 +110,7 @@ def home_page(request):
                                                      "top_quizzes": top_quizzes})
 
 def login_page(request):
-    
-    if request.user.is_authenticated:
-        return redirect("Main:home_page")
-    
+        
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         
@@ -149,24 +152,37 @@ def login_page(request):
                 messages.error(request, f"{msg.upper()}: {form.error_messages[msg]}")
                 
             return error_msg_response(request)
+        
+    if request.user.is_authenticated:
+        return redirect("Main:home_page")
     
     form = LoginForm()
     return render(request,"login.html", context={"form": form})
 
 def register_page(request):
     
-    if request.user.is_authenticated:
-        return redirect("Main:home_page")
-    
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         
         if form.is_valid():
-            user = form.save()
-            msg = "You have successfully registered and logged in."
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
             
-            messages.success(request, msg)
-            login(request, user)
+            message = render_to_string("activate_account_email.html", {
+                "user": user,
+                "domain": request.META["HTTP_HOST"],
+                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                "token": account_activation_token.make_token(user),
+            })
+            
+            mail_subject = "Activate your Spuiz Account."
+            to_email = form.cleaned_data.get("email")
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            
+            msg = "Please confirm your email address to complete the registration"
+            messages.info(request, msg)
         
             response = HttpResponse(msg)
             response.status_code = 200
@@ -185,10 +201,28 @@ def register_page(request):
                 messages.error(request, error_msg)
                 
             return error_msg_response(request)
+        
+    if request.user.is_authenticated:
+        return redirect("Main:home_page")
     
     form = RegistrationForm()
     return render(request, "register.html", context={"form": form})
     
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        messages.success(request, "You have confirmed your email and have now been logged in")
+        return redirect("Main:home_page")
+    else:
+        return HttpResponse("Activation link is invalid")
+
 def logout_page(request):
     logout(request)
     messages.info(request, "You have been logged out.")
