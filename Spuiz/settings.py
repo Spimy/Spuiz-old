@@ -29,6 +29,12 @@ DEBUG = (os.environ.get('DEBUG_DJANGO_SPUIZ') == 'True')
 
 ALLOWED_HOSTS = ['spuiz.herokuapp.com']
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER_SPUIZ")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD_SPUIZ")
+EMAIL_PORT = 587
+
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,
     'width': 1120,
