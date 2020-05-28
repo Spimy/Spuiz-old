@@ -251,4 +251,35 @@ button {
         }
     }
 
+    @media (max-width: 750px) {
+
+        h2 {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        #settings .card form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #settings .card form .dropbox {
+            margin-right: 0;
+            width: 100%;
+        }
+
+        #settings .card img.banner {
+            width: 100%;
+        }
+
+        #settings .card img {
+            margin-top: 10px;
+        }
+
+    }
+
 }
