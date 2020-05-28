@@ -36,7 +36,7 @@
     height: 100px;
     margin: 0 25px;
     object-fit: cover;
-    object-position: 30% 30%;
+    object-position: center;
     width: 100px;
 }
 
