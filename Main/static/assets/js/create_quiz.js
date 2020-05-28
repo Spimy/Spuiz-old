@@ -259,3 +259,29 @@ const clearPreview = (btn) => {
 }
 
 // =====================================================
+
+
+// =====================================================
+// Form validation
+// =====================================================
+const validateForm = () => {
+    const form_inputs = quiz_creator_form.getElementsByTagName("input");
+
+    for (const input of form_inputs) {
+
+        input.addEventListener("invalid", event => {
+            event.preventDefault();
+            if (media_quiz_checkbox.checked) {
+                msgs.innerHTML = '<div id="msg-error">Please fill in all the required fields: Quiz Title, Quiz Thumbnail, Questions, Answers and Question Thumbnails!</div>';
+                messageEvent("msg-error", 10);
+                return;
+            } else {
+                msgs.innerHTML = '<div id="msg-error">Please fill in all the required fields: Quiz Title, Quiz Thumbnail, Questions and Answers!</div>';
+                messageEvent("msg-error", 10);
+                return;
+            }
+        });
+
+    }
+}
+// =====================================================
