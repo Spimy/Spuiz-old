@@ -132,6 +132,7 @@
 #quiz .quiz-card .question-card .wrapper img {
     border-radius: 5px;
     display: block;
+    height: 175px;
     margin: 0 auto;
     object-fit: cover;
     width: 300px;
