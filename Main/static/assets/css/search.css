@@ -136,6 +136,12 @@ h1, h2, p {
 
     @media (max-width: 750px) {
 
+        #search h1 {
+            text-align: center;
+            text-transform: uppercase;
+            padding: 0 25px;
+        }
+
         #search .results {
             grid-template-areas: "Quizzes"
                                  "Users";
