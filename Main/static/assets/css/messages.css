@@ -7,7 +7,7 @@
 }
 
 #msg-error {
-    color: #860101;
+    color: #ff4d4d;
     text-align: center;
     visibility: hidden;
     min-width: 250px;
@@ -27,7 +27,7 @@
 }
 
 #msg-success {
-    color: #008a12;
+    color: chartreuse;
     text-align: center;
     visibility: hidden;
     min-width: 250px;
