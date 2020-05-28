@@ -15,9 +15,9 @@
 		{% if user.is_authenticated %}
 			<div class="avatar-container" tabindex="0">
 				{% if not user.user_profile.avatar %}
-					<img src="{% static 'assets/img/default.png' %}">
+					<img src="{% static 'assets/img/default.png' %}" alt="Your avatar">
 				{% else %}
-					<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}">
+					<img src="{{ MEDIA_URL }}{{ user.user_profile.avatar.url }}" alt="Your avatar">
 				{% endif %}
 				{% if has_notification %}<div class="notification"></div>{% endif %}
 				<div class="user-dropdown">

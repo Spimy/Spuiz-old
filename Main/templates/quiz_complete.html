@@ -10,7 +10,7 @@
             <div class="result">
 
                 <h1 class="title">{{ completed.quiz.title }}</h1>
-                <img class="thumbnail" src="{{ MEDIA_URL }}{{ completed.quiz.thumbnail.url }}">
+                <img class="thumbnail" src="{{ MEDIA_URL }}{{ completed.quiz.thumbnail.url }}" alt="{{ completed.quiz.title }}'s thumbnail">
 
                 <div class="score">
                     <h2>Your Score: {{ completed.score }} of {{ total_score }}</h2>

@@ -20,9 +20,9 @@
                 <div href="{{ notification.pk }}/read" class="notification {% if notification.read %} read{% endif %}" onclick="toggleRead(this)">
                     <div class="heading">
                         {% if notification.from_user.user_profile.avatar %}
-                        <img src="{{ notification.from_user.user_profile.avatar.url }}">
+                        <img src="{{ notification.from_user.user_profile.avatar.url }}" alt="{{ notification.from_user.username }}'s avatar">
                         {% else %}
-                        <img src="{% static 'assets/img/default.png' %}">
+                        <img src="{% static 'assets/img/default.png' %}" alt="{{ notification.from_user.username }}'s avatar">
                         {% endif %}
                         <h2>{{ notification.title }}</h2>
                     </div>

@@ -17,9 +17,9 @@
 
         <div class="user-info">
             {% if not viewing_user.user_profile.avatar %}
-                    <img class="user-avatar" src="{% static 'assets/img/default.png' %}">
+                    <img class="user-avatar" src="{% static 'assets/img/default.png' %}" alt="{{ viewing_user.username }}'s avatar">
                 {% else %}
-                    <img class="user-avatar" src="{{ MEDIA_URL }}{{ viewing_user.user_profile.avatar.url }}">
+                    <img class="user-avatar" src="{{ MEDIA_URL }}{{ viewing_user.user_profile.avatar.url }}" alt="{{ viewing_user.username }}'s avatar">
             {% endif %}
             <div class="user-info-content">
                 <h2 class="user-username">{{ viewing_user.username }}</h2>
