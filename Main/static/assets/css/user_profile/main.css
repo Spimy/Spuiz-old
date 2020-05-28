@@ -74,6 +74,7 @@
 
 #user_content {
     color: #f1f1f1;
+    padding-bottom: 25px;
 }
 
 #user_content .user-content > h3 {
@@ -127,6 +128,10 @@
 
 #user_content .user-content .user-content-left .user-bio > * {
     margin: 0;
+}
+
+#user_content .user-content .user-content-left .user-bio a {
+    color: lightblue;
 }
 
 #user_content .user-content .user-content-left .user-bio > ul,
