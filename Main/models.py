@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.contrib.postgres.fields import ArrayField
 
 
@@ -132,9 +132,25 @@ def complete_quiz(sender, instance, **kwargs):
                           "Completed Quiz",
                           f"{instance.user.username} has completed a quiz titled \"{instance.quiz.title}\"!")
 
+
+def new_follow(sender, instance, **kwargs):
+    user_object = kwargs.pop("model", None)
+    action = kwargs.pop("action", None)
+    pk_set = kwargs.pop("pk_set", None)
+    
+    if action == "post_add":
+        user_followed = user_object.objects.get(pk=next(iter(pk_set)))
+        Notification.objects.create(title="New Follow",
+                                    message=f"{instance.user.username} is now following you!",
+                                    for_user=user_followed,
+                                    from_user=instance.user)
+
+
 post_save.connect(create_profile, User)
 
 post_save.connect(create_quiz, Quiz)
 post_delete.connect(delete_quiz, Quiz)
 
 post_save.connect(complete_quiz, CompletedQuiz)
+
+m2m_changed.connect(new_follow, UserProfile.following.through)
