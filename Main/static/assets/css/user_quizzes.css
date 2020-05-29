@@ -277,6 +277,15 @@ button {
     background-color: var(--grey-dark);
 }
 
+#user_quizzes .card .quiz .left {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80%;
+}
+
 #user_quizzes .card .quiz h4 {
     margin: 0 25px;
 }
@@ -297,7 +306,7 @@ button {
 
 @media only screen {
 
-    @media (max-width: 935px) {
+    @media (max-width: 1000px) {
 
         #user_quizzes {
             justify-content: initial;
@@ -338,20 +347,33 @@ button {
 
     }
 
+    @media (max-width: 560px) {
+
+        #user_quizzes .card .quiz .right {
+            display: none;
+        }
+
+    }
+
     @media (max-width: 500px) {
 
         #user_quizzes .card .quiz h4 {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-        }
-
-        #user_quizzes .card .quiz .right {
-            display: none;
+            width: 150px;
         }
 
         .dropdown-options {
             width: 150px;
+        }
+
+    }
+
+    @media (max-width: 400px) {
+
+        #user_quizzes .card .quiz h4 {
+            width: 100px;
         }
 
     }
