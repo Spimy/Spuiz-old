@@ -325,7 +325,7 @@ def user_profile(request, user_slug):
     followings = user.user_profile.following.order_by("username")
     completed_quizzes = CompletedQuiz.objects.filter(
         user__user_profile__slug=user_slug
-    ).order_by("-completed_date")[:4]
+    ).order_by("-completed_date")[:20]
 
     return render(request, "user_profile.html", context={"viewing_user": user,
                                                         "followings": followings,
