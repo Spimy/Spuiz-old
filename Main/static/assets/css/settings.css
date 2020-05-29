@@ -258,9 +258,10 @@ button {
             font-weight: bold;
             margin: 0;
             margin-bottom: 10px;
+            text-align: center;
         }
 
-        #settings .card form {
+        #settings .card form:not(:first-child) {
             display: flex;
             flex-direction: column;
             justify-content: center;
