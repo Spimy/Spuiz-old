@@ -204,6 +204,9 @@
 
 #user_content .user-content .user-content-right .quiz h4 {
     margin: 0 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -251,6 +254,14 @@
 
         #user_content .user-content .user-content-right {
             margin-top: 25px;
+        }
+
+    }
+
+    @media (max-width: 500px) {
+
+        #user_content .user-content .user-content-left .user-bio {
+            overflow-y: auto;
         }
 
     }
