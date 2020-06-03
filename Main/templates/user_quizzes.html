@@ -124,7 +124,7 @@
                         {% else %}
                         <img src="{{ completed.quiz.thumbnail.url }}" alt="{{ completed.quiz.title }}">
                         {% endif %}
-                        <a href="{{ completed.quiz.author.user_profile.slug}}/{{ completed.quiz.slug }}"><h4>{{ completed.quiz.title }}</h4></a>
+                        <a href="/{{ completed.quiz.author.user_profile.slug}}/{{ completed.quiz.slug }}"><h4>{{ completed.quiz.title }}</h4></a>
                     </div>
                     
                     <div class="right">

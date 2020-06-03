@@ -368,6 +368,12 @@ button {
             width: 150px;
         }
 
+        .delete_confirmation .delete-card {
+            white-space: normal;
+            width: 100% !important;
+            word-break: break-word;
+        }
+
     }
 
     @media (max-width: 400px) {
