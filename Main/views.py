@@ -104,6 +104,10 @@ def calculate_percentage_score(score, total_score):
 
 # Create your views here.
 def home_page(request):
+    
+    if request.user.is_authenticated:
+        return redirect("Main:search_page")
+    
     newest_quizzes = Quiz.objects.all().order_by("-pk")[:10]
     top_quizzes = Quiz.objects.annotate(up_count=Count("upvotes")).order_by("-up_count")[:10]
     return render(request, "homepage.html", context={"newest_quizzes": newest_quizzes, 
