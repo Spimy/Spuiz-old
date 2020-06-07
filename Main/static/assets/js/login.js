@@ -54,7 +54,7 @@ login_form.addEventListener("submit", event => {
                 messageEvent("msg-error", 10);
 
             } else {
-                window.location = "/"
+                window.location = "/search"
             }
         }  
     }
